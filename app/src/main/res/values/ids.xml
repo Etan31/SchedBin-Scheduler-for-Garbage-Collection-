@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="bg_anim3" type="id" />
+    <item name="constraintLayout" type="id" />
+    <item name="ic_info" type="id" />
+</resources>

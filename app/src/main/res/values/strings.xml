@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_name">SoftDev_Project</string>
+    <string name="todo">TODO</string>
+    <string name="background_design1">background design 1</string>
+    <string name="background_design2">background design 2</string>
+    <string name="background_design3">background design 3</string>
+    <string name="sign_in_to_">Welcome to MyApp</string>
+    <string name="googleBtn">Continue with Google</string>
+    <string name="login">Login</string>
+    <string name="or">or</string>
+    <string name="password">Password</string>
+    <string name="email">Email</string>
+    <string name="reset_passw">Reset Password</string>
+    <string name="no_account">Don\'t hava an Account?</string>
+    <string name="create_one">Create one</string>
+    <string name="title_activity_2">Activity2</string>
+    <string name="title_activity_main2">MainActivity2</string>
+    <string name="backbtn">This is back button</string>
+    <string name="create_your">CREATE YOUR ACCOUNT</string>
+    <string name="createAccnt_Name">Name</string>
+    <string name="createAccnt_address">Address</string>
+    <string name="number_optional"> Number (optional)</string>
+    <string name="houseName_input"> House Name (optional)</string>
+    <string name="save">Save</string>
+    <string name="info_houseName">This will serve as your house Name tag</string>
+    <string name="reset_password">Reset Password</string>
+    <string name="enter_your_">Enter your email, \nand you’ll receive a link to change your password </string>
+    <string name="new_link_resetpass">The link has been sent to this email \n- \n</string>
+
+</resources>
