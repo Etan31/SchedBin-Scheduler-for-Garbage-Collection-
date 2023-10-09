@@ -26,5 +26,6 @@
     <string name="reset_password">Reset Password</string>
     <string name="enter_your_">Enter your email, \nand you’ll receive a link to change your password </string>
     <string name="new_link_resetpass">The link has been sent to this email \n- \n</string>
+    <string name="view_schedule">View collection Schedule</string>
 
 </resources>
