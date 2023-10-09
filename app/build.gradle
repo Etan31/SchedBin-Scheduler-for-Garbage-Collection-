@@ -42,6 +42,4 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 
     //calendar API
-    implementation 'com.google.api-client:google-api-client-android:1.30.10'
-    implementation 'com.google.apis:google-api-services-calendar:v3-rev305-1.25.0'
 }
