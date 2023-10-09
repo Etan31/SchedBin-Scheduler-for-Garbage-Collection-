@@ -52,8 +52,12 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        Button create_accnt_Btn = findViewById(R.id.create_accnt_Btn);
-        create_accnt_Btn.setOnClickListener(v -> openActivity2());
+//        Button create_accnt_Btn = findViewById(R.id.create_accnt_Btn);
+//        create_accnt_Btn.setOnClickListener(v -> openActivity2());
+
+        Button viewSchedule = findViewById(R.id.regular_user_btn);
+        viewSchedule.setOnClickListener(v -> viewSchedule_Activity());
+
 
         //
         Button login_btn = findViewById(R.id.login_btn);
@@ -94,8 +98,14 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void openActivity2() {
-        Intent intent = new Intent(this, MainActivity2.class);
+//    public void openActivity2() {
+//        Intent intent = new Intent(this, MainActivity2.class);
+//        startActivity(intent);
+//    }
+//
+
+    public void viewSchedule_Activity() {
+        Intent intent = new Intent(this, ActivityHomeRegularUser.class);
         startActivity(intent);
     }
 
