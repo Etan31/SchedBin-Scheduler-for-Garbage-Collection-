@@ -183,7 +183,7 @@
         android:id="@+id/regular_user_btn"
         android:layout_width="324dp"
         android:layout_height="54dp"
-        android:background="@color/transparent"
+        android:background="@drawable/bg_viewsched"
         android:fontFamily="@font/montserrat_bold"
         android:text="@string/view_schedule"
         android:textAppearance="@style/log_in"

@@ -27,5 +27,8 @@
     <string name="enter_your_">Enter your email, \nand you’ll receive a link to change your password </string>
     <string name="new_link_resetpass">The link has been sent to this email \n- \n</string>
     <string name="view_schedule">View collection Schedule</string>
+    <string name="schedule">Schedule</string>
+    <string name="Settings">Settings</string>
+    <string name="add_sched_btn_plus">"plus button for adding schedule "</string>
 
 </resources>
