@@ -105,7 +105,8 @@ public class MainActivity extends AppCompatActivity {
 //
 
     public void viewSchedule_Activity() {
-        Intent intent = new Intent(this, ActivityHomeRegularUser.class);
+//        Intent intent = new Intent(this, ActivityHomeRegularUser.class);
+        Intent intent = new Intent(this, Admin_Home_activity.class);
         startActivity(intent);
     }
 

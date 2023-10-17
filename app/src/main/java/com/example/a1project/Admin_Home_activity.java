@@ -2,6 +2,7 @@ package com.example.a1project;
 
 import static com.example.a1project.R.id.nav_calendar;
 
+import androidx.annotation.IdRes;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -15,18 +16,18 @@ public class Admin_Home_activity extends AppCompatActivity {
 
     ActivityAdminHomeBinding binding;
 
-    @SuppressLint("NonConstantResourceId")
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityAdminHomeBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        binding.bottomNavigationView.setOnItemSelectedListener(item -> {
+//        binding.bottomNavigationView.setOnItemSelectedListener(item -> {
 
-//            switch (item.getItemId()) {
+//            switch (item.get@IdRes()) {
 //
-//                case nav_calendar:
+//                case R.id.nav_calendar:
 //                    replaceFragment(new ScheduleFragment());
 //                    break;
 //                case R.id.nav_settings:
@@ -34,8 +35,32 @@ public class Admin_Home_activity extends AppCompatActivity {
 //                    break;
 //            }
 
+//            @IdRes int itemId = item.getItemId();
+//            switch (itemId) {
+//                // Handle the calendar menu item click
+//                case R.id.nav_calendar:
+//                replaceFragment(new ScheduleFragment());
+//                break;
+//
+//                case R.id.nav_settings:
+//                replaceFragment(new SettingsFragment());
+//                break;
+//            }
+
+
+//            return true;
+//        });
+
+        binding.bottomNavigationView.setOnItemSelectedListener(item -> {
+            if (item.getItemId() == R.id.nav_calendar) {
+                replaceFragment(new ScheduleFragment());
+            } else if (item.getItemId() == R.id.nav_settings) {
+                replaceFragment(new SettingsFragment());
+            }
+
             return true;
         });
+
     }
 
 
