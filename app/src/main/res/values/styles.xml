@@ -67,4 +67,20 @@
         <item name="android:textSize">12sp</item>
         <item name="android:textColor">#A4907C</item>
     </style>
+    <style name="calendar">
+        <item name="android:fontFamily">@font/montserrat_bold</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:letterSpacing">0.1</item>
+        <item name="android:textColor">#A4907C</item>
+    </style>
+    <style name="schedule_of">
+        <item name="android:fontFamily">@font/montserrat_regular</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">#A4907C</item>
+    </style>
+    <style name="dropDown_noSched">
+        <item name="android:fontFamily">@font/opensans_regular</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/color3_btns</item>
+    </style>
 </resources>

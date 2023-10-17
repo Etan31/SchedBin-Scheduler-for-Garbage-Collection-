@@ -2,4 +2,5 @@
 <resources>
     <string name="login">Login</string>
     <string name="Settings">Settings</string>
+    <string name="no_schedule">No Schedule</string>
 </resources>
