@@ -3,4 +3,5 @@
     <string name="login">Login</string>
     <string name="Settings">Settings</string>
     <string name="no_schedule">No Schedule</string>
+    <string name="schedules_for_this_month">Schedules for this month</string>
 </resources>

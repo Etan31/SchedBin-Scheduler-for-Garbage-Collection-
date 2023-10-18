@@ -22,34 +22,7 @@ public class Admin_Home_activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityAdminHomeBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
-//        binding.bottomNavigationView.setOnItemSelectedListener(item -> {
-
-//            switch (item.get@IdRes()) {
-//
-//                case R.id.nav_calendar:
-//                    replaceFragment(new ScheduleFragment());
-//                    break;
-//                case R.id.nav_settings:
-//                    replaceFragment(new SettingsFragment());
-//                    break;
-//            }
-
-//            @IdRes int itemId = item.getItemId();
-//            switch (itemId) {
-//                // Handle the calendar menu item click
-//                case R.id.nav_calendar:
-//                replaceFragment(new ScheduleFragment());
-//                break;
-//
-//                case R.id.nav_settings:
-//                replaceFragment(new SettingsFragment());
-//                break;
-//            }
-
-
-//            return true;
-//        });
+        replaceFragment(new ScheduleFragment());
 
         binding.bottomNavigationView.setOnItemSelectedListener(item -> {
             if (item.getItemId() == R.id.nav_calendar) {
@@ -67,7 +40,7 @@ public class Admin_Home_activity extends AppCompatActivity {
     private void replaceFragment(androidx.fragment.app.Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.frameLayout, fragment);
+        fragmentTransaction.replace(R.id.BaseFrameLayout, fragment);
         fragmentTransaction.commit();
     }
 

@@ -33,5 +33,6 @@
     <string name="calendar">Calendar</string>
     <string name="schedule_of">Schedule of Garbage collection</string>
     <string name="no_schedule">No Schedule</string>
+    <string name="schedules_for_this_month">Schedules for this month</string>
 
 </resources>
