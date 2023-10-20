@@ -1,18 +1,20 @@
 package com.example.a1project;
 
-import static com.example.a1project.R.id.nav_calendar;
-
-import androidx.annotation.IdRes;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.motion.widget.MotionLayout;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 
 import com.example.a1project.databinding.ActivityAdminHomeBinding;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import androidx.constraintlayout.motion.widget.MotionLayout;
 
-public class Admin_Home_activity extends AppCompatActivity {
+public class Admin_Home_activity extends AppCompatActivity implements ScheduleFragment.OnFabClickListener  {
 
     ActivityAdminHomeBinding binding;
 
@@ -27,15 +29,25 @@ public class Admin_Home_activity extends AppCompatActivity {
         binding.bottomNavigationView.setOnItemSelectedListener(item -> {
             if (item.getItemId() == R.id.nav_calendar) {
                 replaceFragment(new ScheduleFragment());
-            } else if (item.getItemId() == R.id.nav_settings) {
+            }else if (item.getItemId() == R.id.add_schedule) {
+                replaceFragment(new AddScheduleFragment());
+            }else if (item.getItemId() == R.id.nav_settings) {
                 replaceFragment(new SettingsFragment());
             }
-
             return true;
         });
 
-    }
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        ScheduleFragment scheduleFragment = new ScheduleFragment();
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.add_schedule_id, scheduleFragment, "addSchedule_tag")
+                .commit();
 
+
+
+
+
+    }
 
     private void replaceFragment(androidx.fragment.app.Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
@@ -44,4 +56,11 @@ public class Admin_Home_activity extends AppCompatActivity {
         fragmentTransaction.commit();
     }
 
+    @Override
+    public void onFabClick() {
+        ScheduleFragment scheduleFragment = (ScheduleFragment) getSupportFragmentManager().findFragmentByTag("addSchedule_tag");
+        if (scheduleFragment != null) {
+            scheduleFragment.startMotionLayoutTransition();
+        }
+    }
 }
