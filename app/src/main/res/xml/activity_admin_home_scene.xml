@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<MotionScene 
+<MotionScene
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:motion="http://schemas.android.com/apk/res-auto">
 
@@ -8,11 +8,10 @@
         motion:constraintSetStart="@id/start"
         motion:duration="1000"
         motion:autoTransition="none"
-        motion:motionInterpolator="cubic(0.39,1,0.1,0.06)">
+        motion:motionInterpolator="cubic-bezier(.37,.56,0,1.15)">
        <KeyFrameSet>
        </KeyFrameSet>
         <OnClick motion:targetId="@id/fab" />
-        <OnClick motion:targetId="@+id/add_schedule_Btn" />
     </Transition>
 
     <ConstraintSet android:id="@+id/start">
