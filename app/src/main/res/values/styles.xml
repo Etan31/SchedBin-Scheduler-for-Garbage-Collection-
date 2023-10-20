@@ -88,4 +88,10 @@
         <item name="android:textSize">18sp</item>
         <item name="android:textColor">@color/color3_btns</item>
     </style>
+    <style name="schedule_add">
+        <item name="android:textSize">32sp</item>
+        <item name="android:fontFamily">@font/montserrat_bold</item>
+        <item name="android:letterSpacing">0.05</item>
+        <item name="android:textColor">#A4907C</item>
+    </style>
 </resources>

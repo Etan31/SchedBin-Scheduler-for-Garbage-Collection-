@@ -8,7 +8,7 @@
         motion:constraintSetStart="@id/start"
         motion:duration="1000"
         motion:autoTransition="none"
-        motion:motionInterpolator="cubic-bezier(.37,.56,0,1.15)">
+        motion:motionInterpolator="cubic(0.37,0.56,0,1.15)">
        <KeyFrameSet>
        </KeyFrameSet>
         <OnClick motion:targetId="@id/fab" />
