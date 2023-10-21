@@ -49,7 +49,7 @@
                     <AutoCompleteTextView
                         android:id="@+id/addSched_date"
                         android:layout_width="match_parent"
-                        android:layout_height="52dp"
+                        android:layout_height="48dp"
                         android:background="@drawable/input_bg"
                         android:contentDescription="date format"
                         android:drawableStart="@drawable/ic_calendar"
@@ -101,7 +101,7 @@
                     <AutoCompleteTextView
                         android:id="@+id/addSched_address"
                         android:layout_width="match_parent"
-                        android:layout_height="50dp"
+                        android:layout_height="48dp"
                         android:background="@drawable/input_bg"
                         android:contentDescription="@string/enter_an_address"
                         android:drawableStart="@drawable/ic_map"
@@ -126,53 +126,32 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
 
-                        <com.google.android.material.textfield.TextInputLayout
-                            android:id="@+id/layout_addSched_garbageType"
-                            android:layout_width="349dp"
-                            android:layout_height="56dp"
-                            android:background="@drawable/bg_dropdown"
-                            android:hint="@string/garbageType"
-                            app:endIconDrawable="@drawable/ic_dropdown"
+                        <Spinner
+                            android:id="@+id/spinner_typeofgarbage"
+                            android:layout_width="348dp"
+                            android:layout_height="48dp"
+                            android:layout_marginTop="11dp"
+                            android:background="@drawable/bg_recyclesvg"
+                            android:paddingStart="40dp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintVertical_bias="0.717">
+                            app:layout_constraintVertical_bias="0.692" />
 
-                            <AutoCompleteTextView
-                                android:id="@+id/addSched_garbageType"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:drawableStart="@drawable/ic_recycle"
-                                android:drawableEnd="@drawable/ic_dropdown"
-                                android:drawablePadding="10dp"
-                                android:inputType="none"
-                                tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
-                        </com.google.android.material.textfield.TextInputLayout>
-
-                        <com.google.android.material.textfield.TextInputLayout
-                            android:id="@+id/layout_addSched_doesRepeat"
-                            android:layout_width="344dp"
-                            android:layout_height="51dp"
-                            android:layout_marginTop="30dp"
-                            android:background="@drawable/bg_dropdown"
+                        <Spinner
+                            android:id="@+id/spinner_doesNotRepeat"
+                            android:layout_width="342dp"
+                            android:layout_height="48dp"
+                            android:background="@drawable/bg_repeatevent"
+                            android:paddingStart="40dp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.463"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/layout_addSched_garbageType"
-                            app:layout_constraintVertical_bias="0.0">
+                            app:layout_constraintTop_toBottomOf="@+id/spinner_typeofgarbage"
+                            app:layout_constraintVertical_bias="0.22" />
 
-                            <AutoCompleteTextView
-                                android:id="@+id/addSched_doesRepeat"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:drawableStart="@drawable/ic_repeatevent"
-                                android:drawableEnd="@drawable/ic_dropdown"
-                                android:drawablePadding="10dp"
-                                android:hint="Does not repeat"
-                                android:inputType="none"
-                                tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
-                        </com.google.android.material.textfield.TextInputLayout>
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <Button
@@ -190,6 +169,16 @@
                         app:layout_anchorGravity="start|top"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
+
+                    <Button
+                        android:id="@+id/button2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/login_btn"
+                        android:text="@string/add_schedule"
+                        android:textAppearance="@style/add_Sched"
+                        app:layout_anchor="@+id/constraintLayout3"
+                        app:layout_anchorGravity="bottom|center" />
                 </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
