@@ -46,4 +46,19 @@
     <string name="enter_an_address">Enter an address</string>
     <string name="garbageType">Type of Garbage</string>
 
+    <string-array name="garbageTypes">
+        <item>Biodegradable</item>
+        <item>Non-Biodegradable</item>
+        <item>Recyclable</item>
+        <item>Hazardous</item>
+    </string-array>
+
+    <string-array name="doesNotRepeat_array">
+        <item>Everyday</item>
+        <item>Every week</item>
+        <item>Every month</item>
+        <item>Every Year</item>
+        <item>Custom</item>
+    </string-array>
+
 </resources>

@@ -94,4 +94,10 @@
         <item name="android:letterSpacing">0.05</item>
         <item name="android:textColor">#A4907C</item>
     </style>
+    <style name="add_Sched">
+        <item name="android:textSize">20sp</item>
+        <item name="android:letterSpacing">0.1</item>
+        <item name="android:textColor">#FBFFDC</item>
+        <item name="android:fontFamily">@font/montserrat_bold</item>
+    </style>
 </resources>
