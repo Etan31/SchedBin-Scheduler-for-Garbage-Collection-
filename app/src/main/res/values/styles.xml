@@ -100,4 +100,16 @@
         <item name="android:textColor">#FBFFDC</item>
         <item name="android:fontFamily">@font/montserrat_bold</item>
     </style>
+    <style name="settings">
+        <item name="android:textSize">32sp</item>
+        <item name="android:letterSpacing">0.1</item>
+        <item name="android:textColor">#A4907C</item>
+        <item name="android:fontFamily">@font/montserrat_bold</item>
+    </style>
+    <style name="logout">
+        <item name="android:textSize">20sp</item>
+        <item name="android:letterSpacing">0.1</item>
+        <item name="android:textColor">#FBFFDC</item>
+        <item name="android:fontFamily">@font/montserrat_bold</item>
+    </style>
 </resources>
