@@ -36,8 +36,6 @@
     <string name="schedules_for_this_month">Schedules for this month</string>
     <string name="add_schedule">Add Schedule</string>
     <string name="schedule_add">Schedule \nyour\n collection</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="date_format">mm/dd/yyyy</string>
     <string name="date_format_mm_dd_yyyy">date format, mm/dd/yyyy</string>
     <string name="time">00:00</string>
@@ -45,6 +43,8 @@
     <string name="enter_a_time">Enter a time</string>
     <string name="enter_an_address">Enter an address</string>
     <string name="garbageType">Type of Garbage</string>
+    <string name="edite_schedule">Edite Schedule</string>
+    <string name="logout">Logout</string>
 
     <string-array name="garbageTypes">
         <item>Biodegradable</item>
