@@ -19,7 +19,11 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="731dp"
-                android:clipToPadding="true">
+                android:clipToPadding="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent">
+
 
                 <TextView
                     android:id="@+id/Settings_text"
@@ -28,14 +32,14 @@
                     android:gravity="center"
                     android:text="@string/Settings"
                     android:textAppearance="@style/settings"
-                    app:layout_constraintBottom_toTopOf="@+id/button11"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.069" />
 
                 <Button
-                    android:id="@+id/button11"
+                    android:id="@+id/editSched_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="20dp"
@@ -47,12 +51,15 @@
                     android:paddingEnd="10dp"
                     android:text="@string/edite_schedule"
                     android:textAllCaps="false"
-                    app:layout_constraintBottom_toTopOf="@+id/button12"
+                    app:layout_constraintBottom_toTopOf="@+id/email_btn"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" />
+                    app:layout_constraintHorizontal_bias="0.505"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/Settings_text"
+                    app:layout_constraintVertical_bias="1.0" />
 
                 <Button
-                    android:id="@+id/button12"
+                    android:id="@+id/email_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="20dp"
@@ -64,12 +71,12 @@
                     android:paddingEnd="10dp"
                     android:text="useremail@mgail.com"
                     android:textAllCaps="false"
-                    app:layout_constraintBottom_toTopOf="@+id/button13"
+                    app:layout_constraintBottom_toTopOf="@+id/number_btn"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />
 
                 <Button
-                    android:id="@+id/button13"
+                    android:id="@+id/number_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="20dp"
@@ -80,15 +87,14 @@
                     android:paddingStart="10dp"
                     android:paddingEnd="10dp"
                     android:text="0912345689123456"
-                    app:layout_constraintBottom_toTopOf="@+id/button14"
+                    app:layout_constraintBottom_toTopOf="@+id/resetpassword_btn"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />
 
                 <Button
-                    android:id="@+id/button14"
+                    android:id="@+id/resetpassword_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="152dp"
                     android:background="@drawable/bg_settings_btn"
                     android:drawableStart="@drawable/ic_password"
                     android:drawablePadding="10dp"
@@ -97,12 +103,12 @@
                     android:paddingEnd="10dp"
                     android:text="@string/reset_passw"
                     android:textAllCaps="false"
-                    app:layout_constraintBottom_toTopOf="@+id/logout"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.505"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="1.0" />
+                    app:layout_constraintVertical_bias="0.566" />
 
                 <Button
                     android:id="@+id/logout"
@@ -120,7 +126,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.828"
+                    app:layout_constraintVertical_bias="0.74"
                     tools:ignore="TextContrastCheck" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
