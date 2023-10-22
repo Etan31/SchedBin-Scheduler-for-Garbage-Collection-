@@ -3,13 +3,127 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/main_color"
     tools:context=".SettingsFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="hello_blank_fragment" />
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="731dp"
+                android:clipToPadding="true">
+
+                <TextView
+                    android:id="@+id/Settings_text"
+                    android:layout_width="215dp"
+                    android:layout_height="41dp"
+                    android:gravity="center"
+                    android:text="@string/Settings"
+                    android:textAppearance="@style/settings"
+                    app:layout_constraintBottom_toTopOf="@+id/button11"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+                <Button
+                    android:id="@+id/button11"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:background="@drawable/bg_settings_btn"
+                    android:drawableStart="@drawable/ic_editcalendar"
+                    android:drawablePadding="10dp"
+                    android:gravity="center|start"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
+                    android:text="@string/edite_schedule"
+                    android:textAllCaps="false"
+                    app:layout_constraintBottom_toTopOf="@+id/button12"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <Button
+                    android:id="@+id/button12"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:background="@drawable/bg_settings_btn"
+                    android:drawableStart="@drawable/ic_email"
+                    android:drawablePadding="10dp"
+                    android:gravity="center|start"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
+                    android:text="useremail@mgail.com"
+                    android:textAllCaps="false"
+                    app:layout_constraintBottom_toTopOf="@+id/button13"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <Button
+                    android:id="@+id/button13"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:background="@drawable/bg_settings_btn"
+                    android:drawableStart="@drawable/ic_number"
+                    android:drawablePadding="10dp"
+                    android:gravity="center|start"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
+                    android:text="0912345689123456"
+                    app:layout_constraintBottom_toTopOf="@+id/button14"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <Button
+                    android:id="@+id/button14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="152dp"
+                    android:background="@drawable/bg_settings_btn"
+                    android:drawableStart="@drawable/ic_password"
+                    android:drawablePadding="10dp"
+                    android:gravity="center|start"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
+                    android:text="@string/reset_passw"
+                    android:textAllCaps="false"
+                    app:layout_constraintBottom_toTopOf="@+id/logout"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.505"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="1.0" />
+
+                <Button
+                    android:id="@+id/logout"
+                    android:layout_width="229dp"
+                    android:layout_height="48dp"
+                    android:background="@color/color3_btns"
+                    android:drawableEnd="@drawable/ic_logout"
+                    android:includeFontPadding="false"
+                    android:paddingStart="20dp"
+                    android:paddingEnd="20dp"
+                    android:text="@string/logout"
+                    android:textAllCaps="true"
+                    android:textAppearance="@style/logout"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.828"
+                    tools:ignore="TextContrastCheck" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
+    </ScrollView>
 
 </FrameLayout>
