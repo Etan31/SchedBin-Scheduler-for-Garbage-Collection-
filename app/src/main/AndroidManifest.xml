@@ -13,6 +13,9 @@
         android:theme="@style/Theme.1project"
         tools:targetApi="31">
         <activity
+            android:name=".EditSchedule"
+            android:exported="false" />
+        <activity
             android:name=".addSchedule_activity"
             android:exported="false" />
         <activity

@@ -6,170 +6,197 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/main_color"
+    android:screenOrientation="portrait"
     tools:context=".ScheduleFragment">
-    <androidx.constraintlayout.motion.widget.MotionLayout
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/motionLayout"
-        app:layoutDescription="@xml/fragment_schedule_scene">
+        android:layout_height="match_parent">
 
-        <!-- Your existing layout content here -->
-        <!-- Add ScrollView, LinearLayout, RelativeLayout, and other views here -->
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintLayout2"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_width="400dp"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-            <ScrollView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:contentDescription="Scroll"
+
+            <TextView
+                android:id="@+id/calendar"
+                android:layout_width="147dp"
+                android:layout_height="25dp"
+                android:layout_marginTop="96dp"
+                android:gravity="top"
+                android:text="@string/calendar"
+                android:textAppearance="@style/calendar"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.106"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="MissingConstraints" />
+
+            <TableLayout
+                android:id="@+id/schedule_tableLayout"
+                android:layout_width="340dp"
+                android:layout_height="126dp"
+                android:layout_marginBottom="14dp"
+                app:layout_constraintBottom_toTopOf="@+id/add_schedule"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/Title_ScheduleforthisMonth"
+                app:layout_constraintVertical_bias="0.0">
+
+                <!-- Header row -->
+                <TableRow
+                    android:id="@+id/schedule_th"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/tr_date"
+                        android:layout_width="81dp"
+                        android:layout_height="match_parent"
+                        android:text="Date"
+                        android:textAlignment="center" />
+
+                    <TextView
+                        android:id="@+id/tr_garbageType"
+                        android:layout_width="141dp"
+                        android:layout_height="match_parent"
+                        android:text="@string/garbage_type"
+                        android:textAlignment="center" />
+
+                    <TextView
+                        android:id="@+id/tr_deleteBtn"
+                        android:layout_width="124dp"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:text="@string/delete_scheduleBtn" />
+                </TableRow>
+
+                <!-- Data rows (wrapped in a ScrollView) -->
+                <ScrollView
+                    android:layout_width="296dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/schedule_tableLayout"
+                    app:layout_constraintStart_toStartOf="@+id/schedule_tableLayout"
+                    app:layout_constraintTop_toBottomOf="@+id/schedule_th">
+
+                    <TableLayout
+                        android:id="@+id/data_table_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TableRow
+                            android:id="@+id/schedule_td"
+                            android:layout_width="match_parent"
+                            android:layout_height="51dp">
+
+                            <TextView
+                                android:id="@+id/tr_date2"
+                                android:layout_width="81dp"
+                                android:layout_height="match_parent"
+                                android:text=""
+                                android:textAlignment="center" />
+
+                            <TextView
+                                android:id="@+id/tr_garbageType2"
+                                android:layout_width="144dp"
+                                android:layout_height="wrap_content"
+                                android:text=""
+                                android:textAlignment="center" />
+
+                            <TextView
+                                android:id="@+id/tr_deleteBtn2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:gravity="center_vertical|center_horizontal"
+                                android:text="" />
+                        </TableRow>
+                    </TableLayout>
+                </ScrollView>
+            </TableLayout>
+
+            <Button
+                android:id="@+id/button"
+                android:layout_width="269dp"
+                android:layout_height="48dp"
+                android:layout_marginBottom="64dp"
+                android:background="@drawable/bg_viewsched"
+                android:drawableEnd="@drawable/ic_dropdown"
+                android:paddingStart="10dp"
+                android:text="@string/no_schedule"
+                android:textAlignment="textStart"
+                android:textAppearance="@style/dropDown_noSched"
+                app:layout_constraintBottom_toTopOf="@+id/Admin_calendarView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.644" />
+
+            <TextView
+                android:id="@+id/schedule_of"
+                android:layout_width="251dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="26dp"
+                android:layout_marginEnd="122dp"
+                android:gravity="top"
+                android:text="@string/schedule_of"
+                android:textAppearance="@style/schedule_of"
+                app:layout_constraintBottom_toTopOf="@+id/Admin_calendarView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/calendar"
+                app:layout_constraintVertical_bias="1.0" />
+
+            <CalendarView
+                android:id="@+id/Admin_calendarView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:background="@drawable/bg_calendar1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/calendar" />
+
+            <Button
+                android:id="@+id/add_schedule"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:layout_marginStart="95dp"
+                android:layout_marginEnd="66dp"
+                android:background="@drawable/bg_add_schedule"
+                android:focusable="true"
+                android:text="@string/add_schedule"
+                android:textAllCaps="false"
+                android:textAppearance="@style/add_Sched_btn"
+                android:visibility="invisible"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/Title_ScheduleforthisMonth"
+                android:layout_width="304dp"
+                android:layout_height="52dp"
+                android:layout_marginStart="48dp"
+                android:layout_marginEnd="47dp"
+                android:gravity="center"
+                android:text="@string/schedules_for_this_month"
+                android:textAppearance="@style/calendar"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="399dp"
-                        android:layout_height="match_parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.5"
-                        app:layout_constraintStart_toStartOf="parent"
-                        tools:layout_editor_absoluteX="18dp">
-
-                        <RelativeLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="716dp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintHorizontal_bias="0.5"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintVertical_bias="0.0">
-
-                            <RelativeLayout
-                                android:layout_width="321dp"
-                                android:layout_height="174dp"
-                                android:layout_alignParentStart="true"
-                                android:layout_alignParentEnd="true"
-                                android:layout_alignParentBottom="true"
-                                android:layout_marginStart="58dp"
-                                android:layout_marginEnd="31dp"
-                                android:layout_marginBottom="58dp"
-                                android:background="@drawable/bg_listofsched">
-
-                                <TextView
-                                    android:id="@+id/Title_ScheduleforthisMonth"
-                                    android:layout_width="304dp"
-                                    android:layout_height="52dp"
-                                    android:layout_alignParentStart="true"
-                                    android:layout_alignParentEnd="true"
-                                    android:layout_marginStart="9dp"
-                                    android:layout_marginEnd="8dp"
-                                    android:gravity="center"
-                                    android:text="@string/schedules_for_this_month"
-                                    android:textAppearance="@style/calendar" />
-
-                                <ListView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="100dp"
-                                    android:layout_below="@+id/Title_ScheduleforthisMonth"
-                                    android:layout_alignParentEnd="true"
-                                    android:layout_alignParentBottom="true"
-                                    android:layout_marginTop="1dp"
-                                    android:layout_marginEnd="0dp"
-                                    android:layout_marginBottom="21dp" />
-
-                            </RelativeLayout>
-
-                            <CalendarView
-                                android:id="@+id/Admin_calendarView"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentStart="true"
-                                android:layout_alignParentTop="true"
-                                android:layout_alignParentEnd="true"
-                                android:layout_marginStart="39dp"
-                                android:layout_marginTop="140dp"
-                                android:layout_marginEnd="22dp"
-                                android:background="@drawable/bg_calendar1" />
-
-                            <Button
-                                android:id="@+id/button"
-                                android:layout_width="269dp"
-                                android:layout_height="48dp"
-                                android:layout_alignParentStart="true"
-                                android:layout_alignParentTop="true"
-                                android:layout_alignParentEnd="true"
-                                android:layout_marginStart="74dp"
-                                android:layout_marginTop="44dp"
-                                android:layout_marginEnd="56dp"
-                                android:background="@drawable/bg_viewsched"
-                                android:drawableEnd="@drawable/ic_dropdown"
-                                android:paddingStart="10dp"
-                                android:text="@string/no_schedule"
-                                android:textAlignment="textStart"
-                                android:textAppearance="@style/dropDown_noSched" />
-
-                            <TextView
-                                android:id="@+id/calendar"
-                                android:layout_width="147dp"
-                                android:layout_height="25dp"
-                                android:layout_alignParentStart="true"
-                                android:layout_alignParentTop="true"
-                                android:layout_marginStart="40dp"
-                                android:layout_marginTop="96dp"
-                                android:gravity="top"
-                                android:text="@string/calendar"
-                                android:textAppearance="@style/calendar"
-                                tools:ignore="MissingConstraints" />
-
-                            <TextView
-                                android:id="@+id/schedule_of"
-                                android:layout_width="251dp"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentStart="true"
-                                android:layout_alignParentTop="true"
-                                android:layout_marginStart="40dp"
-                                android:layout_marginTop="120dp"
-                                android:gravity="top"
-                                android:text="@string/schedule_of"
-                                android:textAppearance="@style/schedule_of" />
-
-                            <Button
-                                android:id="@+id/add_schedule"
-                                android:layout_width="wrap_content"
-                                android:layout_height="48dp"
-                                android:layout_alignParentStart="true"
-                                android:layout_alignParentEnd="true"
-                                android:layout_alignParentBottom="true"
-                                android:layout_marginStart="95dp"
-                                android:layout_marginEnd="66dp"
-                                android:background="@drawable/bg_add_schedule"
-                                android:focusable="true"
-                                android:text="@string/add_schedule"
-                                android:textAllCaps="false"
-                                android:textAppearance="@style/add_Sched_btn"
-                                android:visibility="invisible"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintStart_toStartOf="parent"
-                                tools:layout_editor_absoluteY="658dp" />
-
-
-                        </RelativeLayout>
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                </LinearLayout>
-            </ScrollView>
+                app:layout_constraintTop_toBottomOf="@+id/Admin_calendarView"
+                app:layout_constraintVertical_bias="0.0" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.constraintlayout.motion.widget.MotionLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </FrameLayout>

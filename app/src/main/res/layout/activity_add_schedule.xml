@@ -54,7 +54,7 @@
                         android:contentDescription="date format"
                         android:drawableStart="@drawable/ic_calendar"
                         android:drawablePadding="10dp"
-                        android:hint="@string/date_format"
+                        android:hint="@string/enter_date"
                         android:inputType="date"
                         android:paddingStart="10dp"
                         tools:ignore="EditableContentDescCheck" />
@@ -81,7 +81,7 @@
                         android:drawableStart="@drawable/ic_time"
                         android:drawablePadding="10dp"
                         android:hint="@string/time"
-                        android:inputType="date"
+                        android:inputType="time"
                         android:labelFor="@+id/textInputLayout4"
                         android:paddingStart="10dp"
                         tools:ignore="EditableContentDescCheck" />
@@ -107,7 +107,7 @@
                         android:drawableStart="@drawable/ic_map"
                         android:drawablePadding="10dp"
                         android:hint="@string/address"
-                        android:inputType="date"
+                        android:inputType="text"
                         android:paddingStart="10dp"
                         tools:ignore="EditableContentDescCheck" />
                 </com.google.android.material.textfield.TextInputLayout>
@@ -171,7 +171,7 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <Button
-                        android:id="@+id/button2"
+                        android:id="@+id/add_schedule_Btn"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="@drawable/login_btn"
