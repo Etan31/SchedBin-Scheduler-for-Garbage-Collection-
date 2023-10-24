@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/main_color"
+    android:screenOrientation="portrait"
     app:layoutDescription="@xml/activity_admin_home_scene"
     tools:context=".Admin_Home_activity">
 

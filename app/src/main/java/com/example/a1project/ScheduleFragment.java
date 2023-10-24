@@ -2,22 +2,40 @@ package com.example.a1project;
 
 import android.content.Context;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.constraintlayout.motion.widget.MotionLayout;
-import androidx.fragment.app.Fragment;
-
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import androidx.constraintlayout.motion.widget.MotionLayout;
+import android.widget.CalendarView;
+import android.widget.TableLayout;
+import android.widget.TableRow;
+import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link ScheduleFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
+
+
 public class ScheduleFragment extends Fragment {
+    private CalendarView calendarView;
+    private Map<String, String> dateGarbageTypeMap;
+
+    //for displaying schedule to the tablelayout
+    private TableLayout tableLayout;
+
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -29,8 +47,8 @@ public class ScheduleFragment extends Fragment {
     private String mParam2;
 
     public void startMotionLayoutTransition() {
-        MotionLayout motionLayout = requireView().findViewById(R.id.motionLayout);
-        motionLayout.transitionToEnd(); // Start the animation
+//        MotionLayout motionLayout = requireView().findViewById(R.id.motionLayout);
+//        motionLayout.transitionToEnd(); // Start the animation
 
     }
 
@@ -72,9 +90,7 @@ public class ScheduleFragment extends Fragment {
 
     }
 
-//    private MotionLayout findViewById(int motionLayout) {
-//
-//    }
+
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -92,6 +108,94 @@ public class ScheduleFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_schedule, container, false);
+        View view = inflater.inflate(R.layout.fragment_schedule, container, false);
+
+
+
+
+        ////////////////////////////////
+        TableLayout tableLayout = view.findViewById(R.id.schedule_tableLayout);
+        TableLayout dataTableLayout = view.findViewById(R.id.data_table_layout);
+        DatabaseReference schedulesRef = FirebaseDatabase.getInstance().getReference("schedules");
+
+        schedulesRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // Clear existing data rows
+                dataTableLayout.removeAllViews();
+
+                for (DataSnapshot scheduleSnapshot : dataSnapshot.getChildren()) {
+//                    String address = scheduleSnapshot.child("address").getValue(String.class);
+                    String date = scheduleSnapshot.child("date").getValue(String.class);
+                    String garbageType = scheduleSnapshot.child("garbageType").getValue(String.class);
+
+                    // Create a new TableRow for the data entry
+                    TableRow dataRow = new TableRow(requireContext());
+
+                    // Create TextViews for the data
+                    TextView dateTextView = new TextView(requireContext());
+                    dateTextView.setText(date);
+                    dateTextView.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.MATCH_PARENT));
+                    dateTextView.setGravity(Gravity.START);
+
+//                    TextView addressTextView = new TextView(requireContext());
+//                    addressTextView.setText(address);
+//                    addressTextView.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT));
+//                    addressTextView.setGravity(Gravity.START);
+
+                    TextView garbageTypeTextView = new TextView(requireContext());
+                    garbageTypeTextView.setText(garbageType);
+                    garbageTypeTextView.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT));
+                    garbageTypeTextView.setGravity(Gravity.START);
+
+                    // Add the TextViews to the dataRow
+                    dataRow.addView(dateTextView);
+//                    dataRow.addView(addressTextView);
+                    dataRow.addView(garbageTypeTextView);
+
+                    // Add the dataRow to the dataTableLayout (inside the ScrollView)
+                    dataTableLayout.addView(dataRow);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Handle errors
+            }
+        });
+
+
+
+
+
+
+
+        return view;
     }
+//    private void customizeCalendarView() {
+//        calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+//            @Override
+//            public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
+//                String selectedDate = String.format("%02d/%02d/%04d", month + 1, dayOfMonth, year);
+//
+//                if (dateGarbageTypeMap.containsKey(selectedDate)) {
+//                    String garbageType = dateGarbageTypeMap.get(selectedDate);
+//
+//                    if ("Recyclable".equals(garbageType)) {
+//                        view.setBackgroundColor(Color.BLUE);
+//                    } else if ("Non-Biodegradable".equals(garbageType)) {
+//                        view.setBackgroundColor(Color.YELLOW);
+//                    } else if ("Biodegradable".equals(garbageType)) {
+//                        view.setBackgroundColor(Color.GREEN);
+//                    } else if ("Hazardous".equals(garbageType)) {
+//                        view.setBackgroundColor(Color.RED);
+//                    }
+//                } else {
+//                    // Set a default background color for dates without data
+//                    view.setBackgroundColor(Color.WHITE);
+//                }
+//            }
+//        });
+//    }
+
 }
