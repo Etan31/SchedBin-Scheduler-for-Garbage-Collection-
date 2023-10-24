@@ -112,4 +112,26 @@
         <item name="android:textColor">#FBFFDC</item>
         <item name="android:fontFamily">@font/montserrat_bold</item>
     </style>
+
+    //for showing the caledar type of garbage
+    <style name="BlueTextAppearance">
+        <item name="android:background">#0000FF</item> <!-- Blue background -->
+        <item name="android:textColor">#FFFFFF</item> <!-- White text color -->
+    </style>
+
+    <style name="YellowTextAppearance">
+        <item name="android:background">#FFFF00</item> <!-- Yellow background -->
+        <item name="android:textColor">#000000</item> <!-- Black text color -->
+    </style>
+
+    <style name="GreenTextAppearance">
+        <item name="android:background">#00FF00</item> <!-- Green background -->
+        <item name="android:textColor">#000000</item> <!-- Black text color -->
+    </style>
+
+    <style name="RedTextAppearance">
+        <item name="android:background">#FF0000</item> <!-- Red background -->
+        <item name="android:textColor">#FFFFFF</item> <!-- White text color -->
+    </style>
+
 </resources>
