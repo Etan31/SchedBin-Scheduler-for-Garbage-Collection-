@@ -39,11 +39,12 @@
 
             <TableLayout
                 android:id="@+id/schedule_tableLayout"
-                android:layout_width="340dp"
-                android:layout_height="126dp"
+                android:layout_width="356dp"
+                android:layout_height="145dp"
                 android:layout_marginBottom="14dp"
                 app:layout_constraintBottom_toTopOf="@+id/add_schedule"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.636"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/Title_ScheduleforthisMonth"
                 app:layout_constraintVertical_bias="0.0">
@@ -155,8 +156,8 @@
 
             <CalendarView
                 android:id="@+id/Admin_calendarView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="348dp"
+                android:layout_height="309dp"
                 android:layout_marginTop="24dp"
                 android:background="@drawable/bg_calendar1"
                 app:layout_constraintEnd_toEndOf="parent"
