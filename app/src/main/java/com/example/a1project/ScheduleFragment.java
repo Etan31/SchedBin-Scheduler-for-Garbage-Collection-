@@ -164,38 +164,7 @@ public class ScheduleFragment extends Fragment {
             }
         });
 
-
-
-
-
-
-
         return view;
     }
-//    private void customizeCalendarView() {
-//        calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
-//            @Override
-//            public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
-//                String selectedDate = String.format("%02d/%02d/%04d", month + 1, dayOfMonth, year);
-//
-//                if (dateGarbageTypeMap.containsKey(selectedDate)) {
-//                    String garbageType = dateGarbageTypeMap.get(selectedDate);
-//
-//                    if ("Recyclable".equals(garbageType)) {
-//                        view.setBackgroundColor(Color.BLUE);
-//                    } else if ("Non-Biodegradable".equals(garbageType)) {
-//                        view.setBackgroundColor(Color.YELLOW);
-//                    } else if ("Biodegradable".equals(garbageType)) {
-//                        view.setBackgroundColor(Color.GREEN);
-//                    } else if ("Hazardous".equals(garbageType)) {
-//                        view.setBackgroundColor(Color.RED);
-//                    }
-//                } else {
-//                    // Set a default background color for dates without data
-//                    view.setBackgroundColor(Color.WHITE);
-//                }
-//            }
-//        });
-//    }
 
 }
