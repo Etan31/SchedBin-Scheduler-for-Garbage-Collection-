@@ -307,8 +307,8 @@
 
     <Button
         android:id="@+id/save_btn2"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="311dp"
+        android:layout_height="36dp"
         android:layout_marginStart="52dp"
         android:layout_marginEnd="52dp"
         android:layout_marginBottom="33dp"
@@ -321,7 +321,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/housenameInput_createaAcount"
         tools:ignore="MissingConstraints" />
 
 
@@ -377,7 +376,6 @@
         android:id="@+id/emailInput_createaAcount"
         android:layout_width="241dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/numberInput_createaAcount"
         app:layout_constraintEnd_toEndOf="@+id/addressInput_createaAcount"
         app:layout_constraintStart_toStartOf="@+id/addressInput_createaAcount"
         app:layout_constraintTop_toBottomOf="@+id/addressInput_createaAcount">
@@ -386,37 +384,17 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="email" />
-    </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/housenameInput_createaAcount"
-        android:layout_width="241dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="240dp"
-        app:layout_constraintBottom_toTopOf="@+id/save_btn2"
-        app:layout_constraintEnd_toEndOf="@+id/numberInput_createaAcount"
-        app:layout_constraintStart_toStartOf="@+id/numberInput_createaAcount"
-        app:layout_constraintTop_toBottomOf="@+id/numberInput_createaAcount">
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/numberInput_createaAcount"
+            android:layout_width="241dp"
+            android:layout_height="0dp">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="House Name (optional)" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/numberInput_createaAcount"
-        android:layout_width="241dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/housenameInput_createaAcount"
-        app:layout_constraintEnd_toEndOf="@+id/emailInput_createaAcount"
-        app:layout_constraintStart_toStartOf="@+id/emailInput_createaAcount"
-        app:layout_constraintTop_toBottomOf="@+id/emailInput_createaAcount">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Number (optional)" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Number (optional)" />
+        </com.google.android.material.textfield.TextInputLayout>
     </com.google.android.material.textfield.TextInputLayout>
 
 
