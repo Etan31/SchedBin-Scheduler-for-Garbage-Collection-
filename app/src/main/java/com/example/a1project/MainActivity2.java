@@ -40,7 +40,7 @@ public class MainActivity2 extends AppCompatActivity {
 
         TextInputLayout nameLayout = findViewById(R.id.nameInput_createaAcount);
         TextInputLayout passwordLayout = findViewById(R.id.passwordInput_createAcount);
-        TextInputLayout houseNameLayout = findViewById(R.id.housenameInput_createaAcount);
+//        TextInputLayout houseNameLayout = findViewById(R.id.housenameInput_createaAcount);
         TextInputLayout numberLayout = findViewById(R.id.numberInput_createaAcount);
         TextInputLayout emailLayout = findViewById(R.id.emailInput_createaAcount);
         TextInputLayout addressLayout = findViewById(R.id.addressInput_createaAcount);
@@ -48,7 +48,7 @@ public class MainActivity2 extends AppCompatActivity {
         //Start of creating account to save in firebase
         nameEditText = (TextInputEditText) nameLayout.getEditText();
         passwordEditText = (TextInputEditText) passwordLayout.getEditText();
-        houseNameEditText = (TextInputEditText) houseNameLayout.getEditText();
+//        houseNameEditText = (TextInputEditText) houseNameLayout.getEditText();
         numberEditText = (TextInputEditText) numberLayout.getEditText();
         emailEditText = (TextInputEditText) emailLayout.getEditText();
         addressEditText = (TextInputEditText) addressLayout.getEditText();
