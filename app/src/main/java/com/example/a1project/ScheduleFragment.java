@@ -1,12 +1,15 @@
 package com.example.a1project;
 
 import android.content.Context;
+import android.icu.text.SimpleDateFormat;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CalendarView;
+import android.widget.GridView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -19,8 +22,15 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.prolificinteractive.materialcalendarview.CalendarDay;
+import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 
+import java.text.ParseException;
+import java.util.Calendar;
+import java.util.HashSet;
+import java.util.Locale;
 import java.util.Map;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -30,8 +40,15 @@ import java.util.Map;
 
 
 public class ScheduleFragment extends Fragment {
+
     private CalendarView calendarView;
     private Map<String, String> dateGarbageTypeMap;
+    private GridView calendarGridView;
+
+    private MaterialCalendarView materialCalendarView;
+    private HashSet<CalendarDay> scheduledDates_CalendarDay= new HashSet<>();
+    private HashSet<String> scheduledDates = new HashSet<>();
+
 
     //for displaying schedule to the tablelayout
     private TableLayout tableLayout;
@@ -164,7 +181,78 @@ public class ScheduleFragment extends Fragment {
             }
         });
 
+
+
+
+
+
+//        for displaying dot to the calendar view.
+
+//        for displaying dot to the calendar view.
+        materialCalendarView = view.findViewById(R.id.Admin_calendarView);
+
+        // Step 1: Retrieve Schedules from Firebase
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference schedulesRefs = database.getReference("schedules");
+
+        schedulesRefs.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // Step 2: Process Schedule Data
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    // Extract date from schedule
+                    String date = snapshot.child("date").getValue(String.class);
+
+                    // Convert date string to CalendarDay object
+                    CalendarDay calendarDay = convertStringToCalendarDay(date);
+                    scheduledDates_CalendarDay.add(calendarDay);
+                }
+
+                // Step 3: Apply Decorator to MaterialCalendarView
+                applyDecorator();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Handle errors
+            }
+        });
+
         return view;
     }
 
+
+    // Method to convert date string to CalendarDay object
+// Method to convert date string to CalendarDay object
+    private CalendarDay convertStringToCalendarDay(String date) {
+        if (TextUtils.isEmpty(date)) {
+            // Handle the case where the date string is empty
+            return null;
+        }
+
+        // Convert date string to Calendar object
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
+
+        try {
+            calendar.setTime(sdf.parse(date));
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+        // Extract day, month, and year
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        int month = calendar.get(Calendar.MONTH);
+        int year = calendar.get(Calendar.YEAR);
+
+        return CalendarDay.from(year, month + 1, day);
+    }
+
+
+    // Method to apply decorator to MaterialCalendarView
+    private void applyDecorator() {
+        // Create a decorator and add it to the MaterialCalendarView
+        materialCalendarView.addDecorator(new ScheduleDecorator(requireContext(), scheduledDates_CalendarDay));
+    }
 }
