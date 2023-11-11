@@ -154,7 +154,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/calendar"
                 app:layout_constraintVertical_bias="1.0" />
 
-            <CalendarView
+            <com.prolificinteractive.materialcalendarview.MaterialCalendarView
                 android:id="@+id/Admin_calendarView"
                 android:layout_width="348dp"
                 android:layout_height="309dp"
@@ -178,7 +178,8 @@
                 android:visibility="invisible"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/Admin_calendarView" />
 
             <TextView
                 android:id="@+id/Title_ScheduleforthisMonth"
