@@ -1,33 +1,28 @@
 package com.example.a1project;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.icu.text.SimpleDateFormat;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.DatePicker;
-import android.app.DatePickerDialog;
-import android.widget.DatePicker;
 import android.widget.Spinner;
 import android.widget.TimePicker;
 import android.widget.Toast;
-import java.util.Calendar;
-import java.util.Locale;
 
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.a1project.adapter.PlaceAutoSuggestAdapter;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.Calendar;
 import java.util.Locale;
 
 public class addSchedule_activity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
@@ -41,6 +36,14 @@ public class addSchedule_activity extends AppCompatActivity implements AdapterVi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_schedule);
 
+        //for accessing the Address with PlaceAPI autocomplete
+        TextInputLayout addressTextInputLayout = findViewById(R.id.layout_addSched_address);
+        AutoCompleteTextView autoCompleteTextView = addressTextInputLayout.findViewById(R.id.addSched_address);
+
+        autoCompleteTextView.setAdapter(new PlaceAutoSuggestAdapter(this, android.R.layout.simple_list_item_1));
+
+
+
         //for storing schedules to firebase
         FirebaseApp.initializeApp(this);
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("schedules");
@@ -50,7 +53,6 @@ public class addSchedule_activity extends AppCompatActivity implements AdapterVi
         AutoCompleteTextView dateAutoCompleteTextView = findViewById(R.id.addSched_date);
         TextInputLayout timeTextInputLayout = findViewById(R.id.layout_addSched_time);
         AutoCompleteTextView timeAutoCompleteTextView = findViewById(R.id.addSched_time);
-        TextInputLayout addressTextInputLayout = findViewById(R.id.layout_addSched_address);
         AutoCompleteTextView addressAutoCompleteTextView = findViewById(R.id.addSched_address);
         Button addScheduleButton = findViewById(R.id.add_schedule_Btn);
 
