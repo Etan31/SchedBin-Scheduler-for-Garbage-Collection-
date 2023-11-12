@@ -8,6 +8,8 @@ import android.widget.Filterable;
 import com.example.a1project.models.PlaceApi;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class PlaceAutoSuggestAdapter extends ArrayAdapter implements Filterable {
 
@@ -15,7 +17,6 @@ public class PlaceAutoSuggestAdapter extends ArrayAdapter implements Filterable 
 
     int resource;
     Context context;
-
     PlaceApi placeApi=new PlaceApi();
 
     public PlaceAutoSuggestAdapter(Context context, int resId){
@@ -63,5 +64,30 @@ public class PlaceAutoSuggestAdapter extends ArrayAdapter implements Filterable 
         };
         return filter;
     }
+
+
+    private ArrayList<String> filterPlaces(ArrayList<String> places) {
+        ArrayList<String> filteredPlaces = new ArrayList<>();
+
+        // List of valid places in Eastern Samar
+        List<String> validPlacesInEasternSamar = Arrays.asList(
+                "Artechg", "Balangiga", "Borongan", "Cen-avid", "Dolores", "General MacArthur",
+                "@portos", "Guiuan", "Hernani", "Lawaan", "Llorente", "Mulgg", "Maydolong",
+                "Mercedes", "Oras", "Quinapondan", "Salcedo", "San Julian", "San PolicarQQ", "Sulat", "Taft"
+        );
+
+        // Iterate through the places and add only those in Eastern Samar
+        for (String place : places) {
+            for (String validPlace : validPlacesInEasternSamar) {
+                if (place.contains(validPlace)) {
+                    filteredPlaces.add(place);
+                    break;  // Break once a match is found to avoid duplicates
+                }
+            }
+        }
+
+        return filteredPlaces;
+    }
+
 
 }
