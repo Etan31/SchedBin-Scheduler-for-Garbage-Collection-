@@ -38,42 +38,6 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_bias="0.069" />
 
-                <Button
-                    android:id="@+id/email_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:background="@drawable/bg_settings_btn"
-                    android:drawableStart="@drawable/ic_email"
-                    android:drawablePadding="10dp"
-                    android:gravity="center|start"
-                    android:paddingStart="10dp"
-                    android:paddingEnd="10dp"
-                    android:text="useremail@mgail.com"
-                    android:textAllCaps="false"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.505"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/editSched_btn" />
-
-                <Button
-                    android:id="@+id/editSched_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="36dp"
-                    android:background="@drawable/bg_settings_btn"
-                    android:drawableStart="@drawable/ic_editcalendar"
-                    android:drawablePadding="10dp"
-                    android:gravity="center|start"
-                    android:paddingStart="10dp"
-                    android:paddingEnd="10dp"
-                    android:text="@string/edite_schedule"
-                    android:textAllCaps="false"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.505"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/Settings_text" />
-
                 <!--                <Button-->
                 <!--                    android:id="@+id/number_btn"-->
                 <!--                    android:layout_width="wrap_content"-->
@@ -92,6 +56,24 @@
                 <!--                    app:layout_constraintTop_toBottomOf="@+id/editSched_btn" />-->
 
                 <Button
+                    android:id="@+id/editSched_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="64dp"
+                    android:background="@drawable/bg_settings_btn"
+                    android:drawableStart="@drawable/ic_editcalendar"
+                    android:drawablePadding="10dp"
+                    android:gravity="center|start"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
+                    android:text="@string/edite_schedule"
+                    android:textAllCaps="false"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.505"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/Settings_text" />
+
+                <Button
                     android:id="@+id/resetpassword_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -107,7 +89,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.505"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/email_btn" />
+                    app:layout_constraintTop_toBottomOf="@+id/editSched_btn" />
 
                 <Button
                     android:id="@+id/logout"

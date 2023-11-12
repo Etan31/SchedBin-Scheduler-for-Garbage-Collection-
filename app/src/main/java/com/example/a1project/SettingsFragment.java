@@ -20,6 +20,8 @@ public class SettingsFragment extends Fragment {
 
     private Button logout;
     private Button add_admin;
+    private Button resetpassword_btn;
+    private Button editSched_btn;
 
 
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -72,6 +74,8 @@ public class SettingsFragment extends Fragment {
 
         logout = view.findViewById(R.id.logout);
         add_admin = view.findViewById(R.id.add_adminBtn);
+        resetpassword_btn = view.findViewById(R.id.resetpassword_btn);
+        editSched_btn = view.findViewById(R.id.editSched_btn);
 
         logout.setOnClickListener(v -> {
             FirebaseAuth.getInstance().signOut();
@@ -83,6 +87,17 @@ public class SettingsFragment extends Fragment {
             startActivity(new Intent(getActivity(), MainActivity2.class));
             getActivity().finish();
         });
+
+        resetpassword_btn.setOnClickListener(v -> {
+            startActivity(new Intent(getActivity(), resetPassword_Activity.class));
+            getActivity().finish();
+        });
+
+        editSched_btn.setOnClickListener(v -> {
+            startActivity(new Intent(getActivity(), EditSchedule.class));
+            getActivity().finish();
+        });
+
 
         return view;
     }
