@@ -25,7 +25,7 @@ import java.util.Objects;
 
 public class MainActivity2 extends AppCompatActivity {
 
-    private TextInputEditText nameEditText, passwordEditText, houseNameEditText, numberEditText, emailEditText, addressEditText;
+    private TextInputEditText passwordEditText, emailEditText, addressEditText, nameEditText, houseNameEditText, numberEditText ;
 
     Button save_btn2;
 
@@ -38,20 +38,20 @@ public class MainActivity2 extends AppCompatActivity {
         backBtn2.setOnClickListener(v -> openActivity2());
 
 
-        TextInputLayout nameLayout = findViewById(R.id.nameInput_createaAcount);
         TextInputLayout passwordLayout = findViewById(R.id.passwordInput_createAcount);
-//        TextInputLayout houseNameLayout = findViewById(R.id.housenameInput_createaAcount);
-        TextInputLayout numberLayout = findViewById(R.id.numberInput_createaAcount);
         TextInputLayout emailLayout = findViewById(R.id.emailInput_createaAcount);
-        TextInputLayout addressLayout = findViewById(R.id.addressInput_createaAcount);
+//        TextInputLayout nameLayout = findViewById(R.id.nameInput_createaAcount);
+//        TextInputLayout houseNameLayout = findViewById(R.id.housenameInput_createaAcount);
+//        TextInputLayout numberLayout = findViewById(R.id.numberInput_createaAcount);
+//        TextInputLayout addressLayout = findViewById(R.id.addressInput_createaAcount);
 
         //Start of creating account to save in firebase
-        nameEditText = (TextInputEditText) nameLayout.getEditText();
         passwordEditText = (TextInputEditText) passwordLayout.getEditText();
-//        houseNameEditText = (TextInputEditText) houseNameLayout.getEditText();
-        numberEditText = (TextInputEditText) numberLayout.getEditText();
         emailEditText = (TextInputEditText) emailLayout.getEditText();
-        addressEditText = (TextInputEditText) addressLayout.getEditText();
+//        nameEditText = (TextInputEditText) nameLayout.getEditText();
+//        houseNameEditText = (TextInputEditText) houseNameLayout.getEditText();
+//        numberEditText = (TextInputEditText) numberLayout.getEditText();
+//        addressEditText = (TextInputEditText) addressLayout.getEditText();
 
         save_btn2 = (Button) findViewById(R.id.save_btn2);
         save_btn2.setOnClickListener(view -> insertData());
@@ -61,76 +61,71 @@ public class MainActivity2 extends AppCompatActivity {
 
     //for inserting data to the firebase
     private void insertData() {
-        String name = Objects.requireNonNull(nameEditText.getText()).toString();
         String password = Objects.requireNonNull(passwordEditText.getText()).toString();
-        String address = Objects.requireNonNull(addressEditText.getText()).toString();
         String email = Objects.requireNonNull(emailEditText.getText()).toString();
-        String number = Objects.requireNonNull(numberEditText.getText()).toString();
-        String houseName = Objects.requireNonNull(houseNameEditText.getText()).toString();
+//        String name = Objects.requireNonNull(nameEditText.getText()).toString();
+//        String address = Objects.requireNonNull(addressEditText.getText()).toString();
+//        String number = Objects.requireNonNull(numberEditText.getText()).toString();
+//        String houseName = Objects.requireNonNull(houseNameEditText.getText()).toString();
 
-        if (name.isEmpty() || address.isEmpty() || email.isEmpty() || password.isEmpty()) {
-            Toast.makeText(MainActivity2.this, "Please fill in all the fields.", Toast.LENGTH_SHORT).show();
-        } else {
-            checkEmailExists(email, (emailExists) -> {
-                if (emailExists) {
-                    Toast.makeText(MainActivity2.this, "This email is already in use. Please use a different email.", Toast.LENGTH_SHORT).show();
-                } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-                    emailEditText.setError("Please enter a valid email address");
-                } else {
+        checkEmailExists(email, (emailExists) -> {
+            if (emailExists) {
+                Toast.makeText(MainActivity2.this, "This email is already in use. Please use a different email.", Toast.LENGTH_SHORT).show();
+            } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                emailEditText.setError("Please enter a valid email address");
+            } else {
 
 
-                    //email verification
-                    FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
-                            .addOnSuccessListener(authResult -> {
-                                FirebaseUser user = authResult.getUser();
-                                if (user != null) {
-                                    // Send email verification link
-                                    user.sendEmailVerification()
-                                            .addOnCompleteListener(task -> {
-                                                if (task.isSuccessful()) {
-                                                    // Verification email sent
-                                                    Toast.makeText(MainActivity2.this, "Verification email sent. Please check your inbox.", Toast.LENGTH_SHORT).show();
-                                                } else {
-                                                    // Failed to send verification email
-                                                    Toast.makeText(MainActivity2.this, "Failed to send verification email. Please try again later.", Toast.LENGTH_SHORT).show();
-                                                }
-                                            });
+                //email verification
+                FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
+                        .addOnSuccessListener(authResult -> {
+                            FirebaseUser user = authResult.getUser();
+                            if (user != null) {
+                                // Send email verification link
+                                user.sendEmailVerification()
+                                        .addOnCompleteListener(task -> {
+                                            if (task.isSuccessful()) {
+                                                // Verification email sent
+                                                Toast.makeText(MainActivity2.this, "Verification email sent. Please check your inbox.", Toast.LENGTH_SHORT).show();
+                                            } else {
+                                                // Failed to send verification email
+                                                Toast.makeText(MainActivity2.this, "Failed to send verification email. Please try again later.", Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
 
-                                    String userId = user.getUid();
-                                    DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("regular_users").child(userId);
-                                    Map<String, Object> userValues = new HashMap<>();
-                                    userValues.put("name", name);
-                                    userValues.put("password", password);
-                                    userValues.put("email", email);
-                                    userValues.put("address", address);
-                                    userValues.put("number", number);
-                                    userValues.put("houseName", houseName);
+                                String userId = user.getUid();
+                                DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("regular_users").child(userId);
+                                Map<String, Object> userValues = new HashMap<>();
+                                userValues.put("password", password);
+                                userValues.put("email", email);
+//                                    userValues.put("name", name);
+//                                    userValues.put("address", address);
+//                                    userValues.put("number", number);
+//                                    userValues.put("houseName", houseName);
 
-                                    databaseReference.setValue(userValues)
-                                            .addOnSuccessListener(unused -> {
-                                                Toast.makeText(MainActivity2.this, "Success! You've created your account.", Toast.LENGTH_SHORT).show();
-                                                nameEditText.setText("");
-                                                passwordEditText.setText("");
-                                                addressEditText.setText("");
-                                                emailEditText.setText("");
-                                                numberEditText.setText("");
-                                                houseNameEditText.setText("");
-                                            })
-                                            .addOnFailureListener(e -> {
-                                                Toast.makeText(MainActivity2.this, "Account creation failed. Please check your details and retry.", Toast.LENGTH_LONG).show();
-                                            });
-                                }
-                            })
-                            .addOnFailureListener(e -> {
-                                Toast.makeText(MainActivity2.this, "Account creation failed. Please check your details and retry.", Toast.LENGTH_SHORT).show();
-                            });
-                }
-            });
-        }
+                                databaseReference.setValue(userValues)
+                                        .addOnSuccessListener(unused -> {
+                                            Toast.makeText(MainActivity2.this, "Success! Check your email for verification", Toast.LENGTH_SHORT).show();
+                                            passwordEditText.setText("");
+                                            emailEditText.setText("");
+//                                                nameEditText.setText("");
+//                                                addressEditText.setText("");
+//                                                numberEditText.setText("");
+//                                                houseNameEditText.setText("");
+                                        })
+                                        .addOnFailureListener(e -> {
+                                            Toast.makeText(MainActivity2.this, "Account creation failed. Please check your details and retry.", Toast.LENGTH_LONG).show();
+                                        });
+                            }
+                        })
+                        .addOnFailureListener(e -> {
+                            Toast.makeText(MainActivity2.this, "Account creation failed. Please check your details and retry.", Toast.LENGTH_SHORT).show();
+                        });
+            }
+        });
     }
 
     //End of inserting data to the firebase
-
 
     //for checking if the email is used
     private void checkEmailExists(String email, OnEmailCheckListener callback) {
@@ -154,7 +149,8 @@ public class MainActivity2 extends AppCompatActivity {
     //for going back to the login page
     public void openActivity2() {
         Intent intent = new Intent(this, MainActivity.class);
-//        startActivity(intent);
+        startActivity(intent);
         finish();
+
     }
 }
