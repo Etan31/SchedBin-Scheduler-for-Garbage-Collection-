@@ -69,6 +69,15 @@ public class ScheduleFragment extends Fragment {
 
     }
 
+    private Context mContext; // Store the context
+
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mContext = null; // Release the context when the fragment is detached
+    }
+
 
     public interface OnFabClickListener {
         void onFabClick();
@@ -112,6 +121,7 @@ public class ScheduleFragment extends Fragment {
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
+        mContext = context;
 
         // Check if the parent activity implements the callback interface
         if (context instanceof OnFabClickListener) {
@@ -119,6 +129,7 @@ public class ScheduleFragment extends Fragment {
         } else {
             throw new RuntimeException(context.toString() + " must implement OnFabClickListener");
         }
+
     }
 
     @Override
@@ -138,11 +149,18 @@ public class ScheduleFragment extends Fragment {
         schedulesRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                // Check if the fragment is still attached to a context
+                if (!isAdded()) {
+                    return;
+                }
+                if (mContext == null) {
+                    return;
+                }
+
                 // Clear existing data rows
                 dataTableLayout.removeAllViews();
 
                 for (DataSnapshot scheduleSnapshot : dataSnapshot.getChildren()) {
-//                    String address = scheduleSnapshot.child("address").getValue(String.class);
                     String date = scheduleSnapshot.child("date").getValue(String.class);
                     String garbageType = scheduleSnapshot.child("garbageType").getValue(String.class);
 
@@ -150,7 +168,15 @@ public class ScheduleFragment extends Fragment {
                     TableRow dataRow = new TableRow(requireContext());
 
                     // Create TextViews for the data
-                    TextView dateTextView = new TextView(requireContext());
+                    //this text is same as below
+//                    TextView dateTextView = new TextView(requireContext());
+//                    dateTextView.setText(date);
+//                    dateTextView.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.MATCH_PARENT));
+//                    dateTextView.setGravity(Gravity.START);
+
+
+                    // Create TextViews for the data
+                    TextView dateTextView = new TextView(mContext); // Use stored context
                     dateTextView.setText(date);
                     dateTextView.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.MATCH_PARENT));
                     dateTextView.setGravity(Gravity.START);

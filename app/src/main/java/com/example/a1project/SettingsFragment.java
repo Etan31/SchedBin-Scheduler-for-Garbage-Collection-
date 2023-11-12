@@ -2,13 +2,12 @@ package com.example.a1project;
 
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+
+import androidx.fragment.app.Fragment;
 
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -20,6 +19,7 @@ import com.google.firebase.auth.FirebaseAuth;
 public class SettingsFragment extends Fragment {
 
     private Button logout;
+    private Button add_admin;
 
 
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -71,11 +71,17 @@ public class SettingsFragment extends Fragment {
 
 
         logout = view.findViewById(R.id.logout);
+        add_admin = view.findViewById(R.id.add_adminBtn);
 
         logout.setOnClickListener(v -> {
             FirebaseAuth.getInstance().signOut();
             startActivity(new Intent(getActivity(), MainActivity.class));
             getActivity().finish(); // Optional: Finish the current activity
+        });
+
+        add_admin.setOnClickListener(v -> {
+            startActivity(new Intent(getActivity(), MainActivity2.class));
+            getActivity().finish();
         });
 
         return view;
