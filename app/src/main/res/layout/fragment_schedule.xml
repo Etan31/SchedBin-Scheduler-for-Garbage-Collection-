@@ -27,12 +27,12 @@
                 android:id="@+id/calendar"
                 android:layout_width="147dp"
                 android:layout_height="25dp"
-                android:layout_marginTop="96dp"
+                android:layout_marginTop="64dp"
                 android:gravity="top"
                 android:text="@string/calendar"
                 android:textAppearance="@style/calendar"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.106"
+                app:layout_constraintHorizontal_bias="0.11"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:ignore="MissingConstraints" />
@@ -121,7 +121,7 @@
                 </ScrollView>
             </TableLayout>
 
-            <Button
+            <Spinner
                 android:id="@+id/button"
                 android:layout_width="269dp"
                 android:layout_height="48dp"
@@ -134,9 +134,10 @@
                 android:textAppearance="@style/dropDown_noSched"
                 app:layout_constraintBottom_toTopOf="@+id/Admin_calendarView"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.488"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.644" />
+                app:layout_constraintVertical_bias="0.484" />
 
             <TextView
                 android:id="@+id/schedule_of"
@@ -156,8 +157,8 @@
 
             <com.prolificinteractive.materialcalendarview.MaterialCalendarView
                 android:id="@+id/Admin_calendarView"
-                android:layout_width="348dp"
-                android:layout_height="309dp"
+                android:layout_width="339dp"
+                android:layout_height="324dp"
                 android:layout_marginTop="24dp"
                 android:background="@drawable/bg_calendar1"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -192,10 +193,11 @@
                 android:textAppearance="@style/calendar"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/Admin_calendarView"
-                app:layout_constraintVertical_bias="0.0" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.703" />
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
