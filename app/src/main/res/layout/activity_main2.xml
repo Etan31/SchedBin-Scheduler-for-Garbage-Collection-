@@ -287,115 +287,123 @@
     <!--        tools:ignore="MissingConstraints" />-->
 
 
+    <!--    <com.google.android.material.textfield.TextInputLayout-->
+    <!--        android:id="@+id/nameInput_createaAcount"-->
+    <!--        android:layout_width="241dp"-->
+    <!--        android:layout_height="0dp"-->
+    <!--        android:layout_marginTop="60dp"-->
+    <!--        app:layout_constraintBottom_toTopOf="@+id/passwordInput_createAcount"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toTopOf="parent"-->
+    <!--        tools:ignore="MissingConstraints">-->
+
+    <!--        <com.google.android.material.textfield.TextInputEditText-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:hint="name" />-->
+    <!--    </com.google.android.material.textfield.TextInputLayout>-->
+
+    <!--    <com.google.android.material.textfield.TextInputLayout-->
+    <!--        android:id="@+id/addressInput_createaAcount"-->
+    <!--        android:layout_width="241dp"-->
+    <!--        android:layout_height="0dp"-->
+    <!--        app:layout_constraintBottom_toTopOf="@+id/emailInput_createaAcount"-->
+    <!--        app:layout_constraintEnd_toEndOf="@+id/passwordInput_createAcount"-->
+    <!--        app:layout_constraintStart_toStartOf="@+id/passwordInput_createAcount"-->
+    <!--        app:layout_constraintTop_toBottomOf="@+id/passwordInput_createAcount">-->
+
+    <!--        <com.google.android.material.textfield.TextInputEditText-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:hint="address" />-->
+    <!--    </com.google.android.material.textfield.TextInputLayout>-->
+
     <Button
         android:id="@+id/backBtn2"
         android:layout_width="48dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="29dp"
-        android:layout_marginBottom="566dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="28dp"
         android:background="@drawable/btn_back_bg"
         android:contentDescription="@string/backbtn"
         android:drawableEnd="@drawable/ic_backbtn"
         android:drawableTint="@color/color3_btns"
         android:paddingEnd="10dp"
-        app:layout_constraintBottom_toTopOf="@+id/save_btn2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.044"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.042" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/save_btn2"
-        android:layout_width="311dp"
-        android:layout_height="36dp"
+        android:layout_width="294dp"
+        android:layout_height="48dp"
         android:layout_marginStart="52dp"
         android:layout_marginEnd="52dp"
-        android:layout_marginBottom="33dp"
+        android:layout_marginBottom="44dp"
         android:background="@drawable/login_btn"
         android:fontFamily="@font/montserrat_bold"
         android:gravity="center"
         android:lineHeight="24sp"
-        android:text="@string/save"
+        android:text="Send Verification"
         android:textAppearance="@style/log_in"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.48"
         app:layout_constraintStart_toStartOf="parent"
         tools:ignore="MissingConstraints" />
 
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/nameInput_createaAcount"
-        android:layout_width="241dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="60dp"
-        app:layout_constraintBottom_toTopOf="@+id/passwordInput_createAcount"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="MissingConstraints">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="name" />
-    </com.google.android.material.textfield.TextInputLayout>
-
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/passwordInput_createAcount"
-        android:layout_width="241dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/addressInput_createaAcount"
-        app:layout_constraintEnd_toEndOf="@+id/nameInput_createaAcount"
-        app:layout_constraintStart_toStartOf="@+id/nameInput_createaAcount"
-        app:layout_constraintTop_toBottomOf="@+id/nameInput_createaAcount"
+        android:layout_width="304dp"
+        android:layout_height="50dp"
+        android:background="@drawable/input_bg"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/emailInput_createaAcount"
+        app:layout_constraintVertical_bias="0.087"
         tools:ignore="MissingConstraints">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Password" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/addressInput_createaAcount"
-        android:layout_width="241dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/emailInput_createaAcount"
-        app:layout_constraintEnd_toEndOf="@+id/passwordInput_createAcount"
-        app:layout_constraintStart_toStartOf="@+id/passwordInput_createAcount"
-        app:layout_constraintTop_toBottomOf="@+id/passwordInput_createAcount">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="address" />
+            android:hint="Password"
+            tools:ignore="TouchTargetSizeCheck" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/emailInput_createaAcount"
-        android:layout_width="241dp"
-        android:layout_height="0dp"
-        app:layout_constraintEnd_toEndOf="@+id/addressInput_createaAcount"
-        app:layout_constraintStart_toStartOf="@+id/addressInput_createaAcount"
-        app:layout_constraintTop_toBottomOf="@+id/addressInput_createaAcount">
+        android:layout_width="304dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="80dp"
+        android:background="@drawable/input_bg"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.201">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="email" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/numberInput_createaAcount"
-            android:layout_width="241dp"
-            android:layout_height="0dp">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Number (optional)" />
-        </com.google.android.material.textfield.TextInputLayout>
+            android:hint="Email"
+            tools:ignore="TouchTargetSizeCheck" />
     </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="296dp"
+        android:layout_height="82dp"
+        android:gravity="center"
+        android:text="Add administrator"
+        android:textAppearance="@style/settings"
+        app:layout_constraintBottom_toTopOf="@+id/emailInput_createaAcount"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.637" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
