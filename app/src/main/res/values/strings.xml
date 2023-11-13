@@ -1,10 +1,11 @@
 <resources>
-    <string name="app_name">SoftDev_Project</string>
+    <string name="app_name">SchedBin</string>
     <string name="todo">TODO</string>
     <string name="background_design1">background design 1</string>
     <string name="background_design2">background design 2</string>
     <string name="background_design3">background design 3</string>
-    <string name="sign_in_to_">Welcome to MyApp</string>
+    <string name="sign_in_to_">Sign in\n to \nSchedBin</string>
+
     <string name="googleBtn">Continue with Google</string>
     <string name="login">Login</string>
     <string name="or">or</string>
@@ -41,12 +42,13 @@
     <string name="enter_a_time">Enter a time</string>
     <string name="enter_an_address">Enter an address</string>
     <string name="garbageType">Type of Garbage</string>
-    <string name="edite_schedule">Edite Schedule</string>
+    <string name="edit_schedule">Edit Schedule</string>
     <string name="logout">Logout</string>
     <string name="enter_date">Enter Date (MM/DD/YYYY)</string>
     <string name="delete_scheduleBtn">Delete Schedule</string>
     <string name="garbage_type">Garbage Type</string>
     <string name="address_tr">Address</string>
+    <string name="add_admin">Add Administrator</string>
 
     <string-array name="garbageTypes">
         <item>Biodegradable</item>

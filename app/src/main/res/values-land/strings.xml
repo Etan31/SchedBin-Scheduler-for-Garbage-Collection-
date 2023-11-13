@@ -7,4 +7,5 @@
     <string name="garbageType">Type of Garbage</string>
     <string name="logout">Logout</string>
     <string name="enter_date">Enter Date (MM/DD/YYYY)</string>
+    <string name="add_admin">Add Administrator</string>
 </resources>
