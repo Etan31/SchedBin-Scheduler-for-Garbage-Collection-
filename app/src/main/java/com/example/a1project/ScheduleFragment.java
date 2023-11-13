@@ -8,6 +8,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.GridView;
 import android.widget.TableLayout;
@@ -41,6 +42,8 @@ import java.util.Map;
 
 public class ScheduleFragment extends Fragment {
 
+    Button backBtn2;
+
     private CalendarView calendarView;
     private Map<String, String> dateGarbageTypeMap;
     private GridView calendarGridView;
@@ -64,8 +67,6 @@ public class ScheduleFragment extends Fragment {
     private String mParam2;
 
     public void startMotionLayoutTransition() {
-//        MotionLayout motionLayout = requireView().findViewById(R.id.motionLayout);
-//        motionLayout.transitionToEnd(); // Start the animation
 
     }
 
@@ -279,6 +280,8 @@ public class ScheduleFragment extends Fragment {
     // Method to apply decorator to MaterialCalendarView
     private void applyDecorator() {
         // Create a decorator and add it to the MaterialCalendarView
-        materialCalendarView.addDecorator(new ScheduleDecorator(requireContext(), scheduledDates_CalendarDay));
+        if (isAdded()) {
+            materialCalendarView.addDecorator(new ScheduleDecorator(requireContext(), scheduledDates_CalendarDay));
+        }
     }
 }

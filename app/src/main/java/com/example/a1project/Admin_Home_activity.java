@@ -41,6 +41,7 @@ public class Admin_Home_activity extends AppCompatActivity implements ScheduleFr
         ScheduleFragment scheduleFragment = new ScheduleFragment();
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.add_schedule_id, scheduleFragment, "addSchedule_tag")
+                .addToBackStack(null) // Add to the back stack
                 .commit();
 
         Button addScheduleBtn = findViewById(R.id.add_schedule_Btn);

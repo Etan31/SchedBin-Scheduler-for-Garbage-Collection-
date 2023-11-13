@@ -61,7 +61,7 @@ public class addSchedule_activity extends AppCompatActivity implements AdapterVi
 
 
         backBtn2 = findViewById(R.id.backBtn2);
-        backBtn2.setOnClickListener(v -> finish());
+        backBtn2.setOnClickListener(v -> onBackPressed());
 
         //for displaying spinners
         Spinner spinner_type_of_garbage = findViewById(R.id.spinner_typeofgarbage);

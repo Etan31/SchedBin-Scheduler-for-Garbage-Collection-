@@ -7,7 +7,10 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
+import com.example.a1project.databinding.ActivityAdminHomeBinding;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
@@ -24,6 +27,8 @@ import java.util.Objects;
 
 public class MainActivity2 extends AppCompatActivity {
 
+    Button backBtn2;
+
     private TextInputEditText passwordEditText, emailEditText, addressEditText, nameEditText, houseNameEditText, numberEditText ;
 
     Button save_btn2;
@@ -33,8 +38,8 @@ public class MainActivity2 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
 
-        Button backBtn2 = findViewById(R.id.backBtn2);
-        backBtn2.setOnClickListener(v -> finish());
+        backBtn2 = findViewById(R.id.backBtn2);
+        backBtn2.setOnClickListener(v -> BackPressed());
 
         TextInputLayout passwordLayout = findViewById(R.id.passwordInput_createAcount);
         TextInputLayout emailLayout = findViewById(R.id.emailInput_createaAcount);
@@ -54,6 +59,20 @@ public class MainActivity2 extends AppCompatActivity {
         save_btn2 = (Button) findViewById(R.id.save_btn2);
         save_btn2.setOnClickListener(view -> insertData());
 
+    }
+
+    private void BackPressed() {
+        ActivityAdminHomeBinding binding;
+        binding = ActivityAdminHomeBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+        replaceFragment(new SettingsFragment());
+    }
+
+    private void replaceFragment(androidx.fragment.app.Fragment fragment) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.BaseFrameLayout, fragment);
+        fragmentTransaction.commit();
     }
 
 

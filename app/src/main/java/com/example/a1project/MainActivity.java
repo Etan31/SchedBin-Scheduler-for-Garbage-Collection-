@@ -1,28 +1,19 @@
 package com.example.a1project;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnFailureListener;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
-import com.google.firebase.database.FirebaseDatabase;
-
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import java.util.HashMap;
+
 import java.util.Objects;
-import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -50,10 +41,6 @@ public class MainActivity extends AppCompatActivity {
         Button resetPassword = findViewById(R.id.reset_btn);
         resetPassword.setOnClickListener(v -> resetPassword_Activity());
 
-
-
-//        Button create_accnt_Btn = findViewById(R.id.create_accnt_Btn);
-//        create_accnt_Btn.setOnClickListener(v -> openActivity2());
 
         Button viewSchedule = findViewById(R.id.regular_user_btn);
         viewSchedule.setOnClickListener(v -> viewSchedule_Activity());

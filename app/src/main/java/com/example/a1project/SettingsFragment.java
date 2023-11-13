@@ -80,7 +80,7 @@ public class SettingsFragment extends Fragment {
         logout.setOnClickListener(v -> {
             FirebaseAuth.getInstance().signOut();
             startActivity(new Intent(getActivity(), MainActivity.class));
-            getActivity().finish(); // Optional: Finish the current activity
+            getActivity().finish();
         });
 
         add_admin.setOnClickListener(v -> {

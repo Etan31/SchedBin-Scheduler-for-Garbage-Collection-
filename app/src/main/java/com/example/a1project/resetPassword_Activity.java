@@ -9,18 +9,22 @@
 
     import androidx.annotation.NonNull;
     import androidx.appcompat.app.AppCompatActivity;
+    import androidx.fragment.app.FragmentManager;
+    import androidx.fragment.app.FragmentTransaction;
 
+    import com.example.a1project.databinding.ActivityAdminHomeBinding;
     import com.google.android.gms.tasks.OnFailureListener;
     import com.google.android.gms.tasks.OnSuccessListener;
     import com.google.android.material.textfield.TextInputEditText;
     import com.google.android.material.textfield.TextInputLayout;
     import com.google.firebase.auth.FirebaseAuth;
+    import com.google.firebase.auth.FirebaseUser;
 
     import java.util.Objects;
 
     public class resetPassword_Activity extends AppCompatActivity {
 
-        private Button backBtn2;
+        Button backBtn2;
 
         private FirebaseAuth mAuth;
         private TextInputEditText emailEditText;
@@ -32,7 +36,7 @@
         setContentView(R.layout.activity_reset_password);
 
         backBtn2 = findViewById(R.id.backBtn2);
-        backBtn2.setOnClickListener(v -> finish());
+        backBtn2.setOnClickListener(v -> BackPressed());
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -56,8 +60,30 @@
         });
 
     }
+        private void BackPressed() {
+            FirebaseUser currentUser = mAuth.getCurrentUser();
 
-    private void resetPassword() {
+            if (currentUser == null) {
+                startActivity(new Intent(resetPassword_Activity.this, MainActivity.class));
+
+            } else {
+                // User is signed in
+                ActivityAdminHomeBinding binding;
+                binding = ActivityAdminHomeBinding.inflate(getLayoutInflater());
+                setContentView(binding.getRoot());
+                replaceFragment(new SettingsFragment());
+            }
+        }
+
+        private void replaceFragment(androidx.fragment.app.Fragment fragment) {
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.BaseFrameLayout, fragment);
+            fragmentTransaction.commit();
+        }
+
+
+        private void resetPassword() {
         String email = Objects.requireNonNull(emailEditText.getText()).toString();
 
 
@@ -80,4 +106,4 @@
                 });
     }
 
-}
+    }
