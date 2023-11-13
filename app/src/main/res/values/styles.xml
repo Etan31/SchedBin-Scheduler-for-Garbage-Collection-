@@ -73,6 +73,12 @@
         <item name="android:letterSpacing">0.1</item>
         <item name="android:textColor">#A4907C</item>
     </style>
+    <style name="Headers">
+        <item name="android:fontFamily">@font/montserrat_bold</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:letterSpacing">0.1</item>
+        <item name="android:textColor">@color/color3_btns</item>
+    </style>
     <style name="schedule_of">
         <item name="android:fontFamily">@font/montserrat_regular</item>
         <item name="android:textSize">15sp</item>

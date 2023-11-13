@@ -8,9 +8,12 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.GridView;
+import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -27,8 +30,10 @@ import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -40,7 +45,7 @@ import java.util.Map;
  */
 
 
-public class ScheduleFragment extends Fragment {
+public class ScheduleFragment extends Fragment implements AdapterView.OnItemSelectedListener {
 
     Button backBtn2;
 
@@ -139,7 +144,29 @@ public class ScheduleFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_schedule, container, false);
 
+//        //Spinner
+//        Spinner DropDown_spinner_for_location = view.findViewById(R.id.DropDown_spinner_for_location);
+//
+//        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
+//                getActivity(),
+//                R.array.location,
+//                android.R.layout.simple_spinner_item
+//        );
+//
+//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        DropDown_spinner_for_location.setAdapter(adapter);
+//
+//        // Set the listener
+//        DropDown_spinner_for_location.setOnItemSelectedListener(this);
 
+        // Spinner
+        Spinner dropDownSpinnerForLocation = view.findViewById(R.id.DropDown_spinner_for_location);
+
+        // Fetch data from Firebase
+        fetchFirebaseDataAndPopulateSpinner(dropDownSpinnerForLocation);
+
+        // Set the listener
+        dropDownSpinnerForLocation.setOnItemSelectedListener(this);
 
 
         ////////////////////////////////
@@ -168,33 +195,24 @@ public class ScheduleFragment extends Fragment {
                     // Create a new TableRow for the data entry
                     TableRow dataRow = new TableRow(requireContext());
 
-                    // Create TextViews for the data
-                    //this text is same as below
-//                    TextView dateTextView = new TextView(requireContext());
-//                    dateTextView.setText(date);
-//                    dateTextView.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.MATCH_PARENT));
-//                    dateTextView.setGravity(Gravity.START);
 
 
                     // Create TextViews for the data
                     TextView dateTextView = new TextView(mContext); // Use stored context
                     dateTextView.setText(date);
-                    dateTextView.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.MATCH_PARENT));
+                    dateTextView.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1f)); // Use layout weight to fill available space
                     dateTextView.setGravity(Gravity.START);
-
-//                    TextView addressTextView = new TextView(requireContext());
-//                    addressTextView.setText(address);
-//                    addressTextView.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT));
-//                    addressTextView.setGravity(Gravity.START);
+                    dateTextView.setPadding(10, 10, 5, 5);
 
                     TextView garbageTypeTextView = new TextView(requireContext());
                     garbageTypeTextView.setText(garbageType);
-                    garbageTypeTextView.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT));
+                    garbageTypeTextView.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1f )); // Use layout weight to fill available space
                     garbageTypeTextView.setGravity(Gravity.START);
+                    garbageTypeTextView.setPadding(10, 10, 5, 5);
+
 
                     // Add the TextViews to the dataRow
                     dataRow.addView(dateTextView);
-//                    dataRow.addView(addressTextView);
                     dataRow.addView(garbageTypeTextView);
 
                     // Add the dataRow to the dataTableLayout (inside the ScrollView)
@@ -208,12 +226,6 @@ public class ScheduleFragment extends Fragment {
             }
         });
 
-
-
-
-
-
-//        for displaying dot to the calendar view.
 
 //        for displaying dot to the calendar view.
         materialCalendarView = view.findViewById(R.id.Admin_calendarView);
@@ -249,7 +261,61 @@ public class ScheduleFragment extends Fragment {
     }
 
 
-    // Method to convert date string to CalendarDay object
+//    displaying List of Adress on the firebase realtime database to the spinner
+    private void fetchFirebaseDataAndPopulateSpinner(Spinner spinner) {
+        // Assuming you have a reference to your Firebase database
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("schedules");
+
+        // Listen for changes in the data
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                List<String> uniqueAddresses = new ArrayList<>();
+
+                // Iterate through the data and extract unique addresses
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    String address = snapshot.child("address").getValue(String.class);
+
+                    // Check if the address is not already in the list
+                    if (address != null && !uniqueAddresses.contains(address)) {
+                        uniqueAddresses.add(address);
+                    }
+                }
+
+                // Create an ArrayAdapter with the unique addresses
+                ArrayAdapter<String> adapter = new ArrayAdapter<>(
+                        requireActivity(),
+                        android.R.layout.simple_spinner_item,
+                        uniqueAddresses
+                );
+
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinner.setAdapter(adapter);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // Handle errors if needed
+            }
+        });
+    }
+
+    //for the spinner
+    // Implement the onItemSelected method
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        // Handle the selected item here
+        String selectedItem = parent.getItemAtPosition(position).toString();
+        // Do something with the selected item
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+        // Handle the case when nothing is selected
+    }
+
+
+
 // Method to convert date string to CalendarDay object
     private CalendarDay convertStringToCalendarDay(String date) {
         if (TextUtils.isEmpty(date)) {
