@@ -66,7 +66,7 @@
                     android:gravity="center|start"
                     android:paddingStart="10dp"
                     android:paddingEnd="10dp"
-                    android:text="@string/edite_schedule"
+                    android:text="@string/edit_schedule"
                     android:textAllCaps="false"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.505"
@@ -114,11 +114,18 @@
                     android:id="@+id/add_adminBtn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Add administrator"
-                    app:layout_constraintBottom_toTopOf="@+id/logout"
+                    android:layout_marginTop="32dp"
+                    android:background="@drawable/bg_settings_btn"
+                    android:drawableStart="@drawable/ic_add_admin"
+                    android:drawablePadding="10dp"
+                    android:gravity="center|start"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
+                    android:textAllCaps="false"
+                    android:text="@string/add_admin"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toStartOf="parent" />
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/resetpassword_btn" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
     </ScrollView>

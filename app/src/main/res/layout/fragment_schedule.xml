@@ -158,7 +158,7 @@
             <com.prolificinteractive.materialcalendarview.MaterialCalendarView
                 android:id="@+id/Admin_calendarView"
                 android:layout_width="339dp"
-                android:layout_height="324dp"
+                android:layout_height="303dp"
                 android:layout_marginTop="24dp"
                 android:background="@drawable/bg_calendar1"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -188,15 +188,16 @@
                 android:layout_height="52dp"
                 android:layout_marginStart="48dp"
                 android:layout_marginEnd="47dp"
+                android:layout_marginBottom="172dp"
                 android:gravity="center"
                 android:text="@string/schedules_for_this_month"
                 android:textAppearance="@style/calendar"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.703" />
+                app:layout_constraintTop_toBottomOf="@+id/Admin_calendarView"
+                app:layout_constraintVertical_bias="0.12" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

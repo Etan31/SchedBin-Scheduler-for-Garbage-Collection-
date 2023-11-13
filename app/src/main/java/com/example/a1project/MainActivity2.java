@@ -1,6 +1,5 @@
 package com.example.a1project;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.widget.Button;
@@ -35,8 +34,7 @@ public class MainActivity2 extends AppCompatActivity {
         setContentView(R.layout.activity_main2);
 
         Button backBtn2 = findViewById(R.id.backBtn2);
-        backBtn2.setOnClickListener(v -> openActivity2());
-
+        backBtn2.setOnClickListener(v -> finish());
 
         TextInputLayout passwordLayout = findViewById(R.id.passwordInput_createAcount);
         TextInputLayout emailLayout = findViewById(R.id.emailInput_createaAcount);
@@ -145,12 +143,4 @@ public class MainActivity2 extends AppCompatActivity {
         });
     }
     //end of checking if the email is used
-
-    //for going back to the login page
-    public void openActivity2() {
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
-        finish();
-
-    }
 }
