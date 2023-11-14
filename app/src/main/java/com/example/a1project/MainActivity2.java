@@ -111,7 +111,7 @@ public class MainActivity2 extends AppCompatActivity {
                                         });
 
                                 String userId = user.getUid();
-                                DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("regular_users").child(userId);
+                                DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Admin_users").child(userId);
                                 Map<String, Object> userValues = new HashMap<>();
                                 userValues.put("password", password);
                                 userValues.put("email", email);

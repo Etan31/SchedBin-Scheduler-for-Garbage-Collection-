@@ -121,8 +121,8 @@
 
             <Spinner
                 android:id="@+id/DropDown_spinner_for_location"
-                android:layout_width="269dp"
-                android:layout_height="48dp"
+                android:layout_width="325dp"
+                android:layout_height="46dp"
                 android:layout_marginBottom="64dp"
                 android:background="@drawable/bg_viewsched"
                 android:drawableEnd="@drawable/ic_dropdown"
@@ -132,7 +132,7 @@
                 android:textAppearance="@style/dropDown_noSched"
                 app:layout_constraintBottom_toTopOf="@+id/Admin_calendarView"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.488"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.484" />

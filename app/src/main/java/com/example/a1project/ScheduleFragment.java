@@ -61,6 +61,8 @@ public class ScheduleFragment extends Fragment implements AdapterView.OnItemSele
     //for displaying schedule to the tablelayout
     private TableLayout tableLayout;
 
+    private String selectedAddress;
+
 
 
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -144,29 +146,20 @@ public class ScheduleFragment extends Fragment implements AdapterView.OnItemSele
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_schedule, container, false);
 
-//        //Spinner
-//        Spinner DropDown_spinner_for_location = view.findViewById(R.id.DropDown_spinner_for_location);
-//
-//        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
-//                getActivity(),
-//                R.array.location,
-//                android.R.layout.simple_spinner_item
-//        );
-//
-//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//        DropDown_spinner_for_location.setAdapter(adapter);
-//
-//        // Set the listener
-//        DropDown_spinner_for_location.setOnItemSelectedListener(this);
+
 
         // Spinner
         Spinner dropDownSpinnerForLocation = view.findViewById(R.id.DropDown_spinner_for_location);
+
+        // Set the listener
+        dropDownSpinnerForLocation.setOnItemSelectedListener(this);
 
         // Fetch data from Firebase
         fetchFirebaseDataAndPopulateSpinner(dropDownSpinnerForLocation);
 
         // Set the listener
         dropDownSpinnerForLocation.setOnItemSelectedListener(this);
+//        updateTableWithFilteredData();
 
 
         ////////////////////////////////
@@ -188,10 +181,16 @@ public class ScheduleFragment extends Fragment implements AdapterView.OnItemSele
                 // Clear existing data rows
                 dataTableLayout.removeAllViews();
 
-                for (DataSnapshot scheduleSnapshot : dataSnapshot.getChildren()) {
-                    String date = scheduleSnapshot.child("date").getValue(String.class);
-                    String garbageType = scheduleSnapshot.child("garbageType").getValue(String.class);
+            // Get the selected address from the spinner
+            String selectedAddress = (String) dropDownSpinnerForLocation.getSelectedItem();
 
+            for (DataSnapshot scheduleSnapshot : dataSnapshot.getChildren()) {
+                String date = scheduleSnapshot.child("date").getValue(String.class);
+                String garbageType = scheduleSnapshot.child("garbageType").getValue(String.class);
+                String address = scheduleSnapshot.child("address").getValue(String.class);
+
+                // Check if the schedule's address matches the selected address
+                if (selectedAddress != null && selectedAddress.equals(address)) {
                     // Create a new TableRow for the data entry
                     TableRow dataRow = new TableRow(requireContext());
 
@@ -219,6 +218,7 @@ public class ScheduleFragment extends Fragment implements AdapterView.OnItemSele
                     dataTableLayout.addView(dataRow);
                 }
             }
+        }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
@@ -304,10 +304,74 @@ public class ScheduleFragment extends Fragment implements AdapterView.OnItemSele
     // Implement the onItemSelected method
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        // Handle the selected item here
-        String selectedItem = parent.getItemAtPosition(position).toString();
-        // Do something with the selected item
+        // Get the selected address from the spinner
+        selectedAddress = parent.getItemAtPosition(position).toString();
+
+        // Update the table with the filtered data
+        updateTableWithFilteredData();
     }
+
+    private void updateTableWithFilteredData() {
+        DatabaseReference schedulesRef = FirebaseDatabase.getInstance().getReference("schedules");
+
+        schedulesRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // Check if the fragment is still attached to a context
+                if (!isAdded()) {
+                    return;
+                }
+                if (mContext == null) {
+                    return;
+                }
+
+                TableLayout tableLayout = requireView().findViewById(R.id.schedule_tableLayout);
+                TableLayout dataTableLayout = requireView().findViewById(R.id.data_table_layout);
+
+                // Clear existing data rows
+                dataTableLayout.removeAllViews();
+
+                for (DataSnapshot scheduleSnapshot : dataSnapshot.getChildren()) {
+                    String date = scheduleSnapshot.child("date").getValue(String.class);
+                    String garbageType = scheduleSnapshot.child("garbageType").getValue(String.class);
+                    String address = scheduleSnapshot.child("address").getValue(String.class);
+
+                    // Check if the schedule's address matches the selected address
+                    if (selectedAddress != null && selectedAddress.equals(address)) {
+                        // Create a new TableRow for the data entry
+                        TableRow dataRow = new TableRow(requireContext());
+
+                        // Create TextViews for the data
+                        TextView dateTextView = new TextView(mContext); // Use stored context
+                        dateTextView.setText(date);
+                        dateTextView.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1f));
+                        dateTextView.setGravity(Gravity.START);
+                        dateTextView.setPadding(10, 10, 5, 5);
+
+                        TextView garbageTypeTextView = new TextView(requireContext());
+                        garbageTypeTextView.setText(garbageType);
+                        garbageTypeTextView.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1f));
+                        garbageTypeTextView.setGravity(Gravity.START);
+                        garbageTypeTextView.setPadding(10, 10, 5, 5);
+
+                        // Add the TextViews to the dataRow
+                        dataRow.addView(dateTextView);
+                        dataRow.addView(garbageTypeTextView);
+
+                        // Add the dataRow to the dataTableLayout (inside the ScrollView)
+                        dataTableLayout.addView(dataRow);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Handle errors
+            }
+        });
+    }
+
+
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
