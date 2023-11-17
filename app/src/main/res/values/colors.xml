@@ -7,6 +7,8 @@
     <color name="color1">#D0F5BE</color>
     <color name="color2">#FBFFDC</color>
     <color name="color3_btns">#A4907C</color>
+    <color name="dark_brown">#785028</color>
     <color name="transparent">#00FFFFFF</color>
     <color name="colorDot">#003FFF</color>
+
 </resources>
