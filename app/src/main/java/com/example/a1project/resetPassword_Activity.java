@@ -3,12 +3,13 @@
     import android.content.Intent;
     import android.os.Bundle;
     import android.text.TextUtils;
-    import android.view.View;
+    import android.util.Log;
     import android.widget.Button;
     import android.widget.Toast;
 
     import androidx.annotation.NonNull;
     import androidx.appcompat.app.AppCompatActivity;
+    import androidx.constraintlayout.motion.widget.MotionLayout;
     import androidx.fragment.app.FragmentManager;
     import androidx.fragment.app.FragmentTransaction;
 
@@ -30,6 +31,8 @@
         private TextInputEditText emailEditText;
         private TextInputLayout emailLayout;
 
+        private MotionLayout motionLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,23 +46,25 @@
         emailLayout = findViewById(R.id.resetEmail_input);
         emailEditText = (TextInputEditText) emailLayout.getEditText();
 
+        motionLayout = findViewById(R.id.motionLayout);
 
         Button resetPassword_button = (Button) findViewById(R.id.resetPassword_btn);
-        resetPassword_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String email = Objects.requireNonNull(emailEditText.getText()).toString();
 
-                if(!TextUtils.isEmpty(email)){
-                    resetPassword();
-                } else {
-                    emailEditText.setError("Please enter your email address.");
-                }
+        resetPassword_button.setOnClickListener(v -> {
+            Log.d("ResetPassword", "Reset Password Button Clicked");
+            String email = Objects.requireNonNull(emailEditText.getText()).toString();
 
+            if(!TextUtils.isEmpty(email)){
+                resetPassword();
+            } else {
+                emailEditText.setError("Please enter your email address.");
             }
+
         });
 
+
     }
+
         private void BackPressed() {
             FirebaseUser currentUser = mAuth.getCurrentUser();
 
@@ -82,28 +87,61 @@
             fragmentTransaction.commit();
         }
 
-
         private void resetPassword() {
-        String email = Objects.requireNonNull(emailEditText.getText()).toString();
+//            Log.d("ResetPassword", "Reset Password method called");
+//            String email = Objects.requireNonNull(emailEditText.getText()).toString();
+//
+//
+//
+//            mAuth.sendPasswordResetEmail(email)
+//                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+//                        @Override
+//                        public void onSuccess(Void unused) {
+//                            Toast.makeText(resetPassword_Activity.this, "Reset Password Link has been sent to your account", Toast.LENGTH_SHORT).show();
+////                            Intent intent = new Intent(resetPassword_Activity.this, MainActivity.class);
+////                            startActivity(intent);
+////                            finish();
+//                        }
+//                    })
+//                    .addOnFailureListener(new OnFailureListener() {
+//                        @Override
+//                        public void onFailure(@NonNull Exception e) {
+//                            Log.e("ResetPassword", "Error: " + e.getMessage());
+//                            Toast.makeText(resetPassword_Activity.this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+//                        }
+//                    });
 
 
 
-        mAuth.sendPasswordResetEmail(email)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void unused) {
-                        Toast.makeText(resetPassword_Activity.this, "Reset Password Link has been sent to your account", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(resetPassword_Activity.this, MainActivity.class);
-                        startActivity(intent);
-                        finish();
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(resetPassword_Activity.this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                });
+
+//            }
+
+
+
+
+
+            Log.d("ResetPassword", "Reset Password method called");
+            String email = Objects.requireNonNull(emailEditText.getText()).toString();
+
+            mAuth.sendPasswordResetEmail(email)
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void unused) {
+                            Toast.makeText(resetPassword_Activity.this, "Reset Password Link has been sent to your account", Toast.LENGTH_SHORT).show();
+
+                            // Start the animation when password reset is successful
+                            if (motionLayout != null) {
+                                motionLayout.transitionToEnd();
+                            }
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.e("ResetPassword", "Error: " + e.getMessage());
+                            Toast.makeText(resetPassword_Activity.this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
     }
 
     }
