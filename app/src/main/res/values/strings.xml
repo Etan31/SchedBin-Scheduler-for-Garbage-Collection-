@@ -49,6 +49,8 @@
     <string name="garbage_type">Garbage Type</string>
     <string name="address_tr">Address</string>
     <string name="add_admin">Add Administrator</string>
+    <string name="btn_delete">Delete</string>
+    <string name="btn_update">Update</string>
 
     <string-array name="garbageTypes">
         <item>Biodegradable</item>
