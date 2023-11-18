@@ -9,10 +9,7 @@
 
     import androidx.appcompat.app.AppCompatActivity;
     import androidx.constraintlayout.motion.widget.MotionLayout;
-    import androidx.fragment.app.FragmentManager;
-    import androidx.fragment.app.FragmentTransaction;
 
-    import com.example.a1project.databinding.ActivityAdminHomeBinding;
     import com.google.android.material.textfield.TextInputEditText;
     import com.google.android.material.textfield.TextInputLayout;
     import com.google.firebase.auth.FirebaseAuth;
@@ -21,6 +18,7 @@
     import java.util.Objects;
 
     public class resetPassword_Activity extends AppCompatActivity {
+//        TODO: Fix the bug of the BackPressed, it should be redirected to SettingsFragment instead of Schedulefragment
 
         Button backBtn2;
 
@@ -68,20 +66,13 @@
                 startActivity(new Intent(resetPassword_Activity.this, MainActivity.class));
 
             } else {
-                // User is signed in
-                ActivityAdminHomeBinding binding;
-                binding = ActivityAdminHomeBinding.inflate(getLayoutInflater());
-                setContentView(binding.getRoot());
-                replaceFragment(new SettingsFragment());
+                //                working but redirected to the schedule fragment instead of setting fragment
+                Intent intent = new Intent(resetPassword_Activity.this, Admin_Home_activity.class);
+                startActivity(intent);
+                finish();
             }
         }
 
-        private void replaceFragment(androidx.fragment.app.Fragment fragment) {
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.BaseFrameLayout, fragment);
-            fragmentTransaction.commit();
-        }
 
         private void resetPassword() {
 

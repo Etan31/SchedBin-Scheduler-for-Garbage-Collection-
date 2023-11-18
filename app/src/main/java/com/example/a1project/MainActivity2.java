@@ -1,5 +1,6 @@
 package com.example.a1project;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.widget.Button;
@@ -10,7 +11,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.example.a1project.databinding.ActivityAdminHomeBinding;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
@@ -27,7 +27,11 @@ import java.util.Objects;
 
 public class MainActivity2 extends AppCompatActivity {
 
+    //        TODO: Fix the bug of the BackPressed, it should be redirected to SettingsFragment instead of Schedulefragment
+
+
     Button backBtn2;
+    private FirebaseAuth mAuth;
 
     private TextInputEditText passwordEditText, emailEditText, addressEditText, nameEditText, houseNameEditText, numberEditText ;
 
@@ -37,6 +41,8 @@ public class MainActivity2 extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
+
+        mAuth = FirebaseAuth.getInstance();
 
         backBtn2 = findViewById(R.id.backBtn2);
         backBtn2.setOnClickListener(v -> BackPressed());
@@ -54,10 +60,11 @@ public class MainActivity2 extends AppCompatActivity {
     }
 
     private void BackPressed() {
-        ActivityAdminHomeBinding binding;
-        binding = ActivityAdminHomeBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
-        replaceFragment(new SettingsFragment());
+        //                working but redirected to the schedule fragment instead of setting fragment
+        Intent intent = new Intent(this, Admin_Home_activity.class);
+        startActivity(intent);
+        finish();
+
     }
 
     private void replaceFragment(androidx.fragment.app.Fragment fragment) {

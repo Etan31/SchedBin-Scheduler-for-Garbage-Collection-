@@ -18,9 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.example.a1project.databinding.ActivityAdminHomeBinding;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -31,6 +29,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EditSchedule extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+
+    //        TODO: Fix the bug of the BackPressed, it should be redirected to SettingsFragment instead of Schedulefragment
+
 
     private TableLayout dataTableLayout;
     private LinearLayout linearLayoutInputs;
@@ -122,18 +123,11 @@ public class EditSchedule extends AppCompatActivity implements AdapterView.OnIte
     }
 
     private void BackPressed() {
-        FirebaseUser currentUser = mAuth.getCurrentUser();
+        //                working but redirected to the schedule fragment instead of setting fragment
+        Intent intent = new Intent(this, Admin_Home_activity.class);
+        startActivity(intent);
+        finish();
 
-        if (currentUser == null) {
-            startActivity(new Intent(this, MainActivity.class));
-
-        } else {
-            // User is signed in
-            ActivityAdminHomeBinding binding;
-            binding = ActivityAdminHomeBinding.inflate(getLayoutInflater());
-            setContentView(binding.getRoot());
-            replaceFragment(new SettingsFragment());
-        }
     }
 
     private void replaceFragment(androidx.fragment.app.Fragment fragment) {
