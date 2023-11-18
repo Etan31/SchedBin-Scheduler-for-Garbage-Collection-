@@ -43,18 +43,10 @@ public class MainActivity2 extends AppCompatActivity {
 
         TextInputLayout passwordLayout = findViewById(R.id.passwordInput_createAcount);
         TextInputLayout emailLayout = findViewById(R.id.emailInput_createaAcount);
-//        TextInputLayout nameLayout = findViewById(R.id.nameInput_createaAcount);
-//        TextInputLayout houseNameLayout = findViewById(R.id.housenameInput_createaAcount);
-//        TextInputLayout numberLayout = findViewById(R.id.numberInput_createaAcount);
-//        TextInputLayout addressLayout = findViewById(R.id.addressInput_createaAcount);
 
         //Start of creating account to save in firebase
         passwordEditText = (TextInputEditText) passwordLayout.getEditText();
         emailEditText = (TextInputEditText) emailLayout.getEditText();
-//        nameEditText = (TextInputEditText) nameLayout.getEditText();
-//        houseNameEditText = (TextInputEditText) houseNameLayout.getEditText();
-//        numberEditText = (TextInputEditText) numberLayout.getEditText();
-//        addressEditText = (TextInputEditText) addressLayout.getEditText();
 
         save_btn2 = (Button) findViewById(R.id.save_btn2);
         save_btn2.setOnClickListener(view -> insertData());
@@ -80,10 +72,6 @@ public class MainActivity2 extends AppCompatActivity {
     private void insertData() {
         String password = Objects.requireNonNull(passwordEditText.getText()).toString();
         String email = Objects.requireNonNull(emailEditText.getText()).toString();
-//        String name = Objects.requireNonNull(nameEditText.getText()).toString();
-//        String address = Objects.requireNonNull(addressEditText.getText()).toString();
-//        String number = Objects.requireNonNull(numberEditText.getText()).toString();
-//        String houseName = Objects.requireNonNull(houseNameEditText.getText()).toString();
 
         checkEmailExists(email, (emailExists) -> {
             if (emailExists) {
