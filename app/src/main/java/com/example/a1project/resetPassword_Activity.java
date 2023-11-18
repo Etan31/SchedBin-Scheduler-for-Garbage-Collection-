@@ -84,37 +84,6 @@
         }
 
         private void resetPassword() {
-//            Log.d("ResetPassword", "Reset Password method called");
-//            String email = Objects.requireNonNull(emailEditText.getText()).toString();
-//
-//
-//
-//            mAuth.sendPasswordResetEmail(email)
-//                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-//                        @Override
-//                        public void onSuccess(Void unused) {
-//                            Toast.makeText(resetPassword_Activity.this, "Reset Password Link has been sent to your account", Toast.LENGTH_SHORT).show();
-////                            Intent intent = new Intent(resetPassword_Activity.this, MainActivity.class);
-////                            startActivity(intent);
-////                            finish();
-//                        }
-//                    })
-//                    .addOnFailureListener(new OnFailureListener() {
-//                        @Override
-//                        public void onFailure(@NonNull Exception e) {
-//                            Log.e("ResetPassword", "Error: " + e.getMessage());
-//                            Toast.makeText(resetPassword_Activity.this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-//                        }
-//                    });
-
-
-
-
-//            }
-
-
-
-
 
             Log.d("ResetPassword", "Reset Password method called");
             String email = Objects.requireNonNull(emailEditText.getText()).toString();
