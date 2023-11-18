@@ -70,8 +70,8 @@
 
     <TableLayout
         android:id="@+id/schedule_tableLayout"
-        android:layout_width="387dp"
-        android:layout_height="178dp"
+        android:layout_width="325dp"
+        android:layout_height="188dp"
         android:layout_marginTop="20dp"
         android:background="#54FBFFDC"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -89,7 +89,7 @@
             <TextView
                 android:id="@+id/tr_date"
 
-                android:layout_width="146dp"
+                android:layout_width="125dp"
                 android:layout_height="30dp"
                 android:gravity="center"
                 android:text="Date"
@@ -98,7 +98,7 @@
 
             <TextView
                 android:id="@+id/tr_garbageType"
-                android:layout_width="239dp"
+                android:layout_width="200dp"
                 android:layout_height="30dp"
                 android:gravity="center"
                 android:text="@string/garbage_type"
@@ -131,14 +131,14 @@
 
                     <TextView
                         android:id="@+id/tr_date2"
-                        android:layout_width="146dp"
+                        android:layout_width="125dp"
                         android:layout_height="match_parent"
                         android:text=""
                         android:textAlignment="textStart" />
 
                     <TextView
                         android:id="@+id/tr_garbageType2"
-                        android:layout_width="241dp"
+                        android:layout_width="196dp"
                         android:layout_height="match_parent"
                         android:text=""
                         android:textAlignment="textStart" />
@@ -152,6 +152,7 @@
         android:id="@+id/linearLayout_inputs"
         android:layout_width="416dp"
         android:layout_height="391dp"
+        android:visibility="gone"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -161,7 +162,7 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/layout_addSched_date"
-            android:layout_width="360dp"
+            android:layout_width="330dp"
             android:layout_height="62dp"
             android:layout_gravity="center"
             android:layout_marginTop="0dp"
@@ -186,7 +187,7 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/layout_addSched_time"
-            android:layout_width="360dp"
+            android:layout_width="330dp"
             android:layout_height="63dp"
             android:layout_gravity="center"
             android:layout_marginTop="0dp"
@@ -214,7 +215,7 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/layout_addSched_address"
-            android:layout_width="360dp"
+            android:layout_width="330dp"
             android:layout_height="61dp"
             android:layout_gravity="center"
             android:layout_marginTop="0dp"
@@ -239,7 +240,7 @@
 
         <Spinner
             android:id="@+id/spinner_typeofgarbage"
-            android:layout_width="360dp"
+            android:layout_width="330dp"
             android:layout_height="48dp"
             android:layout_gravity="center"
             android:layout_marginTop="11dp"
@@ -253,7 +254,7 @@
 
         <Spinner
             android:id="@+id/spinner_doesNotRepeat"
-            android:layout_width="360dp"
+            android:layout_width="330dp"
             android:layout_height="48dp"
             android:layout_gravity="center"
             android:layout_marginTop="15dp"
@@ -268,7 +269,7 @@
 
         <LinearLayout
             android:id="@+id/linearLayout_buttons"
-            android:layout_width="384dp"
+            android:layout_width="330dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="20dp"
@@ -287,7 +288,7 @@
                 android:text="@string/btn_delete"
                 android:textAllCaps="false"
                 android:textColor="@color/dark_brown"
-                android:textSize="22sp"
+                android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="parent" />
 
             <Button
@@ -303,7 +304,7 @@
                 android:text="@string/btn_update"
                 android:textAllCaps="false"
                 android:textColor="@color/color2"
-                android:textSize="22sp"
+                android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="parent" />
         </LinearLayout>
 

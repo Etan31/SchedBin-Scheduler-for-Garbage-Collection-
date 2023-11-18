@@ -41,6 +41,8 @@
                     android:layout_width="360dp"
                     android:layout_height="62dp"
                     android:layout_marginTop="40dp"
+                    android:focusable="true"
+                    android:focusableInTouchMode="false"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
@@ -56,6 +58,7 @@
                         android:drawablePadding="10dp"
                         android:hint="@string/enter_date"
                         android:inputType="date"
+                        android:focusable="true"
                         android:paddingStart="10dp"
                         tools:ignore="EditableContentDescCheck" />
                 </com.google.android.material.textfield.TextInputLayout>
@@ -66,6 +69,7 @@
                     android:layout_height="63dp"
                     android:layout_marginTop="30dp"
                     android:contentDescription="@string/enter_a_time"
+                    android:focusableInTouchMode="true"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
@@ -81,6 +85,7 @@
                         android:drawableStart="@drawable/ic_time"
                         android:drawablePadding="10dp"
                         android:hint="@string/time"
+                        android:focusable="true"
                         android:inputType="time"
                         android:labelFor="@+id/textInputLayout4"
                         android:paddingStart="10dp"

@@ -148,6 +148,10 @@ public class ScheduleFragment extends Fragment implements AdapterView.OnItemSele
 
 
 
+        if (!isAdded() || mContext == null) {
+            return null; // Fragment is not attached, return null or handle accordingly
+        }
+
         // Spinner
         Spinner dropDownSpinnerForLocation = view.findViewById(R.id.DropDown_spinner_for_location);
 
@@ -157,13 +161,10 @@ public class ScheduleFragment extends Fragment implements AdapterView.OnItemSele
         // Fetch data from Firebase
         fetchFirebaseDataAndPopulateSpinner(dropDownSpinnerForLocation);
 
-        // Set the listener
-        dropDownSpinnerForLocation.setOnItemSelectedListener(this);
-//        updateTableWithFilteredData();
 
 
         ////////////////////////////////
-        TableLayout tableLayout = view.findViewById(R.id.schedule_tableLayout);
+//        TableLayout tableLayout = view.findViewById(R.id.schedule_tableLayout);
         TableLayout dataTableLayout = view.findViewById(R.id.data_table_layout);
         DatabaseReference schedulesRef = FirebaseDatabase.getInstance().getReference("schedules");
 
@@ -282,6 +283,10 @@ public class ScheduleFragment extends Fragment implements AdapterView.OnItemSele
                     }
                 }
 
+                if (uniqueAddresses.isEmpty()) {
+                    uniqueAddresses.add("No Schedule");
+                }
+
                 // Create an ArrayAdapter with the unique addresses
                 ArrayAdapter<String> adapter = new ArrayAdapter<>(
                         requireActivity(),
@@ -312,24 +317,25 @@ public class ScheduleFragment extends Fragment implements AdapterView.OnItemSele
     }
 
     private void updateTableWithFilteredData() {
+        if (!isAdded() || mContext == null) {
+            return; // Fragment is not attached, do nothing
+        }
         DatabaseReference schedulesRef = FirebaseDatabase.getInstance().getReference("schedules");
 
         schedulesRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // Check if the fragment is still attached to a context
-                if (!isAdded()) {
-                    return;
-                }
-                if (mContext == null) {
+                if (!isAdded() || mContext == null) {
                     return;
                 }
 
-                TableLayout tableLayout = requireView().findViewById(R.id.schedule_tableLayout);
+//                TableLayout tableLayout = requireView().findViewById(R.id.schedule_tableLayout);
                 TableLayout dataTableLayout = requireView().findViewById(R.id.data_table_layout);
 
                 // Clear existing data rows
                 dataTableLayout.removeAllViews();
+
 
                 for (DataSnapshot scheduleSnapshot : dataSnapshot.getChildren()) {
                     String date = scheduleSnapshot.child("date").getValue(String.class);
@@ -339,7 +345,7 @@ public class ScheduleFragment extends Fragment implements AdapterView.OnItemSele
                     // Check if the schedule's address matches the selected address
                     if (selectedAddress != null && selectedAddress.equals(address)) {
                         // Create a new TableRow for the data entry
-                        TableRow dataRow = new TableRow(requireContext());
+                        TableRow dataRow = new TableRow(mContext);
 
                         // Create TextViews for the data
                         TextView dateTextView = new TextView(mContext); // Use stored context
@@ -348,7 +354,7 @@ public class ScheduleFragment extends Fragment implements AdapterView.OnItemSele
                         dateTextView.setGravity(Gravity.START);
                         dateTextView.setPadding(10, 10, 5, 5);
 
-                        TextView garbageTypeTextView = new TextView(requireContext());
+                        TextView garbageTypeTextView = new TextView(mContext);
                         garbageTypeTextView.setText(garbageType);
                         garbageTypeTextView.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1f));
                         garbageTypeTextView.setGravity(Gravity.START);
