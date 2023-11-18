@@ -7,6 +7,10 @@ android {
     namespace 'com.example.a1project'
     compileSdk 33
 
+    viewBinding {
+        enabled = true
+    }
+
     defaultConfig {
         applicationId "com.example.a1project"
         minSdk 24

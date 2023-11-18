@@ -7,15 +7,12 @@
     import android.widget.Button;
     import android.widget.Toast;
 
-    import androidx.annotation.NonNull;
     import androidx.appcompat.app.AppCompatActivity;
     import androidx.constraintlayout.motion.widget.MotionLayout;
     import androidx.fragment.app.FragmentManager;
     import androidx.fragment.app.FragmentTransaction;
 
     import com.example.a1project.databinding.ActivityAdminHomeBinding;
-    import com.google.android.gms.tasks.OnFailureListener;
-    import com.google.android.gms.tasks.OnSuccessListener;
     import com.google.android.material.textfield.TextInputEditText;
     import com.google.android.material.textfield.TextInputLayout;
     import com.google.firebase.auth.FirebaseAuth;
@@ -29,7 +26,6 @@
 
         private FirebaseAuth mAuth;
         private TextInputEditText emailEditText;
-        private TextInputLayout emailLayout;
 
         private MotionLayout motionLayout;
 
@@ -43,12 +39,12 @@
 
         mAuth = FirebaseAuth.getInstance();
 
-        emailLayout = findViewById(R.id.resetEmail_input);
+        TextInputLayout emailLayout = findViewById(R.id.resetEmail_input);
         emailEditText = (TextInputEditText) emailLayout.getEditText();
 
         motionLayout = findViewById(R.id.motionLayout);
 
-        Button resetPassword_button = (Button) findViewById(R.id.resetPassword_btn);
+        Button resetPassword_button = findViewById(R.id.resetPassword_btn);
 
         resetPassword_button.setOnClickListener(v -> {
             Log.d("ResetPassword", "Reset Password Button Clicked");
@@ -124,23 +120,17 @@
             String email = Objects.requireNonNull(emailEditText.getText()).toString();
 
             mAuth.sendPasswordResetEmail(email)
-                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void unused) {
-                            Toast.makeText(resetPassword_Activity.this, "Reset Password Link has been sent to your account", Toast.LENGTH_SHORT).show();
+                    .addOnSuccessListener(unused -> {
+                        Toast.makeText(resetPassword_Activity.this, "Reset Password Link has been sent to your account", Toast.LENGTH_SHORT).show();
 
-                            // Start the animation when password reset is successful
-                            if (motionLayout != null) {
-                                motionLayout.transitionToEnd();
-                            }
+                        // Start the animation when password reset is successful
+                        if (motionLayout != null) {
+                            motionLayout.transitionToEnd();
                         }
                     })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Log.e("ResetPassword", "Error: " + e.getMessage());
-                            Toast.makeText(resetPassword_Activity.this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                        }
+                    .addOnFailureListener(e -> {
+                        Log.e("ResetPassword", "Error: " + e.getMessage());
+                        Toast.makeText(resetPassword_Activity.this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                     });
     }
 
