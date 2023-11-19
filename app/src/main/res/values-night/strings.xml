@@ -11,7 +11,7 @@
     <string name="address">Address</string>
     <string name="garbageType">Type of Garbage</string>
     <string name="logout">Logout</string>
-    <string name="enter_date">Enter Date (MM/DD/YYYY)</string>
+    <string name="enter_date">Enter Date (mm/dd/yyyy)</string>
     <string name="add_admin">Add Administrator</string>
     <string name="btn_delete">Delete</string>
     <string name="btn_update">Update</string>

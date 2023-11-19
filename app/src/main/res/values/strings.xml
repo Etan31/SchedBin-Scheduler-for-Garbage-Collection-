@@ -44,7 +44,7 @@
     <string name="garbageType">Type of Garbage</string>
     <string name="edit_schedule">Edit Schedule</string>
     <string name="logout">Logout</string>
-    <string name="enter_date">Enter Date (MM/DD/YYYY)</string>
+    <string name="enter_date">Enter Date (mm/dd/yyyy)</string>
     <string name="delete_scheduleBtn">Delete Schedule</string>
     <string name="garbage_type">Garbage Type</string>
     <string name="address_tr">Address</string>
@@ -53,6 +53,7 @@
     <string name="btn_update">Update</string>
     <string name="date">Date</string>
     <string name="date_header">Date (MM/DD/YYYY)</string>
+    <string name="row_updated_successfully">Row updated successfully</string>
 
     <string-array name="garbageTypes">
         <item>Biodegradable</item>
