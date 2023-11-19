@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/main_color"
     tools:context=".addSchedule_activity">
+<!--    TODO: the Date and Address input should be required to fill on-->
 
     <ScrollView
         android:layout_width="match_parent"
@@ -63,34 +64,6 @@
                         tools:ignore="EditableContentDescCheck" />
                 </com.google.android.material.textfield.TextInputLayout>
 
-<!--                <com.google.android.material.textfield.TextInputLayout-->
-<!--                    android:id="@+id/layout_addSched_time"-->
-<!--                    android:layout_width="351dp"-->
-<!--                    android:layout_height="63dp"-->
-<!--                    android:layout_marginTop="30dp"-->
-<!--                    android:contentDescription="@string/enter_a_time"-->
-<!--                    android:focusableInTouchMode="true"-->
-<!--                    app:layout_constraintEnd_toEndOf="parent"-->
-<!--                    app:layout_constraintHorizontal_bias="0.5"-->
-<!--                    app:layout_constraintStart_toStartOf="parent"-->
-<!--                    app:layout_constraintTop_toBottomOf="@+id/layout_addSched_date"-->
-<!--                    tools:ignore="MissingConstraints">-->
-
-<!--                    <AutoCompleteTextView-->
-<!--                        android:id="@+id/addSched_time"-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="48dp"-->
-<!--                        android:background="@drawable/input_bg"-->
-<!--                        android:contentDescription="@string/enter_a_time"-->
-<!--                        android:drawableStart="@drawable/ic_time"-->
-<!--                        android:drawablePadding="10dp"-->
-<!--                        android:hint="@string/time"-->
-<!--                        android:focusable="true"-->
-<!--                        android:inputType="time"-->
-<!--                        android:labelFor="@+id/textInputLayout4"-->
-<!--                        android:paddingStart="10dp"-->
-<!--                        tools:ignore="EditableContentDescCheck" />-->
-<!--                </com.google.android.material.textfield.TextInputLayout>-->
 
 
                 <com.google.android.material.textfield.TextInputLayout
