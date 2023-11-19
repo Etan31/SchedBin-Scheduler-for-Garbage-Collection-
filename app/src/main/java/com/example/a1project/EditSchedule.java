@@ -32,8 +32,6 @@ import java.util.Objects;
 
 public class EditSchedule extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     //      TODO: Fix the bug of the BackPressed, it should be redirected to SettingsFragment instead of Schedulefragment
-    //      TODO: The Update Button doesn't work, or it does nothing.
-    //      TODO: After Clicking the row, the data of the table that was displayed or clicked has disappeared. It should remain still.
     //      TODO: when clicking agan the row, the linearLayout disappears again, it should not be disappeared anymore, it'll updates the current strings of the inputs and the spinners
 
 
@@ -115,6 +113,7 @@ public class EditSchedule extends AppCompatActivity implements AdapterView.OnIte
 
                 // Display a toast message for successful update
                 showToast("Row updated successfully");
+                linearLayoutInputs.setVisibility(View.GONE);
             }
         });
 
@@ -175,9 +174,7 @@ public class EditSchedule extends AppCompatActivity implements AdapterView.OnIte
                             @Override
                             public void onClick(View v) {
                                 // Toggle the visibility of linearLayout_inputs
-                                if (linearLayoutInputs.getVisibility() == View.VISIBLE) {
-                                    linearLayoutInputs.setVisibility(View.GONE);
-                                } else {
+                                if (linearLayoutInputs.getVisibility() == View.GONE) {
                                     linearLayoutInputs.setVisibility(View.VISIBLE);
 
                                     // Set values from the clicked row to input fields and spinners
