@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="add_schedule">Add Schedule</string>
-    <string name="time">00:00</string>
+    <string name="time">Enter Time (00:00)</string>
     <string name="set_time">set time</string>
     <string name="address">Address</string>
     <string name="garbageType">Type of Garbage</string>
@@ -10,4 +10,5 @@
     <string name="add_admin">Add Administrator</string>
     <string name="btn_delete">Delete</string>
     <string name="btn_update">Update</string>
+    <string name="date_header">Date (MM/DD/YYYY)</string>
 </resources>

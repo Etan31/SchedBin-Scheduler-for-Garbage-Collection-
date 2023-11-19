@@ -37,7 +37,7 @@
     <string name="schedules_for_this_month">Schedules</string>
     <string name="add_schedule">Add Schedule</string>
     <string name="schedule_add">Schedule \nyour\n collection</string>
-    <string name="time">Enter Time</string>
+    <string name="time">Enter Time (00:00)</string>
     <string name="set_time">set time</string>
     <string name="enter_a_time">Enter a time</string>
     <string name="enter_an_address">Enter an address</string>
@@ -51,6 +51,8 @@
     <string name="add_admin">Add Administrator</string>
     <string name="btn_delete">Delete</string>
     <string name="btn_update">Update</string>
+    <string name="date">Date</string>
+    <string name="date_header">Date (MM/DD/YYYY)</string>
 
     <string-array name="garbageTypes">
         <item>Biodegradable</item>
@@ -67,11 +69,5 @@
         <item>Every Year</item>
     </string-array>
 
-    <string-array name="location">
-        <item>Location 1</item>
-        <item>Location 2</item>
-        <item>Location 3</item>
-        <item>Location 4</item>
-    </string-array>
 
 </resources>

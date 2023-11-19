@@ -89,16 +89,16 @@
             <TextView
                 android:id="@+id/tr_date"
 
-                android:layout_width="125dp"
+                android:layout_width="wrap_content"
                 android:layout_height="30dp"
                 android:gravity="center"
-                android:text="Date"
+                android:text="@string/date_header"
                 android:textAlignment="center"
                 android:textAppearance="@style/Headers" />
 
             <TextView
                 android:id="@+id/tr_garbageType"
-                android:layout_width="200dp"
+                android:layout_width="167dp"
                 android:layout_height="30dp"
                 android:gravity="center"
                 android:text="@string/garbage_type"
@@ -131,14 +131,14 @@
 
                     <TextView
                         android:id="@+id/tr_date2"
-                        android:layout_width="125dp"
+                        android:layout_width="159dp"
                         android:layout_height="match_parent"
                         android:text=""
                         android:textAlignment="textStart" />
 
                     <TextView
                         android:id="@+id/tr_garbageType2"
-                        android:layout_width="196dp"
+                        android:layout_width="166dp"
                         android:layout_height="match_parent"
                         android:text=""
                         android:textAlignment="textStart" />
@@ -148,11 +148,12 @@
         </ScrollView>
     </TableLayout>
 
+    <!--        android:visibility="gone"-->
     <LinearLayout
         android:id="@+id/linearLayout_inputs"
         android:layout_width="416dp"
         android:layout_height="391dp"
-        android:visibility="gone"
+
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

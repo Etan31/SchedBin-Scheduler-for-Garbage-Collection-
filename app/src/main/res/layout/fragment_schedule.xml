@@ -61,18 +61,19 @@
 
                     <TextView
                         android:id="@+id/tr_date"
-
+                        android:layout_height="25dp"
                         android:layout_width="138dp"
-                        android:layout_height="match_parent"
-                        android:text="Date"
+                        android:text="@string/date"
+                        android:gravity="center"
                         android:textAlignment="center"
                         android:textAppearance="@style/Headers" />
 
                     <TextView
                         android:id="@+id/tr_garbageType"
                         android:layout_width="191dp"
-                        android:layout_height="match_parent"
+                        android:layout_height="25dp"
                         android:text="@string/garbage_type"
+                        android:gravity="center"
                         android:textAlignment="center"
                         android:textAppearance="@style/Headers" />
 

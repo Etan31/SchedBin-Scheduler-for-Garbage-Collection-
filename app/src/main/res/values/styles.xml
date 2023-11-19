@@ -75,7 +75,7 @@
     </style>
     <style name="Headers">
         <item name="android:fontFamily">@font/montserrat_bold</item>
-        <item name="android:textSize">15sp</item>
+        <item name="android:textSize">13sp</item>
         <item name="android:letterSpacing">0.1</item>
         <item name="android:textColor">@color/dark_brown</item>
     </style>
