@@ -34,18 +34,14 @@ public class EditSchedule extends AppCompatActivity implements AdapterView.OnIte
     //      TODO: Fix the bug of the BackPressed, it should be redirected to SettingsFragment instead of Schedulefragment
 
 
-
     private Spinner garbageTypeSpinner;
     private Spinner repeatTimeSpinner;
-    private TextInputLayout dateInputLayout;
-    private TextInputLayout addressInputLayout;
 
     private DataSnapshot scheduleSnapshot;
 
     private TableLayout dataTableLayout;
     private LinearLayout linearLayoutInputs;
     Button backBtn2;
-    private FirebaseAuth mAuth;
 
 
     @Override
@@ -54,18 +50,13 @@ public class EditSchedule extends AppCompatActivity implements AdapterView.OnIte
         setContentView(R.layout.activity_edit_schedule);
 
 
-
-        mAuth = FirebaseAuth.getInstance();
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
         linearLayoutInputs = findViewById(R.id.linearLayout_inputs);
 
         backBtn2 = findViewById(R.id.backBtn2);
         backBtn2.setOnClickListener(v -> BackPressed());
 
         initAndPopulateSpinners();
-
-
-        dateInputLayout = findViewById(R.id.layout_addSched_date);
-        addressInputLayout = findViewById(R.id.layout_addSched_address);
 
         garbageTypeSpinner = findViewById(R.id.spinner_typeofgarbage);
         repeatTimeSpinner = findViewById(R.id.spinner_doesNotRepeat);
