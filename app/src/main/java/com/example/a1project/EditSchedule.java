@@ -32,7 +32,6 @@ import java.util.Objects;
 
 public class EditSchedule extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     //      TODO: Fix the bug of the BackPressed, it should be redirected to SettingsFragment instead of Schedulefragment
-    //      TODO: when clicking agan the row, the linearLayout disappears again, it should not be disappeared anymore, it'll updates the current strings of the inputs and the spinners
 
 
 
