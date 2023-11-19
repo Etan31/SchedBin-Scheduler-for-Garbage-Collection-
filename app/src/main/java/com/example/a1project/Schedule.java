@@ -2,7 +2,6 @@ package com.example.a1project;
 
 public class Schedule {
     private String date;
-    private String time;
     private String address;
     private String garbageType;
     private String repeatType;
@@ -11,9 +10,8 @@ public class Schedule {
         // Default constructor required for Firebase
     }
 
-    public Schedule(String date, String time, String address, String garbageType, String repeatType) {
+    public Schedule(String date, String address, String garbageType, String repeatType) {
         this.date = date;
-        this.time = time;
         this.address = address;
         this.garbageType = garbageType;
         this.repeatType = repeatType;
@@ -27,13 +25,6 @@ public class Schedule {
         this.date = date;
     }
 
-    public String getTime() {
-        return time;
-    }
-
-    public void setTime(String time) {
-        this.time = time;
-    }
 
     public String getAddress() {
         return address;
