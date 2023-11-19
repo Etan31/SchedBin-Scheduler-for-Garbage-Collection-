@@ -38,7 +38,7 @@
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/layout_addSched_date"
-                    android:layout_width="360dp"
+                    android:layout_width="330dp"
                     android:layout_height="62dp"
                     android:layout_marginTop="40dp"
                     android:focusable="true"
@@ -56,52 +56,52 @@
                         android:contentDescription="date format"
                         android:drawableStart="@drawable/ic_calendar"
                         android:drawablePadding="10dp"
+                        android:focusable="true"
                         android:hint="@string/enter_date"
                         android:inputType="date"
-                        android:focusable="true"
                         android:paddingStart="10dp"
                         tools:ignore="EditableContentDescCheck" />
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/layout_addSched_time"
-                    android:layout_width="351dp"
-                    android:layout_height="63dp"
-                    android:layout_marginTop="30dp"
-                    android:contentDescription="@string/enter_a_time"
-                    android:focusableInTouchMode="true"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/layout_addSched_date"
-                    tools:ignore="MissingConstraints">
+<!--                <com.google.android.material.textfield.TextInputLayout-->
+<!--                    android:id="@+id/layout_addSched_time"-->
+<!--                    android:layout_width="351dp"-->
+<!--                    android:layout_height="63dp"-->
+<!--                    android:layout_marginTop="30dp"-->
+<!--                    android:contentDescription="@string/enter_a_time"-->
+<!--                    android:focusableInTouchMode="true"-->
+<!--                    app:layout_constraintEnd_toEndOf="parent"-->
+<!--                    app:layout_constraintHorizontal_bias="0.5"-->
+<!--                    app:layout_constraintStart_toStartOf="parent"-->
+<!--                    app:layout_constraintTop_toBottomOf="@+id/layout_addSched_date"-->
+<!--                    tools:ignore="MissingConstraints">-->
 
-                    <AutoCompleteTextView
-                        android:id="@+id/addSched_time"
-                        android:layout_width="match_parent"
-                        android:layout_height="48dp"
-                        android:background="@drawable/input_bg"
-                        android:contentDescription="@string/enter_a_time"
-                        android:drawableStart="@drawable/ic_time"
-                        android:drawablePadding="10dp"
-                        android:hint="@string/time"
-                        android:focusable="true"
-                        android:inputType="time"
-                        android:labelFor="@+id/textInputLayout4"
-                        android:paddingStart="10dp"
-                        tools:ignore="EditableContentDescCheck" />
-                </com.google.android.material.textfield.TextInputLayout>
+<!--                    <AutoCompleteTextView-->
+<!--                        android:id="@+id/addSched_time"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="48dp"-->
+<!--                        android:background="@drawable/input_bg"-->
+<!--                        android:contentDescription="@string/enter_a_time"-->
+<!--                        android:drawableStart="@drawable/ic_time"-->
+<!--                        android:drawablePadding="10dp"-->
+<!--                        android:hint="@string/time"-->
+<!--                        android:focusable="true"-->
+<!--                        android:inputType="time"-->
+<!--                        android:labelFor="@+id/textInputLayout4"-->
+<!--                        android:paddingStart="10dp"-->
+<!--                        tools:ignore="EditableContentDescCheck" />-->
+<!--                </com.google.android.material.textfield.TextInputLayout>-->
 
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/layout_addSched_address"
-                    android:layout_width="353dp"
+                    android:layout_width="330dp"
                     android:layout_height="61dp"
                     android:layout_marginTop="30dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/layout_addSched_time">
+                    app:layout_constraintTop_toBottomOf="@+id/layout_addSched_date">
 
                     <AutoCompleteTextView
                         android:id="@+id/addSched_address"
@@ -133,29 +133,31 @@
 
                         <Spinner
                             android:id="@+id/spinner_typeofgarbage"
-                            android:layout_width="348dp"
+                            android:layout_width="330dp"
                             android:layout_height="48dp"
                             android:layout_marginTop="11dp"
                             android:background="@drawable/bg_recyclesvg"
                             android:paddingStart="40dp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.5"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintVertical_bias="0.692" />
+                            app:layout_constraintVertical_bias="0.575" />
 
                         <Spinner
                             android:id="@+id/spinner_doesNotRepeat"
-                            android:layout_width="342dp"
+                            android:layout_width="330dp"
                             android:layout_height="48dp"
+                            android:layout_marginTop="20dp"
                             android:background="@drawable/bg_repeatevent"
                             android:paddingStart="40dp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintHorizontal_bias="0.463"
+                            app:layout_constraintHorizontal_bias="0.5"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/spinner_typeofgarbage"
-                            app:layout_constraintVertical_bias="0.22" />
+                            app:layout_constraintVertical_bias="0.101" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -179,6 +181,7 @@
                         android:id="@+id/add_schedule_Btn"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="30dp"
                         android:background="@drawable/login_btn"
                         android:text="@string/add_schedule"
                         android:textAppearance="@style/add_Sched"
