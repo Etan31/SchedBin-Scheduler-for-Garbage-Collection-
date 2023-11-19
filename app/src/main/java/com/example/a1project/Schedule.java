@@ -7,7 +7,7 @@ public class Schedule {
     private String garbageType;
     private String repeatType;
 
-    public Schedule(String date, String address, String garbageType, String repeatType) {
+    public Schedule() {
         // Default constructor required for Firebase
     }
 
