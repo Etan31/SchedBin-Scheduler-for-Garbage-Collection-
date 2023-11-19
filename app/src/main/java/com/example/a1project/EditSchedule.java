@@ -6,18 +6,19 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -27,21 +28,35 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class EditSchedule extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+    //      TODO: Fix the bug of the BackPressed, it should be redirected to SettingsFragment instead of Schedulefragment
+    //      TODO: The Update Button doesn't work, or it does nothing.
+    //      TODO: After Clicking the row, the data of the table that was displayed or clicked has disappeared. It should remain still.
+    //      TODO: when clicking agan the row, the linearLayout disappears again, it should not be disappeared anymore, it'll updates the current strings of the inputs and the spinners
 
-    //        TODO: Fix the bug of the BackPressed, it should be redirected to SettingsFragment instead of Schedulefragment
 
+
+    private Spinner garbageTypeSpinner;
+    private Spinner repeatTimeSpinner;
+    private TextInputLayout dateInputLayout;
+    private TextInputLayout addressInputLayout;
+
+    private DataSnapshot scheduleSnapshot;
 
     private TableLayout dataTableLayout;
     private LinearLayout linearLayoutInputs;
     Button backBtn2;
     private FirebaseAuth mAuth;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_schedule);
+
+
 
         mAuth = FirebaseAuth.getInstance();
         linearLayoutInputs = findViewById(R.id.linearLayout_inputs);
@@ -49,11 +64,67 @@ public class EditSchedule extends AppCompatActivity implements AdapterView.OnIte
         backBtn2 = findViewById(R.id.backBtn2);
         backBtn2.setOnClickListener(v -> BackPressed());
 
+        initAndPopulateSpinners();
+
+
+        dateInputLayout = findViewById(R.id.layout_addSched_date);
+        addressInputLayout = findViewById(R.id.layout_addSched_address);
+
+        garbageTypeSpinner = findViewById(R.id.spinner_typeofgarbage);
+        repeatTimeSpinner = findViewById(R.id.spinner_doesNotRepeat);
+
+
+        LinearLayout linearLayoutButtons = findViewById(R.id.linearLayout_buttons);
+        Button updateButton = linearLayoutButtons.findViewById(R.id.btn_update);
+
+        garbageTypeSpinner = findViewById(R.id.spinner_typeofgarbage);
+        repeatTimeSpinner = findViewById(R.id.spinner_doesNotRepeat);
+
+        TextInputLayout dateInputLayout = findViewById(R.id.layout_addSched_date);
+        TextInputLayout addressInputLayout = findViewById(R.id.layout_addSched_address);
+
+// Initialize views in the onCreate method
+        AutoCompleteTextView dateAutoCompleteTextView = dateInputLayout.findViewById(R.id.addSched_date);
+        AutoCompleteTextView addressAutoCompleteTextView = addressInputLayout.findViewById(R.id.addSched_address);
+
+        garbageTypeSpinner = findViewById(R.id.spinner_typeofgarbage);
+        repeatTimeSpinner = findViewById(R.id.spinner_doesNotRepeat);
+
+
+
+
+        // Set up the OnClickListener for the Update Button
+        updateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Get the updated values from input fields and spinners
+                String updatedDate = dateAutoCompleteTextView.getText().toString();
+                String updatedAddress = addressAutoCompleteTextView.getText().toString();
+                String updatedGarbageType = garbageTypeSpinner.getSelectedItem().toString();
+                String updatedRepeatType = repeatTimeSpinner.getSelectedItem().toString();
+
+                // Update the data in the Firebase database
+                // Use the unique key of the clicked row to identify and update the data
+                DatabaseReference updateRef = FirebaseDatabase.getInstance().getReference("schedules")
+                        .child(Objects.requireNonNull(scheduleSnapshot.getKey()));
+
+                updateRef.child("date").setValue(updatedDate);
+                updateRef.child("address").setValue(updatedAddress);
+                updateRef.child("garbageType").setValue(updatedGarbageType);
+                updateRef.child("repeatType").setValue(updatedRepeatType);
+
+                // Display a toast message for successful update
+                showToast("Row updated successfully");
+            }
+        });
+
 
 //       spinner for the scheduled places
         Spinner dropDownSpinnerForLocation = findViewById(R.id.DropDown_spinner_for_location);
         dropDownSpinnerForLocation.setOnItemSelectedListener(this);
         fetchFirebaseDataAndPopulateSpinner(dropDownSpinnerForLocation);
+
+        updateTableWithFilteredData((String) dropDownSpinnerForLocation.getSelectedItem());
 
 
 //        for the displaying of the schedule to the table
@@ -63,19 +134,22 @@ public class EditSchedule extends AppCompatActivity implements AdapterView.OnIte
         schedulesRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+
                 // Clear existing data rows
                 dataTableLayout.removeAllViews();
 
                 // Get the selected address from the spinner
                 String selectedAddress = (String) dropDownSpinnerForLocation.getSelectedItem();
 
-                for (DataSnapshot scheduleSnapshot : dataSnapshot.getChildren()) {
-                    String date = scheduleSnapshot.child("date").getValue(String.class);
-                    String garbageType = scheduleSnapshot.child("garbageType").getValue(String.class);
-                    String address = scheduleSnapshot.child("address").getValue(String.class);
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    String date = snapshot.child("date").getValue(String.class);
+                    String garbageType = snapshot.child("garbageType").getValue(String.class);
+                    String repeatType = snapshot.child("repeatType").getValue(String.class);
+                    String address = snapshot.child("address").getValue(String.class);
 
                     // Check if the schedule's address matches the selected address
                     if (selectedAddress != null && selectedAddress.equals(address)) {
+                        scheduleSnapshot = snapshot;
                         // Create a new TableRow for the data entry
                         TableRow dataRow = new TableRow(EditSchedule.this); // Use the activity context
 
@@ -97,19 +171,39 @@ public class EditSchedule extends AppCompatActivity implements AdapterView.OnIte
                         dataRow.addView(garbageTypeTextView);
 
                 // Add an OnClickListener to the dataRow
-                dataRow.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        // Toggle the visibility of linearLayout_inputs
-                        if (linearLayoutInputs.getVisibility() == View.VISIBLE) {
-                            linearLayoutInputs.setVisibility(View.GONE);
-                        } else {
-                            linearLayoutInputs.setVisibility(View.VISIBLE);
-                        }
-                    }
-                });
+                        dataRow.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                // Toggle the visibility of linearLayout_inputs
+                                if (linearLayoutInputs.getVisibility() == View.VISIBLE) {
+                                    linearLayoutInputs.setVisibility(View.GONE);
+                                } else {
+                                    linearLayoutInputs.setVisibility(View.VISIBLE);
 
-                // Add the dataRow to the dataTableLayout (inside the ScrollView)
+                                    // Set values from the clicked row to input fields and spinners
+                                    dateAutoCompleteTextView.setText(date);
+                                    addressAutoCompleteTextView.setText(address);
+                                    setSpinnerSelection(garbageTypeSpinner, garbageType);
+                                    setSpinnerSelection(repeatTimeSpinner, repeatType);
+
+                                }
+                            }
+
+
+                            private void setSpinnerSelection(Spinner spinner, String value) {
+                                ArrayAdapter<String> adapter = (ArrayAdapter<String>) spinner.getAdapter();
+                                if (adapter != null) {
+                                    int position = adapter.getPosition(value);
+                                    if (position != -1) {
+                                        spinner.setSelection(position);
+                                    }
+                                }
+                            }
+
+                        });
+
+
+                        // Add the dataRow to the dataTableLayout (inside the ScrollView)
                 dataTableLayout.addView(dataRow);
             }
         }
@@ -120,6 +214,30 @@ public class EditSchedule extends AppCompatActivity implements AdapterView.OnIte
                 // Handle errors
             }
         });
+
+
+
+    }
+
+    private void showToast(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
+    private void initAndPopulateSpinners() {
+        // Initialize spinners
+        Spinner spinnerTypeOfGarbage = findViewById(R.id.spinner_typeofgarbage);
+        ArrayAdapter<CharSequence> typeOfGarbageAdapter = ArrayAdapter.createFromResource(this, R.array.garbageTypes, android.R.layout.simple_spinner_item);
+        typeOfGarbageAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerTypeOfGarbage.setAdapter(typeOfGarbageAdapter);
+
+        Spinner spinnerDoesNotRepeat = findViewById(R.id.spinner_doesNotRepeat);
+        ArrayAdapter<CharSequence> doesNotRepeatAdapter = ArrayAdapter.createFromResource(this, R.array.doesNotRepeat_array, android.R.layout.simple_spinner_item);
+        doesNotRepeatAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerDoesNotRepeat.setAdapter(doesNotRepeatAdapter);
+
+        // Set OnItemSelectedListener for the spinners
+        spinnerTypeOfGarbage.setOnItemSelectedListener(this);
+        spinnerDoesNotRepeat.setOnItemSelectedListener(this);
     }
 
     private void BackPressed() {
@@ -128,13 +246,6 @@ public class EditSchedule extends AppCompatActivity implements AdapterView.OnIte
         startActivity(intent);
         finish();
 
-    }
-
-    private void replaceFragment(androidx.fragment.app.Fragment fragment) {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.BaseFrameLayout, fragment);
-        fragmentTransaction.commit();
     }
 
     //    displaying List of Address on the firebase realtime database to the spinner
@@ -179,10 +290,103 @@ public class EditSchedule extends AppCompatActivity implements AdapterView.OnIte
         });
     }
 
+
+    private void updateTableWithFilteredData(String selectedAddress) {
+        DatabaseReference schedulesRef = FirebaseDatabase.getInstance().getReference("schedules");
+
+        TextInputLayout dateInputLayout = findViewById(R.id.layout_addSched_date);
+        TextInputLayout addressInputLayout = findViewById(R.id.layout_addSched_address);
+
+// Initialize views in the onCreate method
+        AutoCompleteTextView dateAutoCompleteTextView = dateInputLayout.findViewById(R.id.addSched_date);
+        AutoCompleteTextView addressAutoCompleteTextView = addressInputLayout.findViewById(R.id.addSched_address);
+
+        schedulesRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // Clear existing data rows
+                dataTableLayout.removeAllViews();
+
+                for (DataSnapshot scheduleSnapshot : dataSnapshot.getChildren()) {
+                    String date = scheduleSnapshot.child("date").getValue(String.class);
+                    String garbageType = scheduleSnapshot.child("garbageType").getValue(String.class);
+                    String repeatType = scheduleSnapshot.child("repeatType").getValue(String.class);
+                    String address = scheduleSnapshot.child("address").getValue(String.class);
+
+                    // Check if the schedule's address matches the selected address
+                    if (selectedAddress != null && selectedAddress.equals(address)) {
+                        // Create a new TableRow for the data entry
+                        TableRow dataRow = new TableRow(EditSchedule.this); // Use the activity context
+
+                        // Create TextViews for the data
+                        TextView dateTextView = new TextView(EditSchedule.this); // Use the activity context
+                        dateTextView.setText(date);
+                        dateTextView.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1f));
+                        dateTextView.setGravity(Gravity.START);
+                        dateTextView.setPadding(10, 10, 5, 10);
+
+                        TextView garbageTypeTextView = new TextView(EditSchedule.this); // Use the activity context
+                        garbageTypeTextView.setText(garbageType);
+                        garbageTypeTextView.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1f));
+                        garbageTypeTextView.setGravity(Gravity.START);
+                        garbageTypeTextView.setPadding(10, 10, 5, 10);
+
+                        // Add the TextViews to the dataRow
+                        dataRow.addView(dateTextView);
+                        dataRow.addView(garbageTypeTextView);
+
+                        // Add an OnClickListener to the dataRow
+                        dataRow.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                // Toggle the visibility of linearLayout_inputs
+                                if (linearLayoutInputs.getVisibility() == View.VISIBLE) {
+                                    linearLayoutInputs.setVisibility(View.GONE);
+                                } else {
+                                    linearLayoutInputs.setVisibility(View.VISIBLE);
+
+                                    // Set values from the clicked row to input fields and spinners
+                                    dateAutoCompleteTextView.setText(date);
+                                    addressAutoCompleteTextView.setText(address);
+                                    setSpinnerSelection(garbageTypeSpinner, garbageType);
+                                    setSpinnerSelection(repeatTimeSpinner, repeatType);
+                                }
+                            }
+
+                            private void setSpinnerSelection(Spinner spinner, String value) {
+                                ArrayAdapter<String> adapter = (ArrayAdapter<String>) spinner.getAdapter();
+                                if (adapter != null) {
+                                    int position = adapter.getPosition(value);
+                                    if (position != -1) {
+                                        spinner.setSelection(position);
+                                    }
+                                }
+                            }
+                        });
+
+                        // Add the dataRow to the dataTableLayout (inside the ScrollView)
+                        dataTableLayout.addView(dataRow);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Handle errors
+            }
+        });
+    }
+
+
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        // Get the selected address from the spinner
+        String selectedAddress = (String) parent.getSelectedItem();
 
+        // call the method with the selected address from the spinner
+        updateTableWithFilteredData(selectedAddress);
     }
+
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {

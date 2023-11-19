@@ -265,44 +265,48 @@ public class ScheduleFragment extends Fragment implements AdapterView.OnItemSele
 //    displaying List of Adress on the firebase realtime database to the spinner
     private void fetchFirebaseDataAndPopulateSpinner(Spinner spinner) {
         // Assuming you have a reference to your Firebase database
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("schedules");
+        if (isAdded()) {
+            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("schedules");
 
-        // Listen for changes in the data
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                List<String> uniqueAddresses = new ArrayList<>();
+            // Listen for changes in the data
+            databaseReference.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if (isAdded()) {
+                        List<String> uniqueAddresses = new ArrayList<>();
 
-                // Iterate through the data and extract unique addresses
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    String address = snapshot.child("address").getValue(String.class);
+                        // Iterate through the data and extract unique addresses
+                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                            String address = snapshot.child("address").getValue(String.class);
 
-                    // Check if the address is not already in the list
-                    if (address != null && !uniqueAddresses.contains(address)) {
-                        uniqueAddresses.add(address);
+                            // Check if the address is not already in the list
+                            if (address != null && !uniqueAddresses.contains(address)) {
+                                uniqueAddresses.add(address);
+                            }
+                        }
+
+                        if (uniqueAddresses.isEmpty()) {
+                            uniqueAddresses.add("No Schedule");
+                        }
+
+                        // Create an ArrayAdapter with the unique addresses
+                        ArrayAdapter<String> adapter = new ArrayAdapter<>(
+                                requireActivity(),
+                                android.R.layout.simple_spinner_item,
+                                uniqueAddresses
+                        );
+
+                        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        spinner.setAdapter(adapter);
                     }
+                    }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    // Handle errors if needed
                 }
-
-                if (uniqueAddresses.isEmpty()) {
-                    uniqueAddresses.add("No Schedule");
-                }
-
-                // Create an ArrayAdapter with the unique addresses
-                ArrayAdapter<String> adapter = new ArrayAdapter<>(
-                        requireActivity(),
-                        android.R.layout.simple_spinner_item,
-                        uniqueAddresses
-                );
-
-                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                spinner.setAdapter(adapter);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                // Handle errors if needed
-            }
-        });
+            });
+        }
     }
 
     //for the spinner

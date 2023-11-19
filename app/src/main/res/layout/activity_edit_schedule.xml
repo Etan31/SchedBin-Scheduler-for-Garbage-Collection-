@@ -148,12 +148,12 @@
         </ScrollView>
     </TableLayout>
 
-<!--android:visibility="gone"-->
+
     <LinearLayout
         android:id="@+id/linearLayout_inputs"
         android:layout_width="416dp"
         android:layout_height="391dp"
-
+        android:visibility="gone"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
