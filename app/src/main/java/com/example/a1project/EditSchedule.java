@@ -1,7 +1,9 @@
 package com.example.a1project;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
@@ -27,7 +29,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 
 public class EditSchedule extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
@@ -43,6 +47,7 @@ public class EditSchedule extends AppCompatActivity implements AdapterView.OnIte
     private LinearLayout linearLayoutInputs;
     Button backBtn2;
 
+    private Calendar calendar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,6 +110,24 @@ public class EditSchedule extends AppCompatActivity implements AdapterView.OnIte
                 showToast("Row updated successfully");
                 linearLayoutInputs.setVisibility(View.GONE);
             }
+        });
+
+
+
+        calendar = Calendar.getInstance();
+        dateAutoCompleteTextView.setOnClickListener(v -> {
+            int year = calendar.get(Calendar.YEAR);
+            int month = calendar.get(Calendar.MONTH);
+            int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+            DatePickerDialog datePicker = new DatePickerDialog(this, (view, year1, month1, day1) -> {
+                // Display the selected date in the format mm/dd/yyyy
+                String selectedDate = String.format(Locale.US, "%02d/%02d/%d", month1 + 1, day1, year1);
+                dateAutoCompleteTextView.setText(selectedDate);
+            }, year, month, day);
+
+            datePicker.show();
+            Log.d("DatePicker", "Date picker dialog opened.");
         });
 
 
