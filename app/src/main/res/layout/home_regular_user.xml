@@ -7,13 +7,175 @@
     android:background="@color/main_color"
     tools:context=".ActivityHomeRegularUser">
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="131dp"
-        android:text="Regular user"
+
+    <Spinner
+        android:id="@+id/DropDown_spinner_for_location"
+        android:layout_width="325dp"
+        android:layout_height="48dp"
+        android:background="@drawable/bg_viewsched"
+        android:drawableEnd="@drawable/ic_dropdown"
+        android:paddingStart="10dp"
+        android:text="@string/no_schedule"
+        android:textAlignment="textStart"
+        android:textAppearance="@style/dropDown_noSched"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.105" />
+
+    <TextView
+        android:id="@+id/calendar"
+        android:layout_width="113dp"
+        android:layout_height="29dp"
+        android:gravity="top"
+        android:text="@string/calendar"
+        android:textAppearance="@style/calendar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/DropDown_spinner_for_location"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/schedule_of"
+        android:layout_width="192dp"
+        android:layout_height="19dp"
+        android:text="schedule for this month"
+        android:textAlignment="center"
+        android:textAppearance="@style/schedule_of"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/calendar" />
+
+    <com.prolificinteractive.materialcalendarview.MaterialCalendarView
+        android:id="@+id/Admin_calendarView"
+        android:layout_width="339dp"
+        android:layout_height="303dp"
+        android:background="@drawable/bg_calendar1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/schedule_of" />
+
+    <TableLayout
+        android:id="@+id/schedule_tableLayout"
+        android:layout_width="325dp"
+        android:layout_height="188dp"
+        android:background="#54FBFFDC"
+        app:layout_constraintBottom_toTopOf="@+id/backBtn2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TableRow
+            android:id="@+id/schedule_th"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="#D2FBFFDC">
+
+            <TextView
+                android:id="@+id/tr_date"
+                android:layout_width="162dp"
+                android:layout_height="30dp"
+                android:gravity="center"
+                android:text="@string/date_header"
+                android:textAlignment="center"
+                android:textAppearance="@style/Headers" />
+
+            <TextView
+                android:id="@+id/tr_garbageType"
+                android:layout_width="163dp"
+                android:layout_height="30dp"
+                android:gravity="center"
+                android:text="@string/garbage_type"
+                android:textAlignment="center"
+                android:textAppearance="@style/Headers" />
+
+        </TableRow>
+
+        <ScrollView
+            android:layout_width="296dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/schedule_tableLayout"
+            app:layout_constraintStart_toStartOf="@+id/schedule_tableLayout"
+            app:layout_constraintTop_toBottomOf="@+id/schedule_th">
+
+            <TableLayout
+                android:id="@+id/data_table_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:focusable="true"
+                android:textAlignment="textStart"
+                tools:ignore="TouchTargetSizeCheck">
+
+                <TableRow
+                    android:id="@+id/schedule_td"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/tr_date2"
+                        android:layout_width="159dp"
+                        android:layout_height="match_parent"
+                        android:text=""
+                        android:textAlignment="textStart" />
+
+                    <TextView
+                        android:id="@+id/tr_garbageType2"
+                        android:layout_width="166dp"
+                        android:layout_height="match_parent"
+                        android:text=""
+                        android:textAlignment="textStart" />
+
+                </TableRow>
+            </TableLayout>
+        </ScrollView>
+    </TableLayout>
+
+    <Button
+        android:id="@+id/backBtn2"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="14dp"
+        android:layout_marginEnd="22dp"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="@color/dark_brown"
+        android:contentDescription="@string/backbtn"
+        android:drawableEnd="@drawable/ic_btn_logout"
+        android:drawableTint="@color/color2"
+        android:paddingEnd="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="RtlSymmetry" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="50sp"
+        android:layout_height="50sp"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@mipmap/sched_bin_round" />
+
+    <TextView
+        android:id="@+id/text1"
+        android:layout_width="311dp"
+        android:layout_height="41dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:fontFamily="@font/montserrat_bold"
+        android:text="Welcome SchedBin"
+        android:textColor="@color/dark_brown"
+        android:textSize="28sp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imageView"
+        app:layout_constraintTop_toTopOf="@+id/imageView" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
