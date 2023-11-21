@@ -48,8 +48,6 @@ public class addSchedule_activity extends AppCompatActivity implements AdapterVi
 
         TextInputLayout dateInputLayout = findViewById(R.id.layout_addSched_date);
         AutoCompleteTextView dateAutoCompleteTextView = findViewById(R.id.addSched_date);
-//        TextInputLayout timeTextInputLayout = findViewById(R.id.layout_addSched_time);
-//        AutoCompleteTextView timeAutoCompleteTextView = findViewById(R.id.addSched_time);
         AutoCompleteTextView addressAutoCompleteTextView = findViewById(R.id.addSched_address);
         Button addScheduleButton = findViewById(R.id.add_schedule_Btn);
 
@@ -117,29 +115,7 @@ public class addSchedule_activity extends AppCompatActivity implements AdapterVi
             Log.d("DatePicker", "Date picker dialog opened.");
         });
 
-//        timeAutoCompleteTextView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                int hour = calendar.get(Calendar.HOUR);
-//                int minute = calendar.get(Calendar.MINUTE);
-//
-//                TimePickerDialog timePicker = new TimePickerDialog(addSchedule_activity.this, new TimePickerDialog.OnTimeSetListener() {
-//                    @Override
-//                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-//                        Calendar selectedTime = Calendar.getInstance();
-//                        selectedTime.set(Calendar.HOUR_OF_DAY, hourOfDay);
-//                        selectedTime.set(Calendar.MINUTE, minute);
-//
-//                        // Display the selected time in the 12-hour format with AM/PM
-//                        SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm a", Locale.US);
-//                        String selectedTimeStr = timeFormat.format(selectedTime.getTime());
-//                        timeAutoCompleteTextView.setText(selectedTimeStr);
-//                    }
-//                }, hour, minute, false);
-//
-//                timePicker.show();
-//            }
-//        });
+
     }
 
 

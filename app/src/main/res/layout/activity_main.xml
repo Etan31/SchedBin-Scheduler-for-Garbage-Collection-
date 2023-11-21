@@ -161,30 +161,4 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-    <!--    <Button-->
-    <!--        android:id="@+id/create_accnt_Btn"-->
-    <!--        android:layout_width="100dp"-->
-    <!--        android:layout_height="33dp"-->
-    <!--        android:background="?android:attr/selectableItemBackground"-->
-    <!--        android:gravity="center"-->
-    <!--        android:text="@string/create_one"-->
-    <!--        android:textAppearance="@style/create_one"-->
-    <!--        tools:ignore="TouchTargetSizeCheck"-->
-    <!--        tools:layout_editor_absoluteX="207dp"-->
-    <!--        tools:layout_editor_absoluteY="518dp" />-->
-
-    <!--    <TextView-->
-    <!--        android:id="@+id/no_account"-->
-    <!--        android:layout_width="103dp"-->
-    <!--        android:layout_height="33dp"-->
-    <!--        android:layout_alignParentTop="true"-->
-    <!--        android:layout_centerHorizontal="true"-->
-    <!--        android:fontFamily="@font/montserrat_regular"-->
-    <!--        android:gravity="center_horizontal|center"-->
-    <!--        android:text="@string/no_account"-->
-    <!--        android:textAppearance="@style/no_account"-->
-    <!--        tools:layout_editor_absoluteX="104dp"-->
-    <!--        tools:layout_editor_absoluteY="518dp" />-->
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>
