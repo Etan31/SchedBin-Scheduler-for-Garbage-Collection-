@@ -63,6 +63,8 @@ public class ActivityHomeRegularUser extends AppCompatActivity implements Adapte
         setContentView(R.layout.home_regular_user); // Replace with your activity layout
 
 
+//        helwelkfha;sojdncepaoi
+//        vneorgn
         mContext = this;
         Context context = this;
 

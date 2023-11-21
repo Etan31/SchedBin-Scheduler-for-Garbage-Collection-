@@ -33,7 +33,7 @@ public class MainActivity2 extends AppCompatActivity {
     Button backBtn2;
     private FirebaseAuth mAuth;
 
-    private TextInputEditText passwordEditText, emailEditText;
+    private TextInputEditText passwordEditText, emailEditText, addressEditText, nameEditText, houseNameEditText, numberEditText ;
 
     Button save_btn2;
 
@@ -110,12 +110,20 @@ public class MainActivity2 extends AppCompatActivity {
                                 Map<String, Object> userValues = new HashMap<>();
                                 userValues.put("password", password);
                                 userValues.put("email", email);
+//                                    userValues.put("name", name);
+//                                    userValues.put("address", address);
+//                                    userValues.put("number", number);
+//                                    userValues.put("houseName", houseName);
 
                                 databaseReference.setValue(userValues)
                                         .addOnSuccessListener(unused -> {
                                             Toast.makeText(MainActivity2.this, "Success! Check your email for verification", Toast.LENGTH_SHORT).show();
                                             passwordEditText.setText("");
                                             emailEditText.setText("");
+//                                                nameEditText.setText("");
+//                                                addressEditText.setText("");
+//                                                numberEditText.setText("");
+//                                                houseNameEditText.setText("");
                                         })
                                         .addOnFailureListener(e -> {
                                             Toast.makeText(MainActivity2.this, "Account creation failed. Please check your details and retry.", Toast.LENGTH_LONG).show();
