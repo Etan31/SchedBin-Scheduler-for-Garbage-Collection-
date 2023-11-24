@@ -33,7 +33,7 @@ import java.util.Locale;
 import java.util.Objects;
 
 public class addSchedule_activity extends AppCompatActivity implements  AdapterView.OnItemSelectedListener, DeleteDialogFragment.DeleteDialogListener {
-//    TODO: when updating schedule, the schdule adds a new schedul, it does not change or update the clicked row.
+    // TODO: will add first the data to the database before showing the Toast message
 
     Button backBtn2;
     private Calendar calendar;
@@ -233,7 +233,7 @@ public class addSchedule_activity extends AppCompatActivity implements  AdapterV
                             addScheduleToFirebase(repeatedDate.format(formatter), address, garbageType, repeatType);
                         }
                     }
-                } else if (repeatType.equals("Every year")) {
+                } else if (repeatType.equals("Every Year")) {
                     // Generate schedules for every year
                     for (int i = 0; i < 5; i++) {
                         // Increment the year for each year
@@ -310,6 +310,7 @@ public class addSchedule_activity extends AppCompatActivity implements  AdapterV
             }
         });
     }
+
 
 
 
