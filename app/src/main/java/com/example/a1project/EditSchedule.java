@@ -34,9 +34,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
-public class EditSchedule extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class EditSchedule extends AppCompatActivity implements AdapterView.OnItemSelectedListener,DeleteDialogFragment.DeleteDialogListener {
     //      TODO: Fix the bug of the BackPressed, it should be redirected to SettingsFragment instead of Schedulefragment
-
+    //      TODO: uses unchecked or unsafe operations.
 
     private Spinner garbageTypeSpinner;
     private Spinner repeatTimeSpinner;
@@ -60,6 +60,9 @@ public class EditSchedule extends AppCompatActivity implements AdapterView.OnIte
 
         backBtn2 = findViewById(R.id.backBtn2);
         backBtn2.setOnClickListener(v -> BackPressed());
+
+
+        Button deleteButton = findViewById(R.id.btn_delete);
 
         initAndPopulateSpinners();
 
@@ -224,6 +227,20 @@ public class EditSchedule extends AppCompatActivity implements AdapterView.OnIte
                 // Handle errors
             }
         });
+
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Show the DeleteDialogFragment when the delete button is clicked
+                showDeleteDialog();
+            }
+
+            private void showDeleteDialog() {
+                DeleteDialogFragment deleteDialog = new DeleteDialogFragment();
+                deleteDialog.show(getSupportFragmentManager(), "delete_dialog");
+            }
+        });
+
 
 
 
@@ -401,5 +418,21 @@ public class EditSchedule extends AppCompatActivity implements AdapterView.OnIte
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
 
+    }
+
+    @Override
+    public void onDeleteConfirmed(boolean deleteThisEvent, boolean deleteThisAndFollowingEvents) {
+        // Handle the delete confirmation
+        if (deleteThisEvent) {
+            // Delete only this event
+        } else if (deleteThisAndFollowingEvents) {
+            // Delete this and following events
+        }
+        // Add your logic to perform the delete operation
+
+    }
+
+    @Override
+    public void onDeleteCancelled() {
     }
 }

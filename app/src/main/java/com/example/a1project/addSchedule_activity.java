@@ -1,6 +1,7 @@
 package com.example.a1project;
-
 import android.app.DatePickerDialog;
+import android.icu.text.SimpleDateFormat;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -11,21 +12,33 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.a1project.adapter.PlaceAutoSuggestAdapter;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.FirebaseApp;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
+import java.text.ParseException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
+import java.util.Objects;
 
-public class addSchedule_activity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
+public class addSchedule_activity extends AppCompatActivity implements  AdapterView.OnItemSelectedListener, DeleteDialogFragment.DeleteDialogListener {
+//    TODO: when updating schedule, the schdule adds a new schedul, it does not change or update the clicked row.
 
     Button backBtn2;
     private Calendar calendar;
+
+    private DatabaseReference databaseReference;
 
 
     @Override
@@ -43,6 +56,7 @@ public class addSchedule_activity extends AppCompatActivity implements AdapterVi
 
         //for storing schedules to firebase
         FirebaseApp.initializeApp(this);
+        databaseReference = FirebaseDatabase.getInstance().getReference("schedules");
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("schedules");
 
 
@@ -74,10 +88,85 @@ public class addSchedule_activity extends AppCompatActivity implements AdapterVi
         //end of //for displaying spinners
 
         //for adding data to firebase
+        //for the repeating schedule with the spinner
+
+//        addScheduleButton.setOnClickListener(view -> {
+//            // Get values from input fields
+//            String date = dateAutoCompleteTextView.getText().toString();
+//            String address = addressAutoCompleteTextView.getText().toString();
+//            String garbageType = spinner_type_of_garbage.getSelectedItem().toString();
+//            String repeatType = spinnerDoesNotRepeat.getSelectedItem().toString();
+//
+//            // Create a unique key for the schedule
+//            String scheduleKey = databaseReference.push().getKey();
+//
+//            // Create a Schedule object
+//            Schedule schedule;
+//
+//            // Add conditional checks for repeat type
+//            if (repeatType.equals("Does not Repeat")) {
+//                // Schedule does not repeat
+//                schedule = new Schedule(date, address, garbageType, repeatType);
+//            } else {
+//                // Schedule repeats, handle different repeat types based on the selected date
+//
+//                // Extract day, month, and year from the selected date
+//                String[] dateParts = date.split("/");
+//                int dayOfMonth = Integer.parseInt(dateParts[1]);
+//                int monthOfYear = Integer.parseInt(dateParts[0]);
+//                int year = Integer.parseInt(dateParts[2]);
+//
+//                // For Everyday
+//                if (repeatType.equals("Everyday")) {
+//                    // Set the repeatType as it is
+//                    schedule = new Schedule(date, address, garbageType, repeatType);
+//                }
+//
+//
+//                // For Every Week
+//                else if (repeatType.equals("Every week")) {
+//                    // Determine the day of the week based on the selected date
+//                    Calendar calendar = Calendar.getInstance();
+//                    calendar.set(year, monthOfYear - 1, dayOfMonth);
+//                    int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
+//
+//                    // Set the repeatType as it is, and add additional property for the day of the week
+//                    schedule = new Schedule(date, address, garbageType, repeatType, String.valueOf(dayOfWeek), null);
+//                }
+//
+//                // For Every Month
+//                else if (repeatType.equals("Every month")) {
+//                    // Set the repeatType as it is, and add additional property for the month
+//                    schedule = new Schedule(date, address, garbageType, repeatType, null, String.valueOf(monthOfYear));
+//                }
+//
+//                // For Every Year
+//                else if (repeatType.equals("Every Year")) {
+//                    // Set the repeatType as it is
+//                    schedule = new Schedule(date, address, garbageType, repeatType);
+//                }
+//            }
+//
+//            // Add conditional checks for repeat type
+//            if (repeatType.equals("Does not Repeat")) {
+//                // Schedule does not repeat
+//                schedule = new Schedule(date, address, garbageType, repeatType);
+//            } else {
+//                // Schedule repeats, handle different repeat types
+//                // You may need to add additional logic based on your requirements
+//                // For now, let's just set the repeatType as it is
+//                schedule = new Schedule(date, address, garbageType, repeatType);
+//            }
+//
+//            // Save the schedule to Firebase
+//            databaseReference.child(scheduleKey).setValue(schedule);
+//
+//            Toast.makeText(this, "Schedule added to Firebase", Toast.LENGTH_SHORT).show();
+//        });
+
         addScheduleButton.setOnClickListener(view -> {
             // Get values from input fields
             String date = dateAutoCompleteTextView.getText().toString();
-//            String time = timeAutoCompleteTextView.getText().toString();
             String address = addressAutoCompleteTextView.getText().toString();
             String garbageType = spinner_type_of_garbage.getSelectedItem().toString();
             String repeatType = spinnerDoesNotRepeat.getSelectedItem().toString();
@@ -85,16 +174,84 @@ public class addSchedule_activity extends AppCompatActivity implements AdapterVi
             // Create a unique key for the schedule
             String scheduleKey = databaseReference.push().getKey();
 
-            // Create a Schedule object
-            // Create Schedule without time
-            Schedule schedule = new Schedule(date, address, garbageType, repeatType);
+            // Add conditional checks for repeat type
+            if (repeatType.equals("Does not Repeat")) {
+                // Schedule does not repeat
+                Schedule schedule = new Schedule(date, address, garbageType, repeatType);
+                // Save the schedule to Firebase
+                databaseReference.child(scheduleKey).setValue(schedule);
+            } else {
+                // Schedule repeats, handle different repeat types based on the selected date
 
+                // Parse the selected date
+                DateTimeFormatter formatter = null;
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+                }
+                LocalDate selectedDate = null;
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    selectedDate = LocalDate.parse(date, formatter);
+                }
 
-            // Save the schedule to Firebase
-            databaseReference.child(scheduleKey).setValue(schedule);
+                // Create a base schedule without additional properties
+                Schedule baseSchedule = new Schedule(date, address, garbageType, repeatType);
 
-             Toast.makeText(this, "Schedule added to Firebase", Toast.LENGTH_SHORT).show();
+                // Add additional schedules based on repeatType
+                if (repeatType.equals("Everyday")) {
+                    // Generate schedules for every day
+                    for (int i = 0; i < 365; i++) {
+                        // Increment the date for each day
+                        LocalDate repeatedDate = null;
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                            repeatedDate = selectedDate.plusDays(i);
+                        }
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                            addScheduleToFirebase(repeatedDate.format(formatter), address, garbageType, repeatType);
+                        }
+                    }
+                } else if (repeatType.equals("Every week")) {
+                    // Generate schedules for every week
+                    for (int i = 0; i < 52; i++) {
+                        // Increment the date for each week (7 days)
+                        LocalDate repeatedDate = null;
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                            repeatedDate = selectedDate.plusWeeks(i);
+                        }
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                            addScheduleToFirebase(repeatedDate.format(formatter), address, garbageType, repeatType);
+                        }
+                    }
+                } else if (repeatType.equals("Every month")) {
+                    // Generate schedules for every month
+                    for (int i = 0; i < 12; i++) {
+                        // Increment the month for each month
+                        LocalDate repeatedDate = null;
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                            repeatedDate = selectedDate.plusMonths(i);
+                        }
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                            addScheduleToFirebase(repeatedDate.format(formatter), address, garbageType, repeatType);
+                        }
+                    }
+                } else if (repeatType.equals("Every year")) {
+                    // Generate schedules for every year
+                    for (int i = 0; i < 5; i++) {
+                        // Increment the year for each year
+                        LocalDate repeatedDate = null;
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                            repeatedDate = selectedDate.plusYears(i);
+                        }
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                            addScheduleToFirebase(repeatedDate.format(formatter), address, garbageType, repeatType);
+                        }
+                    }
+                }
+            }
+
+            deletePastSchedules();
+            Toast.makeText(this, "Schedules added to Firebase", Toast.LENGTH_SHORT).show();
         });
+
 
 
 
@@ -115,7 +272,43 @@ public class addSchedule_activity extends AppCompatActivity implements AdapterVi
             Log.d("DatePicker", "Date picker dialog opened.");
         });
 
+    }
 
+    // Helper method to add a schedule to Firebase
+    private void addScheduleToFirebase(String date, String address, String garbageType, String repeatType) {
+        Schedule repeatedSchedule = new Schedule(date, address, garbageType, repeatType);
+        databaseReference.child(Objects.requireNonNull(databaseReference.push().getKey())).setValue(repeatedSchedule);
+    }
+
+    private void deletePastSchedules() {
+        Calendar currentCalendar = Calendar.getInstance();
+        Date currentDate = currentCalendar.getTime();
+
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    Schedule schedule = snapshot.getValue(Schedule.class);
+
+                    // Parse the schedule date and compare with the current date
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy", Locale.getDefault());
+                    try {
+                        Date scheduleDate = dateFormat.parse(schedule.getDate());
+                        if (scheduleDate != null && scheduleDate.before(currentDate)) {
+                            // Schedule is in the past, delete it
+                            snapshot.getRef().removeValue();
+                        }
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.e("Firebase", "Error deleting past schedules: " + databaseError.getMessage());
+            }
+        });
     }
 
 
@@ -131,5 +324,23 @@ public class addSchedule_activity extends AppCompatActivity implements AdapterVi
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
 
+    }
+
+    @Override
+    public void onDeleteConfirmed(boolean deleteThisEvent, boolean deleteThisAndFollowingEvents) {
+        // Handle the delete confirmation
+        if (deleteThisEvent) {
+            // Delete only this event
+        } else if (deleteThisAndFollowingEvents) {
+            // Delete this and following events
+        }
+        // Add your logic to perform the delete operation
+    }
+
+    @Override
+    public void onDeleteCancelled() {
+        // Handle the cancel action
+        // This can be empty or include any specific behavior you want
+        onBackPressed();
     }
 }
