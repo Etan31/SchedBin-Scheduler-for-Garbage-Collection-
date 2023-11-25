@@ -2,6 +2,7 @@ package com.example.a1project;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.icu.text.SimpleDateFormat;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -29,8 +30,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
@@ -425,15 +428,13 @@ public class EditSchedule extends AppCompatActivity implements AdapterView.OnIte
     public void onDeleteConfirmed(boolean deleteThisEvent, boolean deleteThisAndFollowingEvents) {
         TextInputLayout dateInputLayout = findViewById(R.id.layout_addSched_date);
         TextInputLayout addressInputLayout = findViewById(R.id.layout_addSched_address);
+        AutoCompleteTextView dateAutoCompleteTextView = dateInputLayout.findViewById(R.id.addSched_date);
+        AutoCompleteTextView addressAutoCompleteTextView = addressInputLayout.findViewById(R.id.addSched_address);
 
 
         // Handle the delete confirmation for "This Event" radio button Checked
         if (deleteThisEvent) {
-            // Delete only this event
-            AutoCompleteTextView dateAutoCompleteTextView = dateInputLayout.findViewById(R.id.addSched_date);
-            AutoCompleteTextView addressAutoCompleteTextView = addressInputLayout.findViewById(R.id.addSched_address);
 
-            // Get the current values from your input fields and spinners
             String selectedDate = dateAutoCompleteTextView.getText().toString();
             String selectedAddress = addressAutoCompleteTextView.getText().toString();
             String selectedGarbageType = garbageTypeSpinner.getSelectedItem().toString();
@@ -470,11 +471,65 @@ public class EditSchedule extends AppCompatActivity implements AdapterView.OnIte
             });
 
             // Add code to update your UI or perform any other actions after deletion
-        } else if (deleteThisAndFollowingEvents) {
-            // Delete this and following events
-            // Implement this part based on your requirements
+        }else if (deleteThisAndFollowingEvents) {
+                // Delete this and following events
+
+                // Get the current values from your input fields and spinners
+                String selectedDate = dateAutoCompleteTextView.getText().toString();
+                String selectedAddress = addressAutoCompleteTextView.getText().toString();
+                String selectedGarbageType = garbageTypeSpinner.getSelectedItem().toString();
+                String selectedRepeatType = repeatTimeSpinner.getSelectedItem().toString();
+
+                DatabaseReference schedulesRef = FirebaseDatabase.getInstance().getReference("schedules");
+
+                schedulesRef.orderByChild("address").equalTo(selectedAddress)
+                        .addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                // Iterate through the results and delete matching schedules
+                                for (DataSnapshot scheduleSnapshot : dataSnapshot.getChildren()) {
+                                    String scheduleDate = scheduleSnapshot.child("date").getValue(String.class);
+                                    String garbageType = scheduleSnapshot.child("garbageType").getValue(String.class);
+                                    String repeatType = scheduleSnapshot.child("repeatType").getValue(String.class);
+
+                                    // Check if the schedule is on or after the selected date
+                                    if (compareDates(scheduleDate, selectedDate) >= 0
+                                            && selectedGarbageType.equals(garbageType)
+                                            && selectedRepeatType.equals(repeatType)) {
+                                        // Delete the matching schedule
+                                        scheduleSnapshot.getRef().removeValue();
+                                    }
+                                }
+                            }
+
+                            private int compareDates(String date1, String date2) {
+                                // Assuming date format is "MM/dd/yyyy"
+                                SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
+                                try {
+                                    Date d1 = sdf.parse(date1);
+                                    Date d2 = sdf.parse(date2);
+
+                                    if (d1 != null && d2 != null) {
+                                        return d1.compareTo(d2);
+                                    }
+                                } catch (ParseException e) {
+                                    e.printStackTrace();
+                                }
+
+                                return 0;
+                            }
+
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+                                // Handle errors
+                            }
+                        });
+
+                // Add code to update your UI or perform any other actions after deletion
+            }
+
         }
-    }
 
 
     @Override
