@@ -470,9 +470,9 @@ public class EditSchedule extends AppCompatActivity implements AdapterView.OnIte
                 }
             });
 
-            // Add code to update your UI or perform any other actions after deletion
+            // Handle the delete confirmation for "This and following Events" radio button Checked
         }else if (deleteThisAndFollowingEvents) {
-                // Delete this and following events
+
 
                 // Get the current values from your input fields and spinners
                 String selectedDate = dateAutoCompleteTextView.getText().toString();
@@ -525,12 +525,11 @@ public class EditSchedule extends AppCompatActivity implements AdapterView.OnIte
                                 // Handle errors
                             }
                         });
-
-                // Add code to update your UI or perform any other actions after deletion
             }
+        //end of Delete this and following events
 
         }
-
+        //end of delete function
 
     @Override
     public void onDeleteCancelled() {
