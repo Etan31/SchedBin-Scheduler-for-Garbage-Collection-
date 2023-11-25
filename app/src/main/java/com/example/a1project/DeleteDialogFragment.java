@@ -36,41 +36,40 @@ public class DeleteDialogFragment extends DialogFragment {
         LayoutInflater inflater = requireActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.delete_dialog, null);
 
-        builder.setView(view)
-                .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        // Handle delete button click
-                        RadioGroup radioGroup = view.findViewById(R.id.radio_group);
-                        int selectedRadioButtonId = radioGroup.getCheckedRadioButtonId();
+        builder.setView(view);
+        builder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // Handle delete button click
+                RadioGroup radioGroup = view.findViewById(R.id.radio_group);
+                int selectedRadioButtonId = radioGroup.getCheckedRadioButtonId();
 
-                        if (selectedRadioButtonId != -1) {
-                            RadioButton selectedRadioButton = view.findViewById(selectedRadioButtonId);
+                if (selectedRadioButtonId != -1) {
+                    RadioButton selectedRadioButton = view.findViewById(selectedRadioButtonId);
 
-                            boolean deleteThisEvent = selectedRadioButton.getId() == R.id.radio_this_event;
-                            boolean deleteThisAndFollowingEvents = selectedRadioButton.getId() == R.id.radio_this_and_following_events;
+                    boolean deleteThisEvent = selectedRadioButton.getId() == R.id.radio_this_event;
+                    boolean deleteThisAndFollowingEvents = selectedRadioButton.getId() == R.id.radio_this_and_following_events;
 
-                            listener.onDeleteConfirmed(deleteThisEvent, deleteThisAndFollowingEvents);
-                        } else {
-                            // No radio button selected
-                            // Handle accordingly (show an error, etc.)
-                        }
-                    }
-                })
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        // Handle cancel button click
-                        listener.onDeleteCancelled();
-                    }
-                })
-                .setOnCancelListener(new DialogInterface.OnCancelListener() {
-                    @Override
-                    public void onCancel(DialogInterface dialog) {
-                        // Handle cancel when clicking outside the dialog or pressing back
-                        listener.onDeleteCancelled();
-                    }
-                });
+                    listener.onDeleteConfirmed(deleteThisEvent, deleteThisAndFollowingEvents);
+                } else {
+                    // No radio button selected
+                    // Handle accordingly (show an error, etc.)
+                }
+            }
+        }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // Handle cancel button click
+                listener.onDeleteCancelled();
+            }
+        });
+        builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                // Handle cancel when clicking outside the dialog or pressing back
+                listener.onDeleteCancelled();
+            }
+        });
 
         return builder.create();
     }
