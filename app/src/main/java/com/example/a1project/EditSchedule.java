@@ -26,6 +26,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -422,15 +423,59 @@ public class EditSchedule extends AppCompatActivity implements AdapterView.OnIte
 
     @Override
     public void onDeleteConfirmed(boolean deleteThisEvent, boolean deleteThisAndFollowingEvents) {
-        // Handle the delete confirmation
+        TextInputLayout dateInputLayout = findViewById(R.id.layout_addSched_date);
+        TextInputLayout addressInputLayout = findViewById(R.id.layout_addSched_address);
+
+
+        // Handle the delete confirmation for "This Event" radio button Checked
         if (deleteThisEvent) {
             // Delete only this event
+            AutoCompleteTextView dateAutoCompleteTextView = dateInputLayout.findViewById(R.id.addSched_date);
+            AutoCompleteTextView addressAutoCompleteTextView = addressInputLayout.findViewById(R.id.addSched_address);
+
+            // Get the current values from your input fields and spinners
+            String selectedDate = dateAutoCompleteTextView.getText().toString();
+            String selectedAddress = addressAutoCompleteTextView.getText().toString();
+            String selectedGarbageType = garbageTypeSpinner.getSelectedItem().toString();
+            String selectedRepeatType = repeatTimeSpinner.getSelectedItem().toString();
+
+            DatabaseReference schedulesRef = FirebaseDatabase.getInstance().getReference("schedules");
+
+            Query deleteQuery = schedulesRef.orderByChild("date").equalTo(selectedDate);
+
+            deleteQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    // Iterate through the results and find the matching schedule
+                    for (DataSnapshot scheduleSnapshot : dataSnapshot.getChildren()) {
+                        String address = scheduleSnapshot.child("address").getValue(String.class);
+                        String garbageType = scheduleSnapshot.child("garbageType").getValue(String.class);
+                        String repeatType = scheduleSnapshot.child("repeatType").getValue(String.class);
+
+                        // Check if the current schedule matches the selected values
+                        if (selectedAddress.equals(address)
+                                && selectedGarbageType.equals(garbageType)
+                                && selectedRepeatType.equals(repeatType)) {
+                            // Delete the matching schedule
+                            scheduleSnapshot.getRef().removeValue();
+                            break; // Assuming there's only one matching schedule
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    // Handle errors
+                }
+            });
+
+            // Add code to update your UI or perform any other actions after deletion
         } else if (deleteThisAndFollowingEvents) {
             // Delete this and following events
+            // Implement this part based on your requirements
         }
-        // Add your logic to perform the delete operation
-
     }
+
 
     @Override
     public void onDeleteCancelled() {
