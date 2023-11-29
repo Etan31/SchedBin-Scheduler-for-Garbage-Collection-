@@ -8,163 +8,155 @@
     tools:context=".addSchedule_activity">
 <!--    TODO: the Date and Address input should be required to fill on-->
 
-    <ScrollView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent">
+        android:layout_height="728dp"
+        android:layout_marginBottom="3dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/schedule_yo"
+            android:layout_width="209dp"
+            android:layout_height="122dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="44dp"
+            android:gravity="center_horizontal|top"
+            android:text="@string/schedule_add"
+            android:textAppearance="@style/schedule_add"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="TextContrastCheck" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layout_addSched_date"
+            android:layout_width="330dp"
+            android:layout_height="62dp"
+            android:layout_marginTop="40dp"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/schedule_yo">
+
+            <AutoCompleteTextView
+                android:id="@+id/addSched_date"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="@drawable/input_bg"
+                android:contentDescription="date format"
+                android:drawableStart="@drawable/ic_calendar"
+                android:drawablePadding="10dp"
+                android:focusable="true"
+                android:hint="@string/enter_date"
+                android:inputType="date"
+                android:paddingStart="10dp"
+                tools:ignore="EditableContentDescCheck" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layout_addSched_address"
+            android:layout_width="330dp"
+            android:layout_height="61dp"
+            android:layout_marginTop="30dp"
+            android:focusable="false"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/layout_addSched_date">
+
+            <AutoCompleteTextView
+                android:id="@+id/addSched_address"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="@drawable/input_bg"
+                android:contentDescription="@string/enter_an_address"
+                android:drawableStart="@drawable/ic_map"
+                android:drawablePadding="10dp"
+                android:hint="@string/address"
+                android:inputType="text"
+                android:paddingStart="10dp"
+                tools:ignore="EditableContentDescCheck" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:id="@+id/coordinatorLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayout3"
                 android:layout_width="match_parent"
-                android:layout_height="728dp">
+                android:layout_height="match_parent">
 
-                <TextView
-                    android:id="@+id/schedule_yo"
-                    android:layout_width="209dp"
-                    android:layout_height="122dp"
-                    android:layout_alignParentTop="true"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="44dp"
-                    android:gravity="center_horizontal|top"
-                    android:text="@string/schedule_add"
-                    android:textAppearance="@style/schedule_add"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:ignore="TextContrastCheck" />
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/layout_addSched_date"
+                <Spinner
+                    android:id="@+id/spinner_typeofgarbage"
                     android:layout_width="330dp"
-                    android:layout_height="62dp"
-                    android:layout_marginTop="40dp"
-                    android:focusable="false"
-                    android:focusableInTouchMode="false"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/schedule_yo">
-
-                    <AutoCompleteTextView
-                        android:id="@+id/addSched_date"
-                        android:layout_width="match_parent"
-                        android:layout_height="48dp"
-                        android:background="@drawable/input_bg"
-                        android:contentDescription="date format"
-                        android:drawableStart="@drawable/ic_calendar"
-                        android:drawablePadding="10dp"
-                        android:focusable="true"
-                        android:hint="@string/enter_date"
-                        android:inputType="date"
-                        android:paddingStart="10dp"
-                        tools:ignore="EditableContentDescCheck" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/layout_addSched_address"
-                    android:layout_width="330dp"
-                    android:layout_height="61dp"
-                    android:layout_marginTop="30dp"
-                    android:focusable="false"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/layout_addSched_date">
-
-                    <AutoCompleteTextView
-                        android:id="@+id/addSched_address"
-                        android:layout_width="match_parent"
-                        android:layout_height="48dp"
-                        android:background="@drawable/input_bg"
-                        android:contentDescription="@string/enter_an_address"
-                        android:drawableStart="@drawable/ic_map"
-                        android:drawablePadding="10dp"
-                        android:hint="@string/address"
-                        android:inputType="text"
-                        android:paddingStart="10dp"
-                        tools:ignore="EditableContentDescCheck" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <androidx.coordinatorlayout.widget.CoordinatorLayout
-                    android:id="@+id/coordinatorLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="11dp"
+                    android:background="@drawable/bg_recyclesvg"
+                    android:paddingStart="40dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.575" />
 
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/constraintLayout3"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                        <Spinner
-                            android:id="@+id/spinner_typeofgarbage"
-                            android:layout_width="330dp"
-                            android:layout_height="48dp"
-                            android:layout_marginTop="11dp"
-                            android:background="@drawable/bg_recyclesvg"
-                            android:paddingStart="40dp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintHorizontal_bias="0.5"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintVertical_bias="0.575" />
-
-                        <Spinner
-                            android:id="@+id/spinner_doesNotRepeat"
-                            android:layout_width="330dp"
-                            android:layout_height="48dp"
-                            android:layout_marginTop="20dp"
-                            android:background="@drawable/bg_repeatevent"
-                            android:paddingStart="40dp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintHorizontal_bias="0.5"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/spinner_typeofgarbage"
-                            app:layout_constraintVertical_bias="0.101" />
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    <Button
-                        android:id="@+id/backBtn2"
-                        android:layout_width="48dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginTop="16dp"
-                        android:background="@drawable/btn_back_bg"
-                        android:contentDescription="@string/backbtn"
-                        android:drawableEnd="@drawable/ic_backbtn"
-                        android:drawableTint="@color/color3_btns"
-                        android:paddingEnd="10dp"
-                        app:layout_anchor="@+id/constraintLayout3"
-                        app:layout_anchorGravity="start|top"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <Button
-                        android:id="@+id/add_schedule_Btn"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="30dp"
-                        android:background="@drawable/login_btn"
-                        android:text="@string/add_schedule"
-                        android:textAppearance="@style/add_Sched"
-                        app:layout_anchor="@+id/constraintLayout3"
-                        app:layout_anchorGravity="bottom|center" />
-                </androidx.coordinatorlayout.widget.CoordinatorLayout>
+                <Spinner
+                    android:id="@+id/spinner_doesNotRepeat"
+                    android:layout_width="330dp"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/bg_repeatevent"
+                    android:paddingStart="40dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/spinner_typeofgarbage"
+                    app:layout_constraintVertical_bias="0.101" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
-        </LinearLayout>
-    </ScrollView>
+
+            <Button
+                android:id="@+id/backBtn2"
+                android:layout_width="48dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/btn_back_bg"
+                android:contentDescription="@string/backbtn"
+                android:drawableEnd="@drawable/ic_backbtn"
+                android:drawableTint="@color/color3_btns"
+                android:paddingEnd="10dp"
+                app:layout_anchor="@+id/constraintLayout3"
+                app:layout_anchorGravity="start|top"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/add_schedule_Btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="30dp"
+                android:background="@drawable/login_btn"
+                android:text="@string/add_schedule"
+                android:textAppearance="@style/add_Sched"
+                app:layout_anchor="@+id/constraintLayout3"
+                app:layout_anchorGravity="bottom|center" />
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
