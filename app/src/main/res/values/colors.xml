@@ -9,6 +9,9 @@
     <color name="color3_btns">#A4907C</color>
     <color name="dark_brown">#785028</color>
     <color name="transparent">#00FFFFFF</color>
-    <color name="colorDot">#003FFF</color>
+    <color name="green">#00FF00</color>
+    <color name="blue">#0000FF</color>
+    <color name="yellow">#FFFF00</color>
+    <color name="red">#FF0000</color>
 
 </resources>
