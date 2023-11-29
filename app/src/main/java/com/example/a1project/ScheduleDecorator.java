@@ -30,6 +30,6 @@ public class ScheduleDecorator implements DayViewDecorator {
     @Override
     public void decorate(DayViewFacade view) {
         // Customize the appearance of the decorated date (e.g., add a dot)
-        view.addSpan(new DotSpan(5, ContextCompat.getColor(context, R.color.colorDot)));
+        view.addSpan(new DotSpan(5, ContextCompat.getColor(context, R.color.green)));
     }
 }

@@ -1,6 +1,7 @@
 package com.example.a1project;
 
 import android.content.Context;
+import android.content.pm.ActivityInfo;
 import android.icu.text.SimpleDateFormat;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -62,6 +63,7 @@ public class ActivityHomeRegularUser extends AppCompatActivity implements Adapte
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_regular_user); // Replace with your activity layout
 
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         mContext = this;
         Context context = this;

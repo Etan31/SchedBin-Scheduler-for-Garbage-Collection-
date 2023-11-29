@@ -1,5 +1,7 @@
 package com.example.a1project;
+
 import android.app.DatePickerDialog;
+import android.content.pm.ActivityInfo;
 import android.icu.text.SimpleDateFormat;
 import android.os.Build;
 import android.os.Bundle;
@@ -45,6 +47,8 @@ public class addSchedule_activity extends AppCompatActivity implements  AdapterV
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_schedule);
+
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         //for accessing the Address with PlaceAPI autocomplete
         TextInputLayout addressTextInputLayout = findViewById(R.id.layout_addSched_address);

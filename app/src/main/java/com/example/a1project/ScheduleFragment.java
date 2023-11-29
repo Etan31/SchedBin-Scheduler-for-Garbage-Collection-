@@ -1,6 +1,7 @@
 package com.example.a1project;
 
 import android.content.Context;
+import android.content.pm.ActivityInfo;
 import android.icu.text.SimpleDateFormat;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -146,7 +147,7 @@ public class ScheduleFragment extends Fragment implements AdapterView.OnItemSele
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_schedule, container, false);
 
-
+        requireActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         if (!isAdded() || mContext == null) {
             return null; // Fragment is not attached, return null or handle accordingly

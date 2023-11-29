@@ -1,6 +1,7 @@
     package com.example.a1project;
 
     import android.content.Intent;
+    import android.content.pm.ActivityInfo;
     import android.os.Bundle;
     import android.text.TextUtils;
     import android.util.Log;
@@ -31,6 +32,8 @@
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reset_password);
+
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         backBtn2 = findViewById(R.id.backBtn2);
         backBtn2.setOnClickListener(v -> BackPressed());
