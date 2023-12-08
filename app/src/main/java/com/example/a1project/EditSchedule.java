@@ -1,6 +1,7 @@
 package com.example.a1project;
 
 import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.icu.text.SimpleDateFormat;
@@ -17,6 +18,7 @@ import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -32,6 +34,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.text.ParseException;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -50,6 +53,9 @@ public class EditSchedule extends AppCompatActivity implements AdapterView.OnIte
 
     private TableLayout dataTableLayout;
     private LinearLayout linearLayoutInputs;
+
+    private Button btnEditTimeFrom;
+    private Button btnSelectTime_to;
     Button backBtn2;
 
     private Calendar calendar;
@@ -92,6 +98,12 @@ public class EditSchedule extends AppCompatActivity implements AdapterView.OnIte
 
         garbageTypeSpinner = findViewById(R.id.spinner_typeofgarbage);
         repeatTimeSpinner = findViewById(R.id.spinner_doesNotRepeat);
+
+        Button btnEditTimeFrom = findViewById(R.id.btnEdit_Time_from);
+        Button btnEditTimeTo = findViewById(R.id.btnEdit_Time_to);
+
+        btnEditTimeFrom.setOnClickListener(v -> showTimePickerDialog_from_To(btnEditTimeFrom));
+        btnEditTimeTo.setOnClickListener(v -> showTimePickerDialog_from_To(btnEditTimeTo));
 
 
 
@@ -168,6 +180,8 @@ public class EditSchedule extends AppCompatActivity implements AdapterView.OnIte
                     String garbageType = snapshot.child("garbageType").getValue(String.class);
                     String repeatType = snapshot.child("repeatType").getValue(String.class);
                     String address = snapshot.child("address").getValue(String.class);
+                    String startTime = snapshot.child("startTime").getValue(String.class);
+                    String endTime = snapshot.child("endTime").getValue(String.class);
 
                     // Check if the schedule's address matches the selected address
                     if (selectedAddress != null && selectedAddress.equals(address)) {
@@ -206,6 +220,11 @@ public class EditSchedule extends AppCompatActivity implements AdapterView.OnIte
                                     setSpinnerSelection(garbageTypeSpinner, garbageType);
                                     setSpinnerSelection(repeatTimeSpinner, repeatType);
 
+                                    // Set text for btnSelectTime_from and btnSelectTime_to
+                                    btnEditTimeFrom.setText(startTime);
+                                    btnEditTimeTo.setText(endTime);
+
+                                    Toast.makeText(EditSchedule.this, "Start Time: " + startTime, Toast.LENGTH_SHORT).show();
                                 }
                             }
 
@@ -247,10 +266,53 @@ public class EditSchedule extends AppCompatActivity implements AdapterView.OnIte
                 deleteDialog.show(getSupportFragmentManager(), "delete_dialog");
             }
         });
+    }
 
+    //for selecting time "from" and "to"
+    public void showTimePickerDialog_from_To(final Button button) {
+        LocalTime currentTime = null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            currentTime = LocalTime.now();
+        }
+        int hour = 0;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            hour = currentTime.getHour();
+        }
+        int minute = 0;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            minute = currentTime.getMinute();
+        }
 
+        // Determine whether it's AM or PM
+        String amPm;
+        if (hour >= 12) {
+            amPm = "PM";
+            if (hour > 12) {
+                hour -= 12;
+            }
+        } else {
+            amPm = "AM";
+            if (hour == 0) {
+                hour = 12;
+            }
+        }
 
+        TimePickerDialog timePickerDialog = new TimePickerDialog(
+                this,
+                new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                        // Update the text on the button with the selected time
+                        String time = String.format("%02d:%02d %s", (hourOfDay == 0 || hourOfDay == 12) ? 12 : hourOfDay % 12, minute, (hourOfDay < 12) ? "AM" : "PM");
+                        button.setText(time);
+                    }
+                },
+                hour,
+                minute,
+                false  // Set this to false to use 12-hour format
+        );
 
+        timePickerDialog.show();
     }
 
     private void showToast(String message) {
@@ -331,6 +393,9 @@ public class EditSchedule extends AppCompatActivity implements AdapterView.OnIte
         TextInputLayout dateInputLayout = findViewById(R.id.layout_addSched_date);
         TextInputLayout addressInputLayout = findViewById(R.id.layout_addSched_address);
 
+        Button btnEditTimeFrom = findViewById(R.id.btnEdit_Time_from);
+        Button btnEditTimeTo = findViewById(R.id.btnEdit_Time_to);
+
 // Initialize views in the onCreate method
         AutoCompleteTextView dateAutoCompleteTextView = dateInputLayout.findViewById(R.id.addSched_date);
         AutoCompleteTextView addressAutoCompleteTextView = addressInputLayout.findViewById(R.id.addSched_address);
@@ -346,6 +411,8 @@ public class EditSchedule extends AppCompatActivity implements AdapterView.OnIte
                     String garbageType = scheduleSnapshot.child("garbageType").getValue(String.class);
                     String repeatType = scheduleSnapshot.child("repeatType").getValue(String.class);
                     String address = scheduleSnapshot.child("address").getValue(String.class);
+                    String startTime = scheduleSnapshot.child("startTime").getValue(String.class);
+                    String endTime = scheduleSnapshot.child("endTime").getValue(String.class);
 
                     // Check if the schedule's address matches the selected address
                     if (selectedAddress != null && selectedAddress.equals(address)) {
@@ -384,6 +451,13 @@ public class EditSchedule extends AppCompatActivity implements AdapterView.OnIte
                                     addressAutoCompleteTextView.setText(address);
                                     setSpinnerSelection(garbageTypeSpinner, garbageType);
                                     setSpinnerSelection(repeatTimeSpinner, repeatType);
+
+
+                                    // Set text for btnSelectTime_from and btnSelectTime_to
+                                    btnEditTimeFrom.setText(startTime);
+                                    btnEditTimeTo.setText(endTime);
+
+                                    Toast.makeText(EditSchedule.this, "Start Time: " + startTime, Toast.LENGTH_SHORT).show();
                                 }
                             }
 
