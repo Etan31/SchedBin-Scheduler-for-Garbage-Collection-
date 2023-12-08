@@ -6,8 +6,8 @@ public class Schedule {
     private String address;
     private String garbageType;
     private String repeatType;
-    private String dayOfWeek;
-    private String month;
+    private String startTime;
+    private String endTime;
 
     public Schedule() {
         // Default constructor required for Firebase
@@ -21,30 +21,30 @@ public class Schedule {
     }
 
     // Constructor with additional properties
-    public Schedule(String date, String address, String garbageType, String repeatType, String dayOfWeek, String month) {
+    public Schedule(String date, String address, String garbageType, String repeatType, String startTime, String endTime) {
         this.date = date;
         this.address = address;
         this.garbageType = garbageType;
         this.repeatType = repeatType;
-        this.dayOfWeek = dayOfWeek;
-        this.month = month;
+        this.startTime = startTime;
+        this.endTime = endTime;
     }
 
     // Getter and setter methods for the new properties
     public String getDayOfWeek() {
-        return dayOfWeek;
+        return startTime;
     }
 
     public void setDayOfWeek(String dayOfWeek) {
-        this.dayOfWeek = dayOfWeek;
+        this.startTime = startTime;
     }
 
     public String getMonth() {
-        return month;
+        return endTime;
     }
 
     public void setMonth(String month) {
-        this.month = month;
+        this.endTime = endTime;
     }
 
     public String getDate() {

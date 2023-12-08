@@ -64,7 +64,7 @@
             android:id="@+id/layout_addSched_address"
             android:layout_width="330dp"
             android:layout_height="61dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="20dp"
             android:focusable="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
@@ -108,10 +108,10 @@
                     android:paddingStart="40dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintHorizontal_bias="0.506"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.575" />
+                    app:layout_constraintVertical_bias="0.548" />
 
                 <Spinner
                     android:id="@+id/spinner_doesNotRepeat"
@@ -122,10 +122,60 @@
                     android:paddingStart="40dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/spinner_typeofgarbage"
-                    app:layout_constraintVertical_bias="0.101" />
+                    app:layout_constraintVertical_bias="0.042" />
+
+                <Button
+                    android:id="@+id/btnSelectTime_from"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="40dp"
+                    android:backgroundTint="@color/sched_bin_background"
+                    android:text="SELECT TIME"
+                    android:onClick="showTimePickerDialog"
+                    app:layout_constraintStart_toStartOf="@+id/spinner_doesNotRepeat"
+                    app:layout_constraintTop_toBottomOf="@+id/spinner_doesNotRepeat" />
+
+                <Button
+                    android:id="@+id/btnSelectTime_to"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/sched_bin_background"
+                    android:text="SELECT TIME"
+                    android:onClick="showTimePickerDialog"
+                    app:layout_constraintBottom_toBottomOf="@+id/ic_arrowRight"
+                    app:layout_constraintEnd_toEndOf="@+id/spinner_doesNotRepeat"
+                    app:layout_constraintTop_toTopOf="@+id/ic_arrowRight"
+                    app:layout_constraintVertical_bias="0.538" />
+
+                <ImageView
+                    android:id="@+id/ic_arrowRight"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="@+id/btnSelectTime_from"
+                    app:layout_constraintEnd_toStartOf="@+id/btnSelectTime_to"
+                    app:layout_constraintStart_toEndOf="@+id/btnSelectTime_from"
+                    app:layout_constraintTop_toTopOf="@+id/btnSelectTime_from"
+                    app:srcCompat="@drawable/ic_right" />
+
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="From:"
+                    app:layout_constraintBottom_toTopOf="@+id/btnSelectTime_from"
+                    app:layout_constraintStart_toStartOf="@+id/btnSelectTime_from" />
+
+                <TextView
+                    android:id="@+id/textView4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="2dp"
+                    android:text="To:"
+                    app:layout_constraintBottom_toTopOf="@+id/btnSelectTime_to"
+                    app:layout_constraintStart_toStartOf="@+id/btnSelectTime_to" />
+
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -150,7 +200,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="30dp"
-                android:background="@drawable/login_btn"
+                android:backgroundTint="@color/dark_brown"
                 android:text="@string/add_schedule"
                 android:textAppearance="@style/add_Sched"
                 app:layout_anchor="@+id/constraintLayout3"

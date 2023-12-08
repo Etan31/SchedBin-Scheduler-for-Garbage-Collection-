@@ -47,6 +47,7 @@
     <string name="enter_date">Enter Date (mm/dd/yyyy)</string>
     <string name="delete_scheduleBtn">Delete Schedule</string>
     <string name="garbage_type">Garbage Type</string>
+    <string name="timeInterval">Time Intervals</string>
     <string name="address_tr">Address</string>
     <string name="add_admin">Add Administrator</string>
     <string name="btn_delete">Delete</string>
