@@ -55,6 +55,7 @@
     <string name="date">Date</string>
     <string name="date_header">Date (MM/DD/YYYY)</string>
     <string name="row_updated_successfully">Row updated successfully</string>
+    <string name="editText">Select Time</string>
 
     <string-array name="garbageTypes">
         <item>Biodegradable</item>
