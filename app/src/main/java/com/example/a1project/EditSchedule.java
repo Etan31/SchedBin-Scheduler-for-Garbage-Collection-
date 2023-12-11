@@ -46,6 +46,7 @@ public class EditSchedule extends AppCompatActivity implements AdapterView.OnIte
     //      TODO: Fix the bug of the BackPressed, it should be redirected to SettingsFragment instead of Schedulefragment
     //      TODO: uses unchecked or unsafe operations.
 
+
     private Spinner garbageTypeSpinner;
     private Spinner repeatTimeSpinner;
 
@@ -117,6 +118,8 @@ public class EditSchedule extends AppCompatActivity implements AdapterView.OnIte
                 String updatedAddress = addressAutoCompleteTextView.getText().toString();
                 String updatedGarbageType = garbageTypeSpinner.getSelectedItem().toString();
                 String updatedRepeatType = repeatTimeSpinner.getSelectedItem().toString();
+                String updatedStartTime = btnEditTimeFrom.getText().toString();
+                String updatedEndTime = btnEditTimeTo.getText().toString();
 
                 // Update the data in the Firebase database
                 // Use the unique key of the clicked row to identify and update the data
@@ -127,6 +130,8 @@ public class EditSchedule extends AppCompatActivity implements AdapterView.OnIte
                 updateRef.child("address").setValue(updatedAddress);
                 updateRef.child("garbageType").setValue(updatedGarbageType);
                 updateRef.child("repeatType").setValue(updatedRepeatType);
+                updateRef.child("startTime").setValue(updatedStartTime);
+                updateRef.child("endTime").setValue(updatedEndTime);
 
                 // Display a toast message for successful update
                 showToast("Row updated successfully");
@@ -221,10 +226,11 @@ public class EditSchedule extends AppCompatActivity implements AdapterView.OnIte
                                     setSpinnerSelection(repeatTimeSpinner, repeatType);
 
                                     // Set text for btnSelectTime_from and btnSelectTime_to
-                                    btnEditTimeFrom.setText(startTime);
-                                    btnEditTimeTo.setText(endTime);
+//                                    btnEditTimeFrom.setText(startTime);
+//                                    btnEditTimeTo.setText(endTime);
 
-                                    Toast.makeText(EditSchedule.this, "Start Time: " + startTime, Toast.LENGTH_SHORT).show();
+
+//                                    Toast.makeText(EditSchedule.this, "Start Time: " + startTime, Toast.LENGTH_SHORT).show();
                                 }
                             }
 
@@ -387,6 +393,7 @@ public class EditSchedule extends AppCompatActivity implements AdapterView.OnIte
     }
 
 
+    //This will display Inputs and spinner so you can update them here.
     private void updateTableWithFilteredData(String selectedAddress) {
         DatabaseReference schedulesRef = FirebaseDatabase.getInstance().getReference("schedules");
 
@@ -457,7 +464,7 @@ public class EditSchedule extends AppCompatActivity implements AdapterView.OnIte
                                     btnEditTimeFrom.setText(startTime);
                                     btnEditTimeTo.setText(endTime);
 
-                                    Toast.makeText(EditSchedule.this, "Start Time: " + startTime, Toast.LENGTH_SHORT).show();
+//                                    Toast.makeText(EditSchedule.this, "Start Time: " + startTime, Toast.LENGTH_SHORT).show();
                                 }
                             }
 
@@ -530,16 +537,21 @@ public class EditSchedule extends AppCompatActivity implements AdapterView.OnIte
                         String garbageType = scheduleSnapshot.child("garbageType").getValue(String.class);
                         String repeatType = scheduleSnapshot.child("repeatType").getValue(String.class);
 
-                        // Check if the current schedule matches the selected values
-                        if (selectedAddress.equals(address)
-                                && selectedGarbageType.equals(garbageType)
-                                && selectedRepeatType.equals(repeatType)) {
-                            // Delete the matching schedule
-                            scheduleSnapshot.getRef().removeValue();
-                            break; // Assuming there's only one matching schedule
-                        }
+                    // Check if the current schedule matches the selected values
+                    if (selectedAddress.equals(address)
+                            && selectedGarbageType.equals(garbageType)
+                            && selectedRepeatType.equals(repeatType)) {
+                        // Delete the matching schedule
+                        scheduleSnapshot.getRef().removeValue();
+
+                        // Also delete "startTime" and "endTime"
+                        scheduleSnapshot.child("startTime").getRef().removeValue();
+                        scheduleSnapshot.child("endTime").getRef().removeValue();
+
+                        break; // Assuming there's only one matching schedule
                     }
                 }
+            }
 
                 @Override
                 public void onCancelled(DatabaseError databaseError) {
@@ -569,12 +581,16 @@ public class EditSchedule extends AppCompatActivity implements AdapterView.OnIte
                                     String garbageType = scheduleSnapshot.child("garbageType").getValue(String.class);
                                     String repeatType = scheduleSnapshot.child("repeatType").getValue(String.class);
 
-                                    // Check if the schedule is on or after the selected date
+                                // Check if the schedule is on or after the selected date
                                     if (compareDates(scheduleDate, selectedDate) >= 0
                                             && selectedGarbageType.equals(garbageType)
                                             && selectedRepeatType.equals(repeatType)) {
                                         // Delete the matching schedule
                                         scheduleSnapshot.getRef().removeValue();
+
+                                        // Also delete "startTime" and "endTime"
+                                        scheduleSnapshot.child("startTime").getRef().removeValue();
+                                        scheduleSnapshot.child("endTime").getRef().removeValue();
                                     }
                                 }
                             }
