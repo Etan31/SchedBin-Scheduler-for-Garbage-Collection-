@@ -45,7 +45,7 @@ import java.util.Objects;
 public class EditSchedule extends AppCompatActivity implements AdapterView.OnItemSelectedListener,DeleteDialogFragment.DeleteDialogListener {
     //      TODO: Fix the bug of the BackPressed, it should be redirected to SettingsFragment instead of Schedulefragment
     //      TODO: uses unchecked or unsafe operations.
-
+    //      TODO: clear inputs after deleting schedules.
 
     private Spinner garbageTypeSpinner;
     private Spinner repeatTimeSpinner;
