@@ -52,4 +52,9 @@ dependencies {
 
     //calendar API
     implementation 'com.github.prolificinteractive:material-calendarview:2.0.1'
+
+    //confetti library
+    implementation 'nl.dionsegijn:konfetti-xml:2.0.2'
+    implementation 'nl.dionsegijn:konfetti-core:2.0.2'
+    implementation 'nl.dionsegijn:konfetti-xml:2.0.2@aar'
 }
