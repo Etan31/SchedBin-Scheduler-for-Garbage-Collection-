@@ -189,6 +189,8 @@ public class ActivityHomeRegularUser extends AppCompatActivity implements Adapte
                     String date = scheduleSnapshot.child("date").getValue(String.class);
                     String garbageType = scheduleSnapshot.child("garbageType").getValue(String.class);
                     String address = scheduleSnapshot.child("address").getValue(String.class);
+                    String startTime = scheduleSnapshot.child("startTime").getValue(String.class);
+                    String endTime = scheduleSnapshot.child("endTime").getValue(String.class);
 
                     // Check if the schedule's address matches the selected address
                     if (selectedAddress != null && selectedAddress.equals(address)) {
@@ -207,6 +209,18 @@ public class ActivityHomeRegularUser extends AppCompatActivity implements Adapte
                         garbageTypeTextView.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1f));
                         garbageTypeTextView.setGravity(Gravity.START);
                         garbageTypeTextView.setPadding(10, 10, 5, 5);
+
+                        TextView startTimeTextView = new TextView(mContext);
+                        startTimeTextView.setText(startTime);
+                        startTimeTextView.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1f));
+                        startTimeTextView.setGravity(Gravity.START);
+                        startTimeTextView.setPadding(10, 10, 5, 5);
+
+                        TextView endTimeTextView = new TextView(mContext);
+                        endTimeTextView.setText(endTime);
+                        endTimeTextView.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1f));
+                        endTimeTextView.setGravity(Gravity.START);
+                        endTimeTextView.setPadding(10, 10, 5, 5);
 
                         // Add the TextViews to the dataRow
                         dataRow.addView(dateTextView);
