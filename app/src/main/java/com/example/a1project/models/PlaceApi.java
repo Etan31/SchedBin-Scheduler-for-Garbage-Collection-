@@ -81,7 +81,7 @@ import java.util.ArrayList;
 
 public class PlaceApi {
 
-    private static final String API_KEY = "AIzaSyAGFBw4hTu40ml3yin8cOc-XKsmKmd_8t8";
+    private static final String API_KEY = "YOUR_API_KEY";
 
     public ArrayList<String> autoComplete(String input){
         ArrayList<String> arrayList=new ArrayList();
@@ -93,9 +93,9 @@ public class PlaceApi {
             sb.append("input=" + input);
             sb.append("&key=" + API_KEY);
 
-            // Add location and radius parameters for Eastern Samar
-            sb.append("&location=11.50007310, 125.49999080");  // Assuming the center of Eastern Samar
-            sb.append("&radius=5000");  // Adjust the radius as needed
+            // Add location and radius parameters 
+            sb.append("&location=11.50007310, 125.49999080");
+            sb.append("&radius=5000");
 
             URL url = new URL(sb.toString());
             connection = (HttpURLConnection) url.openConnection();
