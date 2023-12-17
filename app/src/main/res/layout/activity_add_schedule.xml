@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/main_color"
     tools:context=".addSchedule_activity">
-<!--    TODO: the Date and Address input should be required to fill on-->
+<!--    TODO: Change the Add Schedule Button layout-->
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
