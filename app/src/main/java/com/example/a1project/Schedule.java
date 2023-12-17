@@ -1,10 +1,13 @@
 package com.example.a1project;
 
 public class Schedule {
+
     private String date;
     private String address;
     private String garbageType;
     private String repeatType;
+    private String startTime;
+    private String endTime;
 
     public Schedule() {
         // Default constructor required for Firebase
@@ -15,6 +18,33 @@ public class Schedule {
         this.address = address;
         this.garbageType = garbageType;
         this.repeatType = repeatType;
+    }
+
+    // Constructor with additional properties
+    public Schedule(String date, String address, String garbageType, String repeatType, String startTime, String endTime) {
+        this.date = date;
+        this.address = address;
+        this.garbageType = garbageType;
+        this.repeatType = repeatType;
+        this.startTime = startTime;
+        this.endTime = endTime;
+    }
+
+    // Getter and setter methods for the new properties
+    public String getDayOfWeek() {
+        return startTime;
+    }
+
+    public void setDayOfWeek(String dayOfWeek) {
+        this.startTime = startTime;
+    }
+
+    public String getMonth() {
+        return endTime;
+    }
+
+    public void setMonth(String month) {
+        this.endTime = endTime;
     }
 
     public String getDate() {

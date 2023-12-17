@@ -1,7 +1,10 @@
 package com.example.a1project;
 
 import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
+import android.icu.text.SimpleDateFormat;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -15,6 +18,7 @@ import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -26,17 +30,22 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.ParseException;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
-public class EditSchedule extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class EditSchedule extends AppCompatActivity implements AdapterView.OnItemSelectedListener,DeleteDialogFragment.DeleteDialogListener {
     //      TODO: Fix the bug of the BackPressed, it should be redirected to SettingsFragment instead of Schedulefragment
-
+    //      TODO: uses unchecked or unsafe operations.
+    //      TODO: clear inputs after deleting schedules.
 
     private Spinner garbageTypeSpinner;
     private Spinner repeatTimeSpinner;
@@ -45,6 +54,9 @@ public class EditSchedule extends AppCompatActivity implements AdapterView.OnIte
 
     private TableLayout dataTableLayout;
     private LinearLayout linearLayoutInputs;
+
+    private Button btnEditTimeFrom;
+    private Button btnSelectTime_to;
     Button backBtn2;
 
     private Calendar calendar;
@@ -54,12 +66,17 @@ public class EditSchedule extends AppCompatActivity implements AdapterView.OnIte
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_schedule);
 
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
 
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         linearLayoutInputs = findViewById(R.id.linearLayout_inputs);
 
         backBtn2 = findViewById(R.id.backBtn2);
         backBtn2.setOnClickListener(v -> BackPressed());
+
+
+        Button deleteButton = findViewById(R.id.btn_delete);
 
         initAndPopulateSpinners();
 
@@ -83,6 +100,12 @@ public class EditSchedule extends AppCompatActivity implements AdapterView.OnIte
         garbageTypeSpinner = findViewById(R.id.spinner_typeofgarbage);
         repeatTimeSpinner = findViewById(R.id.spinner_doesNotRepeat);
 
+        Button btnEditTimeFrom = findViewById(R.id.btnEdit_Time_from);
+        Button btnEditTimeTo = findViewById(R.id.btnEdit_Time_to);
+
+        btnEditTimeFrom.setOnClickListener(v -> showTimePickerDialog_from_To(btnEditTimeFrom));
+        btnEditTimeTo.setOnClickListener(v -> showTimePickerDialog_from_To(btnEditTimeTo));
+
 
 
 
@@ -95,6 +118,8 @@ public class EditSchedule extends AppCompatActivity implements AdapterView.OnIte
                 String updatedAddress = addressAutoCompleteTextView.getText().toString();
                 String updatedGarbageType = garbageTypeSpinner.getSelectedItem().toString();
                 String updatedRepeatType = repeatTimeSpinner.getSelectedItem().toString();
+                String updatedStartTime = btnEditTimeFrom.getText().toString();
+                String updatedEndTime = btnEditTimeTo.getText().toString();
 
                 // Update the data in the Firebase database
                 // Use the unique key of the clicked row to identify and update the data
@@ -105,6 +130,8 @@ public class EditSchedule extends AppCompatActivity implements AdapterView.OnIte
                 updateRef.child("address").setValue(updatedAddress);
                 updateRef.child("garbageType").setValue(updatedGarbageType);
                 updateRef.child("repeatType").setValue(updatedRepeatType);
+                updateRef.child("startTime").setValue(updatedStartTime);
+                updateRef.child("endTime").setValue(updatedEndTime);
 
                 // Display a toast message for successful update
                 showToast("Row updated successfully");
@@ -158,6 +185,8 @@ public class EditSchedule extends AppCompatActivity implements AdapterView.OnIte
                     String garbageType = snapshot.child("garbageType").getValue(String.class);
                     String repeatType = snapshot.child("repeatType").getValue(String.class);
                     String address = snapshot.child("address").getValue(String.class);
+                    String startTime = snapshot.child("startTime").getValue(String.class);
+                    String endTime = snapshot.child("endTime").getValue(String.class);
 
                     // Check if the schedule's address matches the selected address
                     if (selectedAddress != null && selectedAddress.equals(address)) {
@@ -196,6 +225,12 @@ public class EditSchedule extends AppCompatActivity implements AdapterView.OnIte
                                     setSpinnerSelection(garbageTypeSpinner, garbageType);
                                     setSpinnerSelection(repeatTimeSpinner, repeatType);
 
+                                    // Set text for btnSelectTime_from and btnSelectTime_to
+//                                    btnEditTimeFrom.setText(startTime);
+//                                    btnEditTimeTo.setText(endTime);
+
+
+//                                    Toast.makeText(EditSchedule.this, "Start Time: " + startTime, Toast.LENGTH_SHORT).show();
                                 }
                             }
 
@@ -225,8 +260,65 @@ public class EditSchedule extends AppCompatActivity implements AdapterView.OnIte
             }
         });
 
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Show the DeleteDialogFragment when the delete button is clicked
+                showDeleteDialog();
+            }
 
+            private void showDeleteDialog() {
+                DeleteDialogFragment deleteDialog = new DeleteDialogFragment();
+                deleteDialog.show(getSupportFragmentManager(), "delete_dialog");
+            }
+        });
+    }
 
+    //for selecting time "from" and "to"
+    public void showTimePickerDialog_from_To(final Button button) {
+        LocalTime currentTime = null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            currentTime = LocalTime.now();
+        }
+        int hour = 0;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            hour = currentTime.getHour();
+        }
+        int minute = 0;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            minute = currentTime.getMinute();
+        }
+
+        // Determine whether it's AM or PM
+        String amPm;
+        if (hour >= 12) {
+            amPm = "PM";
+            if (hour > 12) {
+                hour -= 12;
+            }
+        } else {
+            amPm = "AM";
+            if (hour == 0) {
+                hour = 12;
+            }
+        }
+
+        TimePickerDialog timePickerDialog = new TimePickerDialog(
+                this,
+                new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                        // Update the text on the button with the selected time
+                        String time = String.format("%02d:%02d %s", (hourOfDay == 0 || hourOfDay == 12) ? 12 : hourOfDay % 12, minute, (hourOfDay < 12) ? "AM" : "PM");
+                        button.setText(time);
+                    }
+                },
+                hour,
+                minute,
+                false  // Set this to false to use 12-hour format
+        );
+
+        timePickerDialog.show();
     }
 
     private void showToast(String message) {
@@ -301,11 +393,15 @@ public class EditSchedule extends AppCompatActivity implements AdapterView.OnIte
     }
 
 
+    //This will display Inputs and spinner so you can update them here.
     private void updateTableWithFilteredData(String selectedAddress) {
         DatabaseReference schedulesRef = FirebaseDatabase.getInstance().getReference("schedules");
 
         TextInputLayout dateInputLayout = findViewById(R.id.layout_addSched_date);
         TextInputLayout addressInputLayout = findViewById(R.id.layout_addSched_address);
+
+        Button btnEditTimeFrom = findViewById(R.id.btnEdit_Time_from);
+        Button btnEditTimeTo = findViewById(R.id.btnEdit_Time_to);
 
 // Initialize views in the onCreate method
         AutoCompleteTextView dateAutoCompleteTextView = dateInputLayout.findViewById(R.id.addSched_date);
@@ -322,6 +418,8 @@ public class EditSchedule extends AppCompatActivity implements AdapterView.OnIte
                     String garbageType = scheduleSnapshot.child("garbageType").getValue(String.class);
                     String repeatType = scheduleSnapshot.child("repeatType").getValue(String.class);
                     String address = scheduleSnapshot.child("address").getValue(String.class);
+                    String startTime = scheduleSnapshot.child("startTime").getValue(String.class);
+                    String endTime = scheduleSnapshot.child("endTime").getValue(String.class);
 
                     // Check if the schedule's address matches the selected address
                     if (selectedAddress != null && selectedAddress.equals(address)) {
@@ -360,6 +458,13 @@ public class EditSchedule extends AppCompatActivity implements AdapterView.OnIte
                                     addressAutoCompleteTextView.setText(address);
                                     setSpinnerSelection(garbageTypeSpinner, garbageType);
                                     setSpinnerSelection(repeatTimeSpinner, repeatType);
+
+
+                                    // Set text for btnSelectTime_from and btnSelectTime_to
+                                    btnEditTimeFrom.setText(startTime);
+                                    btnEditTimeTo.setText(endTime);
+
+//                                    Toast.makeText(EditSchedule.this, "Start Time: " + startTime, Toast.LENGTH_SHORT).show();
                                 }
                             }
 
@@ -401,5 +506,125 @@ public class EditSchedule extends AppCompatActivity implements AdapterView.OnIte
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
 
+    }
+
+    @Override
+    public void onDeleteConfirmed(boolean deleteThisEvent, boolean deleteThisAndFollowingEvents) {
+        TextInputLayout dateInputLayout = findViewById(R.id.layout_addSched_date);
+        TextInputLayout addressInputLayout = findViewById(R.id.layout_addSched_address);
+        AutoCompleteTextView dateAutoCompleteTextView = dateInputLayout.findViewById(R.id.addSched_date);
+        AutoCompleteTextView addressAutoCompleteTextView = addressInputLayout.findViewById(R.id.addSched_address);
+
+
+        // Handle the delete confirmation for "This Event" radio button Checked
+        if (deleteThisEvent) {
+
+            String selectedDate = dateAutoCompleteTextView.getText().toString();
+            String selectedAddress = addressAutoCompleteTextView.getText().toString();
+            String selectedGarbageType = garbageTypeSpinner.getSelectedItem().toString();
+            String selectedRepeatType = repeatTimeSpinner.getSelectedItem().toString();
+
+            DatabaseReference schedulesRef = FirebaseDatabase.getInstance().getReference("schedules");
+
+            Query deleteQuery = schedulesRef.orderByChild("date").equalTo(selectedDate);
+
+            deleteQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    // Iterate through the results and find the matching schedule
+                    for (DataSnapshot scheduleSnapshot : dataSnapshot.getChildren()) {
+                        String address = scheduleSnapshot.child("address").getValue(String.class);
+                        String garbageType = scheduleSnapshot.child("garbageType").getValue(String.class);
+                        String repeatType = scheduleSnapshot.child("repeatType").getValue(String.class);
+
+                    // Check if the current schedule matches the selected values
+                    if (selectedAddress.equals(address)
+                            && selectedGarbageType.equals(garbageType)
+                            && selectedRepeatType.equals(repeatType)) {
+                        // Delete the matching schedule
+                        scheduleSnapshot.getRef().removeValue();
+
+                        // Also delete "startTime" and "endTime"
+                        scheduleSnapshot.child("startTime").getRef().removeValue();
+                        scheduleSnapshot.child("endTime").getRef().removeValue();
+
+                        break; // Assuming there's only one matching schedule
+                    }
+                }
+            }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    // Handle errors
+                }
+            });
+
+            // Handle the delete confirmation for "This and following Events" radio button Checked
+        }else if (deleteThisAndFollowingEvents) {
+
+
+                // Get the current values from your input fields and spinners
+                String selectedDate = dateAutoCompleteTextView.getText().toString();
+                String selectedAddress = addressAutoCompleteTextView.getText().toString();
+                String selectedGarbageType = garbageTypeSpinner.getSelectedItem().toString();
+                String selectedRepeatType = repeatTimeSpinner.getSelectedItem().toString();
+
+                DatabaseReference schedulesRef = FirebaseDatabase.getInstance().getReference("schedules");
+
+                schedulesRef.orderByChild("address").equalTo(selectedAddress)
+                        .addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                // Iterate through the results and delete matching schedules
+                                for (DataSnapshot scheduleSnapshot : dataSnapshot.getChildren()) {
+                                    String scheduleDate = scheduleSnapshot.child("date").getValue(String.class);
+                                    String garbageType = scheduleSnapshot.child("garbageType").getValue(String.class);
+                                    String repeatType = scheduleSnapshot.child("repeatType").getValue(String.class);
+
+                                // Check if the schedule is on or after the selected date
+                                    if (compareDates(scheduleDate, selectedDate) >= 0
+                                            && selectedGarbageType.equals(garbageType)
+                                            && selectedRepeatType.equals(repeatType)) {
+                                        // Delete the matching schedule
+                                        scheduleSnapshot.getRef().removeValue();
+
+                                        // Also delete "startTime" and "endTime"
+                                        scheduleSnapshot.child("startTime").getRef().removeValue();
+                                        scheduleSnapshot.child("endTime").getRef().removeValue();
+                                    }
+                                }
+                            }
+
+                            private int compareDates(String date1, String date2) {
+                                // Assuming date format is "MM/dd/yyyy"
+                                SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
+                                try {
+                                    Date d1 = sdf.parse(date1);
+                                    Date d2 = sdf.parse(date2);
+
+                                    if (d1 != null && d2 != null) {
+                                        return d1.compareTo(d2);
+                                    }
+                                } catch (ParseException e) {
+                                    e.printStackTrace();
+                                }
+
+                                return 0;
+                            }
+
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+                                // Handle errors
+                            }
+                        });
+            }
+        //end of Delete this and following events
+
+        }
+        //end of delete function
+
+    @Override
+    public void onDeleteCancelled() {
     }
 }

@@ -59,81 +59,125 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/schedule_of" />
 
-    <TableLayout
-        android:id="@+id/schedule_tableLayout"
-        android:layout_width="325dp"
-        android:layout_height="188dp"
-        android:background="#54FBFFDC"
+    <HorizontalScrollView
+        android:layout_width="337dp"
+        android:layout_height="163dp"
         app:layout_constraintBottom_toTopOf="@+id/backBtn2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintHorizontal_bias="0.486"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Title_ScheduleforthisMonth">
 
-        <TableRow
-            android:id="@+id/schedule_th"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="#D2FBFFDC">
+        <TableLayout
+            android:id="@+id/schedule_tableLayout"
+            android:layout_width="323dp"
+            android:layout_height="150dp"
+            android:layout_marginBottom="14dp"
+            android:background="#56084C41"
+            app:layout_constraintBottom_toTopOf="@+id/add_schedule"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/Title_ScheduleforthisMonth"
+            app:layout_constraintVertical_bias="0.0">
 
-            <TextView
-                android:id="@+id/tr_date"
-                android:layout_width="162dp"
-                android:layout_height="30dp"
-                android:gravity="center"
-                android:text="@string/date_header"
-                android:textAlignment="center"
-                android:textAppearance="@style/Headers" />
+            <!-- Header row -->
 
-            <TextView
-                android:id="@+id/tr_garbageType"
-                android:layout_width="163dp"
-                android:layout_height="30dp"
-                android:gravity="center"
-                android:text="@string/garbage_type"
-                android:textAlignment="center"
-                android:textAppearance="@style/Headers" />
-
-        </TableRow>
-
-        <ScrollView
-            android:layout_width="296dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/schedule_tableLayout"
-            app:layout_constraintStart_toStartOf="@+id/schedule_tableLayout"
-            app:layout_constraintTop_toBottomOf="@+id/schedule_th">
-
-            <TableLayout
-                android:id="@+id/data_table_layout"
+            <!-- Data rows (wrapped in a ScrollView) -->
+            <TableRow
+                android:id="@+id/schedule_th"
                 android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="#785028">
+
+                <TextView
+                    android:id="@+id/tr_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
+                    android:gravity="center|left"
+                    android:text="@string/date_header"
+                    android:textAllCaps="false"
+                    android:textAppearance="@style/Headers" />
+
+                <TextView
+                    android:id="@+id/tr_garbageType"
+                    android:layout_width="191dp"
+                    android:layout_height="25dp"
+                    android:paddingStart="15dp"
+                    android:text="@string/garbage_type"
+                    android:textAllCaps="false"
+                    android:textAppearance="@style/Headers" />
+
+                <TextView
+                    android:id="@+id/tr_startTime"
+                    android:layout_width="138dp"
+                    android:layout_height="25dp"
+                    android:text="@string/startTime"
+                    android:textAppearance="@style/Headers" />
+
+                <TextView
+                    android:id="@+id/tr_endTime"
+                    android:layout_width="163dp"
+                    android:layout_height="25dp"
+                    android:text="@string/endTime"
+                    android:textAppearance="@style/Headers" />
+
+            </TableRow>
+
+            <ScrollView
+                android:layout_width="296dp"
                 android:layout_height="wrap_content"
-                android:clickable="true"
-                android:focusable="true"
-                android:textAlignment="textStart"
-                tools:ignore="TouchTargetSizeCheck">
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/schedule_tableLayout"
+                app:layout_constraintStart_toStartOf="@+id/schedule_tableLayout"
+                app:layout_constraintTop_toBottomOf="@+id/schedule_th">
 
-                <TableRow
-                    android:id="@+id/schedule_td"
+                <TableLayout
+                    android:id="@+id/data_table_layout"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:textAlignment="textStart"
+                    tools:ignore="TouchTargetSizeCheck">
 
-                    <TextView
-                        android:id="@+id/tr_date2"
-                        android:layout_width="159dp"
-                        android:layout_height="match_parent"
-                        android:text=""
-                        android:textAlignment="textStart" />
+                    <TableRow
+                        android:id="@+id/schedule_td"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
 
-                    <TextView
-                        android:id="@+id/tr_garbageType2"
-                        android:layout_width="166dp"
-                        android:layout_height="match_parent"
-                        android:text=""
-                        android:textAlignment="textStart" />
+                        <TextView
+                            android:id="@+id/tr_date2"
+                            android:layout_width="156dp"
+                            android:layout_height="match_parent"
+                            android:text=""
+                            android:textAlignment="textStart" />
 
-                </TableRow>
-            </TableLayout>
-        </ScrollView>
-    </TableLayout>
+                        <TextView
+                            android:id="@+id/tr_garbageType2"
+                            android:layout_width="191dp"
+                            android:layout_height="match_parent"
+                            android:text=""
+                            android:textAlignment="textStart" />
+
+                        <TextView
+                            android:id="@+id/tr_startTime2"
+                            android:layout_width="137dp"
+                            android:layout_height="match_parent"
+                            android:text=""
+                            android:textAlignment="textStart" />
+
+                        <TextView
+                            android:id="@+id/tr_endTime2"
+                            android:layout_width="163dp"
+                            android:layout_height="match_parent"
+                            android:text=""
+                            android:textAlignment="textStart" />
+                    </TableRow>
+                </TableLayout>
+            </ScrollView>
+        </TableLayout>
+    </HorizontalScrollView>
 
     <Button
         android:id="@+id/backBtn2"

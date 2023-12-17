@@ -32,7 +32,7 @@
     <string name="Settings">Settings</string>
     <string name="add_sched_btn_plus">"plus button for adding schedule "</string>
     <string name="calendar">Calendar</string>
-    <string name="schedule_of">Schedule of Garbage collection</string>
+    <string name="schedule_of">schedule for this month</string>
     <string name="no_schedule">No Schedule</string>
     <string name="schedules_for_this_month">Schedules</string>
     <string name="add_schedule">Add Schedule</string>
@@ -47,13 +47,16 @@
     <string name="enter_date">Enter Date (mm/dd/yyyy)</string>
     <string name="delete_scheduleBtn">Delete Schedule</string>
     <string name="garbage_type">Garbage Type</string>
+    <string name="startTime">Start Time</string>
+    <string name="endTime">End Time</string>
     <string name="address_tr">Address</string>
     <string name="add_admin">Add Administrator</string>
     <string name="btn_delete">Delete</string>
     <string name="btn_update">Update</string>
     <string name="date">Date</string>
-    <string name="date_header">Date (MM/DD/YYYY)</string>
+    <string name="date_header">Date (mm/dd/yyyy)</string>
     <string name="row_updated_successfully">Row updated successfully</string>
+    <string name="editText">Select Time</string>
 
     <string-array name="garbageTypes">
         <item>Biodegradable</item>

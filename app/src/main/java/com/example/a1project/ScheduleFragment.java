@@ -1,6 +1,7 @@
 package com.example.a1project;
 
 import android.content.Context;
+import android.content.pm.ActivityInfo;
 import android.icu.text.SimpleDateFormat;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -146,7 +147,7 @@ public class ScheduleFragment extends Fragment implements AdapterView.OnItemSele
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_schedule, container, false);
 
-
+        requireActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         if (!isAdded() || mContext == null) {
             return null; // Fragment is not attached, return null or handle accordingly
@@ -320,6 +321,7 @@ public class ScheduleFragment extends Fragment implements AdapterView.OnItemSele
         updateTableWithFilteredData();
     }
 
+    //display data from the firebase to the schedules table
     private void updateTableWithFilteredData() {
         if (!isAdded() || mContext == null) {
             return; // Fragment is not attached, do nothing
@@ -334,16 +336,16 @@ public class ScheduleFragment extends Fragment implements AdapterView.OnItemSele
                     return;
                 }
 
-//                TableLayout tableLayout = requireView().findViewById(R.id.schedule_tableLayout);
                 TableLayout dataTableLayout = requireView().findViewById(R.id.data_table_layout);
 
                 // Clear existing data rows
                 dataTableLayout.removeAllViews();
 
-
                 for (DataSnapshot scheduleSnapshot : dataSnapshot.getChildren()) {
                     String date = scheduleSnapshot.child("date").getValue(String.class);
                     String garbageType = scheduleSnapshot.child("garbageType").getValue(String.class);
+                    String startTime = scheduleSnapshot.child("startTime").getValue(String.class);
+                    String endTime = scheduleSnapshot.child("endTime").getValue(String.class);
                     String address = scheduleSnapshot.child("address").getValue(String.class);
 
                     // Check if the schedule's address matches the selected address
@@ -352,7 +354,7 @@ public class ScheduleFragment extends Fragment implements AdapterView.OnItemSele
                         TableRow dataRow = new TableRow(mContext);
 
                         // Create TextViews for the data
-                        TextView dateTextView = new TextView(mContext); // Use stored context
+                        TextView dateTextView = new TextView(mContext);
                         dateTextView.setText(date);
                         dateTextView.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1f));
                         dateTextView.setGravity(Gravity.START);
@@ -364,9 +366,23 @@ public class ScheduleFragment extends Fragment implements AdapterView.OnItemSele
                         garbageTypeTextView.setGravity(Gravity.START);
                         garbageTypeTextView.setPadding(10, 10, 5, 5);
 
+                        TextView startTimeTextView = new TextView(mContext);
+                        startTimeTextView.setText(startTime);
+                        startTimeTextView.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1f));
+                        startTimeTextView.setGravity(Gravity.START);
+                        startTimeTextView.setPadding(10, 10, 5, 5);
+
+                        TextView endTimeTextView = new TextView(mContext);
+                        endTimeTextView.setText(endTime);
+                        endTimeTextView.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1f));
+                        endTimeTextView.setGravity(Gravity.START);
+                        endTimeTextView.setPadding(10, 10, 5, 5);
+
                         // Add the TextViews to the dataRow
                         dataRow.addView(dateTextView);
                         dataRow.addView(garbageTypeTextView);
+                        dataRow.addView(startTimeTextView);
+                        dataRow.addView(endTimeTextView);
 
                         // Add the dataRow to the dataTableLayout (inside the ScrollView)
                         dataTableLayout.addView(dataRow);
@@ -380,8 +396,6 @@ public class ScheduleFragment extends Fragment implements AdapterView.OnItemSele
             }
         });
     }
-
-
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
