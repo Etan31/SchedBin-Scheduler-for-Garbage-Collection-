@@ -8,21 +8,30 @@
     tools:context=".ActivityHomeRegularUser">
 
 
+    <nl.dionsegijn.konfetti.xml.KonfettiView
+        android:id="@+id/konfettiView"
+        android:layout_width="411dp"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <Spinner
         android:id="@+id/DropDown_spinner_for_location"
         android:layout_width="325dp"
         android:layout_height="48dp"
+        android:layout_marginTop="15dp"
         android:background="@drawable/bg_viewsched"
         android:drawableEnd="@drawable/ic_dropdown"
         android:paddingStart="10dp"
         android:text="@string/no_schedule"
         android:textAlignment="textStart"
         android:textAppearance="@style/dropDown_noSched"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.105" />
+        app:layout_constraintTop_toBottomOf="@+id/text1" />
 
     <TextView
         android:id="@+id/calendar"
@@ -32,7 +41,6 @@
         android:text="@string/calendar"
         android:textAppearance="@style/calendar"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/DropDown_spinner_for_location"
         tools:ignore="MissingConstraints" />
@@ -45,7 +53,6 @@
         android:textAlignment="center"
         android:textAppearance="@style/schedule_of"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/calendar" />
 
@@ -55,18 +62,20 @@
         android:layout_height="303dp"
         android:background="@drawable/bg_calendar1"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/schedule_of" />
+        app:layout_constraintTop_toBottomOf="@+id/schedule_of">
+
+    </com.prolificinteractive.materialcalendarview.MaterialCalendarView>
 
     <HorizontalScrollView
+        android:id="@+id/horizontalScrollView"
         android:layout_width="337dp"
         android:layout_height="163dp"
+        android:layout_marginTop="21dp"
         app:layout_constraintBottom_toTopOf="@+id/backBtn2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.486"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Title_ScheduleforthisMonth">
+        app:layout_constraintTop_toBottomOf="@+id/Admin_calendarView">
 
         <TableLayout
             android:id="@+id/schedule_tableLayout"
@@ -183,8 +192,7 @@
         android:id="@+id/backBtn2"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:layout_marginStart="14dp"
-        android:layout_marginEnd="22dp"
+        android:layout_marginEnd="36dp"
         android:layout_marginBottom="16dp"
         android:backgroundTint="@color/dark_brown"
         android:contentDescription="@string/backbtn"
@@ -193,33 +201,39 @@
         android:paddingEnd="15dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
         tools:ignore="RtlSymmetry" />
 
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="50sp"
         android:layout_height="50sp"
-        android:layout_marginStart="25dp"
-        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toStartOf="@+id/text1"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@mipmap/sched_bin_round" />
+        app:srcCompat="@mipmap/sched_bin_round"
+        tools:layout_editor_absoluteY="13dp" />
 
     <TextView
         android:id="@+id/text1"
-        android:layout_width="311dp"
-        android:layout_height="41dp"
+        android:layout_width="315dp"
+        android:layout_height="38dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
+        android:layout_marginStart="10dp"
+        android:autoText="true"
         android:fontFamily="@font/montserrat_bold"
         android:text="Welcome SchedBin"
         android:textColor="@color/dark_brown"
         android:textSize="28sp"
+        app:autoSizeMaxTextSize="20sp"
+        app:autoSizeMinTextSize="15sp"
+        app:autoSizeTextType="none"
         app:layout_constraintBottom_toBottomOf="@+id/imageView"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/imageView"
-        app:layout_constraintTop_toTopOf="@+id/imageView" />
+        app:layout_constraintTop_toTopOf="@+id/imageView"
+        app:layout_constraintVertical_bias="0.25" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
