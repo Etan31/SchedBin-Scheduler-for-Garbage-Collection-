@@ -7,20 +7,42 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Properties;
 
 public class PlaceApi {
 
-    private static final String API_KEY = "AIzaSyAGFBw4hTu40ml3yin8cOc-XKsmKmd_8t8";
+    private String API_KEY;
+
+    public PlaceApi() {
+        loadApiKey();
+    }
+
+    private void loadApiKey() {
+        Properties properties = new Properties();
+        try (InputStream input = getClass().getClassLoader().getResourceAsStream("config.properties")) {
+            if (input == null) {
+                System.out.println("Sorry, unable to find config.properties");
+                return;
+            }
+            properties.load(input);
+            API_KEY = properties.getProperty("API_KEY");
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
 
     public ArrayList<String> autoComplete(String input){
         ArrayList<String> arrayList=new ArrayList();
         HttpURLConnection connection=null;
         StringBuilder jsonResult=new StringBuilder();
+
+        
 
         try {
             StringBuilder sb = new StringBuilder("https://maps.googleapis.com/maps/api/place/autocomplete/json?");
