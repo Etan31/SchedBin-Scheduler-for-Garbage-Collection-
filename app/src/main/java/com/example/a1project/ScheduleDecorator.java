@@ -10,21 +10,30 @@ import com.prolificinteractive.materialcalendarview.DayViewFacade;
 import com.prolificinteractive.materialcalendarview.spans.DotSpan;
 
 import java.util.HashSet;
+import java.util.Set;
 
 public class ScheduleDecorator implements DayViewDecorator {
 
-    private HashSet<CalendarDay> scheduledDates;
+    private final Set<CalendarDay> allScheduledDates;
+    private Set<CalendarDay> filteredDates; // Add this variable
     private Context context;
 
-    public ScheduleDecorator(Context context, HashSet<CalendarDay> scheduledDates) {
+    public ScheduleDecorator(Context context, Set<CalendarDay> scheduledDates) {
         this.context = context;
-        this.scheduledDates = scheduledDates;
+        this.allScheduledDates = scheduledDates;
+        this.filteredDates = new HashSet<>(); // Initialize the set
+    }
+
+    // Add this method to update the filtered dates
+    public void updateFilteredDates(Set<CalendarDay> newFilteredDates) {
+        this.filteredDates.clear();
+        this.filteredDates.addAll(newFilteredDates);
     }
 
     @Override
     public boolean shouldDecorate(CalendarDay day) {
         // Check if the date has a schedule
-        return scheduledDates.contains(day);
+        return filteredDates.contains(day);
     }
 
     @Override
