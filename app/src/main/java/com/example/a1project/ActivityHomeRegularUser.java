@@ -2,6 +2,7 @@ package com.example.a1project;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -60,6 +61,7 @@ public class ActivityHomeRegularUser extends AppCompatActivity implements Adapte
 
 
     Button backBtn2;
+    Button FeedbackBtn;
 
     private Context mContext;
     private Spinner dropDownSpinnerForLocation;
@@ -112,8 +114,11 @@ public class ActivityHomeRegularUser extends AppCompatActivity implements Adapte
         backBtn2 = findViewById(R.id.backBtn2);
         backBtn2.setOnClickListener(v -> finish());
 
+        FeedbackBtn = findViewById(R.id.FeedbackBtn);
+        FeedbackBtn.setOnClickListener(v -> viewFeedbackType());
 
-        // Spinner
+
+                // Spinner
         dropDownSpinnerForLocation = findViewById(R.id.DropDown_spinner_for_location);
 
         // Set the listener
@@ -130,6 +135,12 @@ public class ActivityHomeRegularUser extends AppCompatActivity implements Adapte
 
         // Fetch and decorate calendar
         fetchAndDecorateCalendar();
+    }
+
+    private void viewFeedbackType() {
+        Intent intent = new Intent(this, FeedbackType.class);
+        startActivity(intent);
+
     }
 
     private void showDialog() {
