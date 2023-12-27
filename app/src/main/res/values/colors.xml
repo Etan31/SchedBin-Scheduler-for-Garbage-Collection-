@@ -5,6 +5,7 @@
     <color name="input_color">#FF000000</color>
     <color name="main_color">#FF98EECC</color>
     <color name="dark_green">#084c41</color>
+    <color name="slightdark_green">#E6084C41</color>
     <color name="color1">#D0F5BE</color>
     <color name="color2">#FBFFDC</color>
     <color name="color3_btns">#785028</color> <!-- Change to your desired highlighted color -->
