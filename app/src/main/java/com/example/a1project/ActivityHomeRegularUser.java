@@ -1,17 +1,23 @@
 package com.example.a1project;
 
+import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.icu.text.SimpleDateFormat;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -19,6 +25,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.content.res.AppCompatResources;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -35,6 +42,16 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
+import java.util.concurrent.TimeUnit;
+
+import nl.dionsegijn.konfetti.core.PartyFactory;
+import nl.dionsegijn.konfetti.core.emitter.Emitter;
+import nl.dionsegijn.konfetti.core.emitter.EmitterConfig;
+import nl.dionsegijn.konfetti.core.models.Shape;
+import nl.dionsegijn.konfetti.core.models.Size;
+import nl.dionsegijn.konfetti.xml.KonfettiView;
+
 
 public class ActivityHomeRegularUser extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
@@ -42,7 +59,9 @@ public class ActivityHomeRegularUser extends AppCompatActivity implements Adapte
     private Map<String, String> dateGarbageTypeMap;
     private GridView calendarGridView;
 
+
     Button backBtn2;
+    Button FeedbackBtn;
 
     private Context mContext;
     private Spinner dropDownSpinnerForLocation;
@@ -62,6 +81,30 @@ public class ActivityHomeRegularUser extends AppCompatActivity implements Adapte
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_regular_user); // Replace with your activity layout
+        
+        //for appreciation dialog
+        ImageView imageView = findViewById(R.id.imageView);
+        KonfettiView konfettiView = findViewById(R.id.konfettiView);
+
+        Shape.DrawableShape drawableShapes = new Shape.DrawableShape(Objects.requireNonNull(AppCompatResources.getDrawable(this, R.drawable.ic_square)), true);
+
+        imageView.setOnClickListener(view -> {
+            EmitterConfig emitterConfig = new Emitter(300, TimeUnit.MILLISECONDS).max(300);
+            konfettiView.start(
+                    new PartyFactory(emitterConfig)
+                    .shapes(Shape.Circle.INSTANCE, Shape.Square.INSTANCE, drawableShapes)
+                    .spread(360)
+                    .position(0.5,0.3,1,1)
+                    .sizes( new Size(8, 50, 10)
+                    ).timeToLive(1000)
+                    .fadeOutEnabled(true)
+                    .build()
+
+
+            );
+            showDialog();
+        });
+        
 
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
@@ -71,8 +114,11 @@ public class ActivityHomeRegularUser extends AppCompatActivity implements Adapte
         backBtn2 = findViewById(R.id.backBtn2);
         backBtn2.setOnClickListener(v -> finish());
 
+        FeedbackBtn = findViewById(R.id.FeedbackBtn);
+        FeedbackBtn.setOnClickListener(v -> suggest_feedback());
 
-        // Spinner
+
+                // Spinner
         dropDownSpinnerForLocation = findViewById(R.id.DropDown_spinner_for_location);
 
         // Set the listener
@@ -90,6 +136,55 @@ public class ActivityHomeRegularUser extends AppCompatActivity implements Adapte
         // Fetch and decorate calendar
         fetchAndDecorateCalendar();
     }
+
+    private void suggest_feedback() {
+        Intent intent = new Intent(this, suggestion_feedback.class);
+        startActivity(intent);
+
+    }
+
+    private void showDialog() {
+        // Show dialog
+        Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(true);
+        dialog.setContentView(R.layout.appreciation_dialog);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.show();
+    }
+
+//    private void initUI() {
+//        Emitter emitter = new Emitter(100, TimeUnit.MILLISECONDS, 100);
+//
+//        Shape customDrawableShape = Shape.Square; // Or use another shape provided by the Konfetti library
+//
+//        Party party = new Party(0, 360, 0.9f, 30,
+//                0.9f,
+//                Arrays.asList(new Size(12, 12)),
+//                Arrays.asList(0xfce18a, 0xff726d, 0xf4306d, 0xb48def),
+//                Arrays.asList(customDrawableShape),
+//                1000,
+//                true,
+//                new Position.Relative(0.5, 0.3),
+//                0,
+//                new Rotation.One(),
+//                emitter);
+//
+//        binding.btnStartAnimation.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Dialog dialog = new Dialog(MainActivity.this);
+//                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+//                dialog.setCancelable(true);
+//                dialog.setContentView(R.layout.appreciation_dialog);
+//                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+//                dialog.show();
+//
+//                ParticleSystem system = new ParticleSystem(party);
+//                system.emit(binding.konfettiView, 3000);
+//            }
+//        });
+//    }
 
     private void fetchFirebaseDataAndPopulateSpinner(Spinner spinner) {
         // Assuming you have a reference to your Firebase database

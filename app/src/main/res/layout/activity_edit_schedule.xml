@@ -59,7 +59,7 @@
         android:layout_width="325dp"
         android:layout_height="188dp"
         android:layout_marginTop="20dp"
-        android:background="#54FBFFDC"
+        android:background="#56084C41"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -70,12 +70,12 @@
             android:id="@+id/schedule_th"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:background="#D2FBFFDC">
+            android:background="#785028">
 
             <TextView
                 android:id="@+id/tr_date"
 
-                android:layout_width="wrap_content"
+                android:layout_width="162dp"
                 android:layout_height="30dp"
                 android:gravity="center"
                 android:text="@string/date_header"

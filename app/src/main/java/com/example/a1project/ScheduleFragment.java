@@ -33,10 +33,12 @@ import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 
 /**
@@ -47,6 +49,7 @@ import java.util.Map;
 
 
 public class ScheduleFragment extends Fragment implements AdapterView.OnItemSelectedListener {
+    //TODO: merge schedule if the text match (like Libas & libas)
 
     Button backBtn2;
 
@@ -55,14 +58,13 @@ public class ScheduleFragment extends Fragment implements AdapterView.OnItemSele
     private GridView calendarGridView;
 
     private MaterialCalendarView materialCalendarView;
+
+
+    //get the address from database and display it to the calendarView
     private HashSet<CalendarDay> scheduledDates_CalendarDay= new HashSet<>();
-    private HashSet<String> scheduledDates = new HashSet<>();
-
-
-    //for displaying schedule to the tablelayout
-    private TableLayout tableLayout;
-
+    private Map<CalendarDay, String> scheduleAddressMap = new HashMap<>();
     private String selectedAddress;
+    private ScheduleDecorator scheduleDecorator;
 
 
 
@@ -153,6 +155,9 @@ public class ScheduleFragment extends Fragment implements AdapterView.OnItemSele
             return null; // Fragment is not attached, return null or handle accordingly
         }
 
+        //filter dots on the calendarView
+        scheduleDecorator = new ScheduleDecorator(requireContext(), scheduledDates_CalendarDay);
+
         // Spinner
         Spinner dropDownSpinnerForLocation = view.findViewById(R.id.DropDown_spinner_for_location);
 
@@ -161,6 +166,14 @@ public class ScheduleFragment extends Fragment implements AdapterView.OnItemSele
 
         // Fetch data from Firebase
         fetchFirebaseDataAndPopulateSpinner(dropDownSpinnerForLocation);
+
+
+        //for changinge schedule base on the month displayed on the calendar.
+        MaterialCalendarView calendarView = view.findViewById(R.id.Admin_calendarView);
+        calendarView.setOnMonthChangedListener((widget, date) -> {
+            // Update the displayed schedule when the month changes
+            updateTableWithFilteredData();
+        });
 
 
 
@@ -250,7 +263,7 @@ public class ScheduleFragment extends Fragment implements AdapterView.OnItemSele
                 }
 
                 // Step 3: Apply Decorator to MaterialCalendarView
-                applyDecorator();
+                applyDecorator(selectedAddress);
             }
 
             @Override
@@ -260,27 +273,24 @@ public class ScheduleFragment extends Fragment implements AdapterView.OnItemSele
         });
 
         return view;
-    }
+    }//end of onCreateView
 
 
-//    displaying List of Adress on the firebase realtime database to the spinner
+//    displaying List of Address on the firebase realtime database to the spinner
     private void fetchFirebaseDataAndPopulateSpinner(Spinner spinner) {
-        // Assuming you have a reference to your Firebase database
         if (isAdded()) {
             DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("schedules");
 
-            // Listen for changes in the data
             databaseReference.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     if (isAdded()) {
                         List<String> uniqueAddresses = new ArrayList<>();
 
-                        // Iterate through the data and extract unique addresses
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                             String address = snapshot.child("address").getValue(String.class);
 
-                            // Check if the address is not already in the list
+                            // Add a null check for the address
                             if (address != null && !uniqueAddresses.contains(address)) {
                                 uniqueAddresses.add(address);
                             }
@@ -290,7 +300,6 @@ public class ScheduleFragment extends Fragment implements AdapterView.OnItemSele
                             uniqueAddresses.add("No Schedule");
                         }
 
-                        // Create an ArrayAdapter with the unique addresses
                         ArrayAdapter<String> adapter = new ArrayAdapter<>(
                                 requireActivity(),
                                 android.R.layout.simple_spinner_item,
@@ -300,7 +309,7 @@ public class ScheduleFragment extends Fragment implements AdapterView.OnItemSele
                         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                         spinner.setAdapter(adapter);
                     }
-                    }
+                }
 
                 @Override
                 public void onCancelled(@NonNull DatabaseError databaseError) {
@@ -309,6 +318,7 @@ public class ScheduleFragment extends Fragment implements AdapterView.OnItemSele
             });
         }
     }
+
 
     //for the spinner
     // Implement the onItemSelected method
@@ -321,12 +331,19 @@ public class ScheduleFragment extends Fragment implements AdapterView.OnItemSele
         updateTableWithFilteredData();
     }
 
+
+
     //display data from the firebase to the schedules table
     private void updateTableWithFilteredData() {
-        if (!isAdded() || mContext == null) {
-            return; // Fragment is not attached, do nothing
-        }
-        DatabaseReference schedulesRef = FirebaseDatabase.getInstance().getReference("schedules");
+    if (!isAdded() || mContext == null) {
+        return; // Fragment is not attached, do nothing
+    }
+
+    DatabaseReference schedulesRef = FirebaseDatabase.getInstance().getReference("schedules");
+    MaterialCalendarView calendarView = requireView().findViewById(R.id.Admin_calendarView);
+
+    // Get the selected month from the calendar view
+    CalendarDay selectedMonth = calendarView.getCurrentDate();
 
         schedulesRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -348,8 +365,21 @@ public class ScheduleFragment extends Fragment implements AdapterView.OnItemSele
                     String endTime = scheduleSnapshot.child("endTime").getValue(String.class);
                     String address = scheduleSnapshot.child("address").getValue(String.class);
 
-                    // Check if the schedule's address matches the selected address
-                    if (selectedAddress != null && selectedAddress.equals(address)) {
+
+                    CalendarDay scheduleDay = convertStringToCalendarDay(date);
+                    // Add the mapping to the map
+                    if (scheduleDay != null && address != null) {
+                        scheduleAddressMap.put(scheduleDay, address);
+                    }
+
+
+                // Check if the schedule's address matches the selected address
+                if (selectedAddress != null && selectedAddress.equals(address)) {
+                    // Convert date string to CalendarDay object
+                    CalendarDay scheduleMonth = convertStringToCalendarDay(date);
+
+                    // Check if the schedule's month matches the selected month
+                    if (scheduleMonth != null && scheduleMonth.getMonth() == selectedMonth.getMonth()) {
                         // Create a new TableRow for the data entry
                         TableRow dataRow = new TableRow(mContext);
 
@@ -388,6 +418,9 @@ public class ScheduleFragment extends Fragment implements AdapterView.OnItemSele
                         dataTableLayout.addView(dataRow);
                     }
                 }
+            }
+                applyDecorator(selectedAddress);
+
             }
 
             @Override
@@ -432,10 +465,44 @@ public class ScheduleFragment extends Fragment implements AdapterView.OnItemSele
 
 
     // Method to apply decorator to MaterialCalendarView
-    private void applyDecorator() {
-        // Create a decorator and add it to the MaterialCalendarView
+    private void applyDecorator(String selectedAddress) {
+        Set<CalendarDay> filteredDates = filterDatesByAddress(selectedAddress, scheduledDates_CalendarDay);
+        scheduleDecorator.updateFilteredDates(filteredDates);
+
+        // Update the MaterialCalendarView with the decorator
         if (isAdded()) {
-            materialCalendarView.addDecorator(new ScheduleDecorator(requireContext(), scheduledDates_CalendarDay));
+            materialCalendarView.addDecorator(scheduleDecorator);
         }
     }
+
+
+    //get the dates from database then filter it by the address selected on the spinner
+    private Set<CalendarDay> filterDatesByAddress(String selectedAddress, Set<CalendarDay> allScheduledDates) {
+        Set<CalendarDay> filteredDates = new HashSet<>();
+
+        for (CalendarDay day : allScheduledDates) {
+            // Assuming you have a method to get the address for a specific date
+            String addressForDate = getAddressForDate(day);
+
+            // Add null checks for selectedAddress and addressForDate
+            if (selectedAddress != null && addressForDate != null && selectedAddress.equals(addressForDate)) {
+                filteredDates.add(day);
+            }
+        }
+
+        return filteredDates;
+    }
+
+
+    //To get the address for a specific date
+    private String getAddressForDate(CalendarDay day) {
+        if (scheduleAddressMap.containsKey(day)) {
+            return scheduleAddressMap.get(day);
+        } else {
+            return null; // Handle the case where address is not found
+        }
+    }
+
+
+
 }

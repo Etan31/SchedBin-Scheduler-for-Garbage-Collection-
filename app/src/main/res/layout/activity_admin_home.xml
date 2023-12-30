@@ -29,12 +29,15 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@drawable/nav_bg"
+        app:itemIconTint="@color/selector_bottom_nav_icon"
+        app:itemTextColor="@color/selector_bottom_nav_icon"
+        app:labelVisibilityMode="labeled"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/bottom_nav_menu">
+        app:menu="@menu/bottom_nav_menu" />
 
-    </com.google.android.material.bottomnavigation.BottomNavigationView>
+
 
     <FrameLayout
         android:id="@+id/BaseFrameLayout"
@@ -57,7 +60,7 @@
         android:foregroundTint="@color/color2"
         android:src="@drawable/ic_add"
         android:visibility="visible"
-        app:backgroundTint="@color/color3_btns"
+        app:backgroundTint="@color/dark_brown"
         app:elevation="10dp"
         app:layout_anchorGravity="top|center"
         app:layout_constraintBottom_toBottomOf="@+id/bottomNavigationView"

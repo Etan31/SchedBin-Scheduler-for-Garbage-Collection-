@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:background="@color/main_color"
     tools:context=".addSchedule_activity">
-<!--    TODO: the Date and Address input should be required to fill on-->
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -201,6 +200,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="30dp"
                 android:backgroundTint="@color/dark_brown"
+                android:paddingStart="45dp"
+                android:paddingTop="15dp"
+                android:paddingEnd="45dp"
+                android:paddingBottom="15dp"
                 android:text="@string/add_schedule"
                 android:textAppearance="@style/add_Sched"
                 app:layout_anchor="@+id/constraintLayout3"

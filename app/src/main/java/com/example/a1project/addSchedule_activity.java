@@ -41,6 +41,7 @@ import java.util.Objects;
 
 public class addSchedule_activity extends AppCompatActivity implements  AdapterView.OnItemSelectedListener, DeleteDialogFragment.DeleteDialogListener {
 
+    //TODO:limit to adding of the everyday or every week, it crashes because of doing so many work on the main thread.
 
     Button backBtn2;
     private Calendar calendar;
@@ -122,6 +123,10 @@ public class addSchedule_activity extends AppCompatActivity implements  AdapterV
             // Check if date and address are not empty
             if (date.isEmpty() || address.isEmpty()) {
                 Toast.makeText(this, "Please enter a valid date and address", Toast.LENGTH_SHORT).show();
+                return; // Exit the method if validation fails
+            }
+            if (!isValidDate(date)) {
+                Toast.makeText(this, "Please enter a valid date", Toast.LENGTH_SHORT).show();
                 return; // Exit the method if validation fails
             }
 
@@ -257,8 +262,23 @@ public class addSchedule_activity extends AppCompatActivity implements  AdapterV
 
         btnSelectTime_from.setOnClickListener(v -> showTimePickerDialog_from_To(btnSelectTime_from));
         btnSelectTime_to.setOnClickListener(v -> showTimePickerDialog_from_To(btnSelectTime_to));
+    }//end of onCreate
+
+
+
+    // Function to check if the date is valid
+    private boolean isValidDate(String date) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy", Locale.getDefault());
+        dateFormat.setLenient(false);
+
+        try {
+            // Parse the date; this will throw a ParseException if the date is invalid
+            Date parsedDate = dateFormat.parse(date);
+            return true;
+        } catch (ParseException e) {
+            return false;
+        }
     }
-    //end of onCreate
 
 
 
