@@ -115,7 +115,7 @@ public class ActivityHomeRegularUser extends AppCompatActivity implements Adapte
         backBtn2.setOnClickListener(v -> finish());
 
         FeedbackBtn = findViewById(R.id.FeedbackBtn);
-        FeedbackBtn.setOnClickListener(v -> viewFeedbackType());
+        FeedbackBtn.setOnClickListener(v -> suggest_feedback());
 
 
                 // Spinner
@@ -137,8 +137,8 @@ public class ActivityHomeRegularUser extends AppCompatActivity implements Adapte
         fetchAndDecorateCalendar();
     }
 
-    private void viewFeedbackType() {
-        Intent intent = new Intent(this, FeedbackType.class);
+    private void suggest_feedback() {
+        Intent intent = new Intent(this, suggestion_feedback.class);
         startActivity(intent);
 
     }

@@ -73,5 +73,21 @@
         <item>Every Year</item>
     </string-array>
 
+    <string-array name="features">
+        <item>Address</item>
+        <item>Calendar Display</item>
+        <item>Color Optimization</item>
+        <item>Displayed Schedules</item>
+        <item>Font Size Adjustment</item>
+        <item>Garbage Type</item>
+        <item>Internet Connectivity</item>
+        <item>Layout Readability</item>
+        <item>Night Mode</item>
+        <item>Table Optimization</item>
+        <item>User Navigation</item>
+        <item>Others</item>
+    </string-array>
+
+
 
 </resources>
