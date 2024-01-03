@@ -56,9 +56,19 @@ public class suggestion_feedback extends AppCompatActivity {
             Feedback feedback = new Feedback(feedbackId, selectedFeature, userSuggestion);
             databaseReference.child(feedbackId).setValue(feedback);
 
-            Toast.makeText(this, "Feedback sent successfully", Toast.LENGTH_SHORT).show();
+            clearForms();
+
+            Toast.makeText(this, "Feedback sent, Thank you!", Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(this, "Please enter your suggestion", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void clearForms() {
+        // Clear the selected item in the spinner
+        featureSpinner.setSelection(0);
+
+        // Clear the text in the suggestionEditText
+        suggestionEditText.setText("");
     }
 }
