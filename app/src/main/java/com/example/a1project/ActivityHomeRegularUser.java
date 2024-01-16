@@ -320,6 +320,8 @@ public class ActivityHomeRegularUser extends AppCompatActivity implements Adapte
                         // Add the TextViews to the dataRow
                         dataRow.addView(dateTextView);
                         dataRow.addView(garbageTypeTextView);
+                        dataRow.addView(startTimeTextView);
+                        dataRow.addView(endTimeTextView);
 
                         // Add the dataRow to the dataTableLayout (inside the ScrollView)
                         dataTableLayout.addView(dataRow);
