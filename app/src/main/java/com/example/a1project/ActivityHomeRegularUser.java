@@ -153,38 +153,7 @@ public class ActivityHomeRegularUser extends AppCompatActivity implements Adapte
         dialog.show();
     }
 
-//    private void initUI() {
-//        Emitter emitter = new Emitter(100, TimeUnit.MILLISECONDS, 100);
-//
-//        Shape customDrawableShape = Shape.Square; // Or use another shape provided by the Konfetti library
-//
-//        Party party = new Party(0, 360, 0.9f, 30,
-//                0.9f,
-//                Arrays.asList(new Size(12, 12)),
-//                Arrays.asList(0xfce18a, 0xff726d, 0xf4306d, 0xb48def),
-//                Arrays.asList(customDrawableShape),
-//                1000,
-//                true,
-//                new Position.Relative(0.5, 0.3),
-//                0,
-//                new Rotation.One(),
-//                emitter);
-//
-//        binding.btnStartAnimation.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Dialog dialog = new Dialog(MainActivity.this);
-//                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-//                dialog.setCancelable(true);
-//                dialog.setContentView(R.layout.appreciation_dialog);
-//                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-//                dialog.show();
-//
-//                ParticleSystem system = new ParticleSystem(party);
-//                system.emit(binding.konfettiView, 3000);
-//            }
-//        });
-//    }
+
 
     private void fetchFirebaseDataAndPopulateSpinner(Spinner spinner) {
         // Assuming you have a reference to your Firebase database
