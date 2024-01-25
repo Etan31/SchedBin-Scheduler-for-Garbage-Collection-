@@ -6,21 +6,21 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/main_color"
-    tools:context=".MainActivity2">
+    tools:context="com.schedBin.a1project.MainActivity2">
 
-    <Button
-        android:id="@+id/backBtn2"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="28dp"
-        android:background="@drawable/btn_back_bg"
-        android:contentDescription="@string/backbtn"
-        android:drawableEnd="@drawable/ic_backbtn"
-        android:drawableTint="@color/color3_btns"
-        android:paddingEnd="10dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+<!--    <Button-->
+<!--        android:id="@+id/backBtn2"-->
+<!--        android:layout_width="48dp"-->
+<!--        android:layout_height="48dp"-->
+<!--        android:layout_marginStart="24dp"-->
+<!--        android:layout_marginTop="28dp"-->
+<!--        android:background="@drawable/btn_back_bg"-->
+<!--        android:contentDescription="@string/backbtn"-->
+<!--        android:drawableEnd="@drawable/ic_backbtn"-->
+<!--        android:drawableTint="@color/color3_btns"-->
+<!--        android:paddingEnd="10dp"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent" />-->
 
     <Button
         android:id="@+id/save_btn2"
@@ -44,7 +44,7 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/passwordInput_createAcount"
         android:layout_width="304dp"
-        android:layout_height="50dp"
+        android:layout_height="55dp"
         android:background="@drawable/input_bg"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -64,7 +64,7 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/emailInput_createaAcount"
         android:layout_width="304dp"
-        android:layout_height="50dp"
+        android:layout_height="55dp"
         android:layout_marginTop="80dp"
         android:background="@drawable/input_bg"
         app:layout_constraintBottom_toBottomOf="parent"
