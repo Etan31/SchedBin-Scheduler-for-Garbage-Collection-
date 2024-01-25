@@ -1,4 +1,4 @@
-package com.example.a1project;
+package com.schedBin.a1project;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
@@ -25,6 +25,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -65,6 +66,7 @@ public class EditSchedule extends AppCompatActivity implements AdapterView.OnIte
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_schedule);
+        FirebaseApp.initializeApp(this);
 
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
@@ -207,9 +209,21 @@ public class EditSchedule extends AppCompatActivity implements AdapterView.OnIte
                         garbageTypeTextView.setGravity(Gravity.START);
                         garbageTypeTextView.setPadding(10, 10, 5, 10);
 
+                        TextView startTimeTextView = new TextView(EditSchedule.this);
+                        startTimeTextView.setText(startTime);
+                        startTimeTextView.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1f));
+                        startTimeTextView.setGravity(Gravity.START);
+                        startTimeTextView.setPadding(10, 10, 5, 5);
+
+                        TextView endTimeTextView = new TextView(EditSchedule.this);
+                        endTimeTextView.setText(endTime);
+                        endTimeTextView.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1f));
+                        endTimeTextView.setGravity(Gravity.START);
+                        endTimeTextView.setPadding(10, 10, 5, 5);
+
                         // Add the TextViews to the dataRow
-                        dataRow.addView(dateTextView);
-                        dataRow.addView(garbageTypeTextView);
+//                        dataRow.addView(dateTextView);
+//                        dataRow.addView(garbageTypeTextView);
 
                 // Add an OnClickListener to the dataRow
                         dataRow.setOnClickListener(new View.OnClickListener() {
@@ -226,8 +240,8 @@ public class EditSchedule extends AppCompatActivity implements AdapterView.OnIte
                                     setSpinnerSelection(repeatTimeSpinner, repeatType);
 
                                     // Set text for btnSelectTime_from and btnSelectTime_to
-//                                    btnEditTimeFrom.setText(startTime);
-//                                    btnEditTimeTo.setText(endTime);
+                                    btnEditTimeFrom.setText(startTime);
+                                    btnEditTimeTo.setText(endTime);
 
 
 //                                    Toast.makeText(EditSchedule.this, "Start Time: " + startTime, Toast.LENGTH_SHORT).show();
@@ -506,6 +520,11 @@ public class EditSchedule extends AppCompatActivity implements AdapterView.OnIte
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
 
+    }
+
+    @Override
+    public Void doInBackground(Object... params) {
+        return null;
     }
 
     @Override
