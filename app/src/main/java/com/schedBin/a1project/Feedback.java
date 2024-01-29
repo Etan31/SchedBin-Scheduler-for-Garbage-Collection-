@@ -1,4 +1,4 @@
-package com.example.a1project;
+package com.schedBin.a1project;
 
 public class Feedback {
     private String id;
@@ -6,8 +6,12 @@ public class Feedback {
     private String suggestion;
 
     public Feedback() {
+        String feedbackId;
+        String selectedFeature;
+        String userSuggestion;
         // Default constructor required for Firebase
     }
+
 
     public Feedback(String id, String feature, String suggestion) {
         this.id = id;
