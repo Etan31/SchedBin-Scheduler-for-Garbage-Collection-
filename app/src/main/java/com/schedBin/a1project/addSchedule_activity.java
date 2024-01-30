@@ -1,4 +1,4 @@
-package com.example.a1project;
+package com.schedBin.a1project;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
@@ -19,7 +19,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.a1project.adapter.PlaceAutoSuggestAdapter;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.DataSnapshot;
@@ -27,7 +26,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.schedBin.a1project.adapter.PlaceAutoSuggestAdapter;
 
+import java.lang.ref.WeakReference;
 import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -37,7 +38,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Objects;
 
 public class addSchedule_activity extends AppCompatActivity implements  AdapterView.OnItemSelectedListener, DeleteDialogFragment.DeleteDialogListener {
 
@@ -51,6 +51,57 @@ public class addSchedule_activity extends AppCompatActivity implements  AdapterV
     private Button btnSelectTime_to;
 
     private DatabaseReference databaseReference;
+
+    // Add this class as a nested class in your activity
+    private WeakReference<addSchedule_activity> activityReference;
+
+    void ScheduleTask(addSchedule_activity activity) {
+        this.activityReference = new WeakReference<>(activity);
+    }
+
+    @Override
+    public Void doInBackground(Object... params) {
+        addSchedule_activity activity = activityReference.get();
+        if (activity == null || activity.isFinishing()) {
+            return null; // Activity is not available, or it's finishing, do nothing
+        }
+
+            String date = (String) params[0];
+            String address = (String) params[1];
+            String garbageType = (String) params[2];
+            String repeatType = (String) params[3];
+            String startTimes = (String) params[4];
+            String endTimes = (String) params[5];
+
+            DateTimeFormatter formatter = null;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+            }
+            LocalDate selectedDate = null;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                selectedDate = LocalDate.parse(date, formatter);
+            }
+
+            if (repeatType.equals("Everyday")) {
+                int maxDays = 2 * 30; // 2 months
+                for (int i = 0; i < maxDays; i++) {
+                    LocalDate repeatedDate = null;
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        repeatedDate = selectedDate.plusDays(i);
+                    }
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        if (repeatedDate.isAfter(selectedDate.plusMonths(3))) {
+                            break;
+                        }
+                    }
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        addScheduleToFirebase(repeatedDate.format(formatter), address, garbageType, repeatType, startTimes, endTimes);
+                    }
+                }
+            }
+
+            return null;
+        }
 
 
     @Override
@@ -181,18 +232,25 @@ public class addSchedule_activity extends AppCompatActivity implements  AdapterV
 
                 // Add additional schedules based on repeatType
                 if (repeatType.equals("Everyday")) {
-                    // Generate schedules for every day
-                    for (int i = 0; i < 365; i++) {
-                        // Increment the date for each day
+                    // Generate schedules for every day but limit to 3 to 5 months
+                    int maxDays = 2 * 30; // 2 months
+                    for (int i = 0; i < maxDays; i++) {
                         LocalDate repeatedDate = null;
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                             repeatedDate = selectedDate.plusDays(i);
                         }
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                            if (repeatedDate.isAfter(selectedDate.plusMonths(3))) {
+                                // Stop generating schedules after 2 months
+                                break;
+                            }
+                        }
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                             addScheduleToFirebase(repeatedDate.format(formatter), address, garbageType, repeatType, startTimes, endTimes);
                         }
                     }
-                } else if (repeatType.equals("Every week")) {
+                }
+                else if (repeatType.equals("Every week")) {
                     // Generate schedules for every week
                     for (int i = 0; i < 52; i++) {
                         // Increment the date for each week (7 days)
@@ -283,10 +341,31 @@ public class addSchedule_activity extends AppCompatActivity implements  AdapterV
 
 
     // Helper method to add a schedule to Firebase
+//    private void addScheduleToFirebase(String date, String address, String garbageType, String repeatType, String startTime, String endTime) {
+//        Schedule repeatedSchedule = new Schedule(date, address, garbageType, repeatType,startTime,endTime);
+//        databaseReference.child(Objects.requireNonNull(databaseReference.push().getKey())).setValue(repeatedSchedule);
+//    }
     private void addScheduleToFirebase(String date, String address, String garbageType, String repeatType, String startTime, String endTime) {
-        Schedule repeatedSchedule = new Schedule(date, address, garbageType, repeatType);
-        databaseReference.child(Objects.requireNonNull(databaseReference.push().getKey())).setValue(repeatedSchedule);
+        Schedule repeatedSchedule = new Schedule(date, address, garbageType, repeatType, startTime, endTime);
+        String scheduleKey = databaseReference.push().getKey();
+
+        // Save the schedule to Firebase
+        databaseReference.child(scheduleKey).setValue(repeatedSchedule)
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        // Schedule added successfully
+                        deletePastSchedules();
+                        Toast.makeText(this, "Schedule added to Firebase", Toast.LENGTH_SHORT).show();
+
+                        // Finish the activity
+                        finish();
+                    } else {
+                        // Handle the case where the schedule addition failed
+                        Toast.makeText(this, "Failed to add schedule to Firebase", Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
+
 
     private void deletePastSchedules() {
         Calendar currentCalendar = Calendar.getInstance();

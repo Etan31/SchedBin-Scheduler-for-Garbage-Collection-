@@ -1,4 +1,4 @@
-package com.example.a1project;
+package com.schedBin.a1project;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -9,6 +9,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.icu.text.SimpleDateFormat;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
@@ -27,6 +28,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.content.res.AppCompatResources;
 
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.FirebaseOptions;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -81,6 +84,16 @@ public class ActivityHomeRegularUser extends AppCompatActivity implements Adapte
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_regular_user); // Replace with your activity layout
+
+        FirebaseApp.initializeApp(this);
+
+        // Retrieve the database URL
+        FirebaseApp app = FirebaseApp.getInstance();
+        FirebaseOptions options = app.getOptions();
+        String databaseUrl = options.getDatabaseUrl();
+
+        // Log the database URL
+        Log.d("Firebase", "Connected to database: " + databaseUrl);
         
         //for appreciation dialog
         ImageView imageView = findViewById(R.id.imageView);
