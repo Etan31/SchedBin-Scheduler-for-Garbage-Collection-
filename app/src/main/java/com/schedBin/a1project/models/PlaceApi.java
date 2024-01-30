@@ -1,4 +1,4 @@
-package com.example.a1project.models;
+package com.schedBin.a1project.models;
 
 import android.util.Log;
 
