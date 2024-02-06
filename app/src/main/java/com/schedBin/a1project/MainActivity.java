@@ -1,4 +1,4 @@
-package com.example.a1project;
+package com.schedBin.a1project;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -49,6 +49,10 @@ public class MainActivity extends AppCompatActivity {
         viewSchedule.setOnClickListener(v -> viewSchedule_Activity());
 
 
+        Button add_admin = findViewById(R.id.createAccnt);
+        add_admin.setOnClickListener(v ->MainActivity2());
+
+
         //
         Button login_btn = findViewById(R.id.login_btn);
         login_btn.setOnClickListener(v -> {
@@ -71,12 +75,13 @@ public class MainActivity extends AppCompatActivity {
                             FirebaseUser user = mAuth.getCurrentUser();
 
                             if (user != null) {
-                                if (user.isEmailVerified()) {
-                                    // User is registered and email is verified, log them in.
-                                    openActivityHome();
-                                } else {
-                                    Toast.makeText(MainActivity.this, "Please verify your email", Toast.LENGTH_SHORT).show();
-                                }
+                                openActivityHome();
+//                                if (user.isEmailVerified()) {
+//                                    // User is registered and email is verified, log them in.
+//                                    openActivityHome();
+//                                } else {
+//                                    Toast.makeText(MainActivity.this, "Please verify your email", Toast.LENGTH_SHORT).show();
+//                                }
                             } else {
                                 Toast.makeText(MainActivity.this, "Please register your email address", Toast.LENGTH_SHORT).show();
                             }
@@ -88,6 +93,11 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
+    public void MainActivity2(){
+        Intent intent = new Intent(this, MainActivity2.class);
+        startActivity(intent);
+    }
 
     public void viewSchedule_Activity() {
         Intent intent = new Intent(this, ActivityHomeRegularUser.class);
