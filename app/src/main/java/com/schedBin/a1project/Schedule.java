@@ -1,8 +1,9 @@
-package com.example.a1project;
+package com.schedBin.a1project;
 
 public class Schedule {
 
     private String date;
+
     private String address;
     private String garbageType;
     private String repeatType;
@@ -31,21 +32,21 @@ public class Schedule {
     }
 
     // Getter and setter methods for the new properties
-    public String getDayOfWeek() {
-        return startTime;
-    }
-
-    public void setDayOfWeek(String dayOfWeek) {
-        this.startTime = startTime;
-    }
-
-    public String getMonth() {
-        return endTime;
-    }
-
-    public void setMonth(String month) {
-        this.endTime = endTime;
-    }
+//    public String getDayOfWeek() {
+//        return startTime;
+//    }
+//
+//    public void setDayOfWeek(String dayOfWeek) {
+//        this.startTime = startTime;
+//    }
+//
+//    public String getMonth() {
+//        return endTime;
+//    }
+//
+//    public void setMonth(String month) {
+//        this.endTime = endTime;
+//    }
 
     public String getDate() {
         return date;
@@ -62,6 +63,22 @@ public class Schedule {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public String getDayOfWeek() {
+        return startTime;
+    }
+
+    public void setDayOfWeek(String startTime) {
+        this.startTime = startTime;
+    }
+
+    public String getMonth() {
+        return endTime;
+    }
+
+    public void setMonth(String endTime) {
+        this.endTime = endTime;
     }
 
     public String getGarbageType() {
