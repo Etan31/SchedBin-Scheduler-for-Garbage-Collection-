@@ -22,6 +22,21 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
+            <com.google.android.material.progressindicator.LinearProgressIndicator
+                android:id="@+id/lineardialog"
+                android:layout_width="325dp"
+                android:layout_height="14dp"
+                android:layout_marginEnd="12dp"
+                android:indeterminate="true"
+                app:indeterminateAnimationType="disjoint"
+                app:indicatorColor="@color/color3_btns"
+                app:indicatorSize="50dp"
+                app:layout_constraintBottom_toBottomOf="@+id/horizontalScrollView2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/horizontalScrollView2"
+                app:trackThickness="8dp" />
 
             <TextView
                 android:id="@+id/calendar"
@@ -38,6 +53,7 @@
                 tools:ignore="MissingConstraints" />
 
             <HorizontalScrollView
+                android:id="@+id/horizontalScrollView2"
                 android:layout_width="337dp"
                 android:layout_height="163dp"
                 app:layout_constraintBottom_toTopOf="@+id/add_schedule"
