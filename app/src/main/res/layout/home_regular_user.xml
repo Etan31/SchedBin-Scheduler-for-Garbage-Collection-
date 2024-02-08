@@ -7,7 +7,6 @@
     android:background="@color/main_color"
     tools:context="com.schedBin.a1project.ActivityHomeRegularUser">
 
-
     <nl.dionsegijn.konfetti.xml.KonfettiView
         android:id="@+id/konfettiView"
         android:layout_width="411dp"
@@ -206,6 +205,20 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/FeedbackBtn"
         tools:ignore="RtlSymmetry" />
+
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:id="@+id/lineardialog"
+        android:layout_width="325dp"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        app:indeterminateAnimationType="disjoint"
+        app:indicatorSize="50dp"
+        app:indicatorColor="@color/color3_btns"
+        app:layout_constraintBottom_toBottomOf="@+id/horizontalScrollView"
+        app:layout_constraintEnd_toEndOf="@+id/backBtn2"
+        app:layout_constraintStart_toStartOf="@+id/FeedbackBtn"
+        app:layout_constraintTop_toTopOf="@+id/horizontalScrollView"
+        app:trackThickness="8dp" />
 
     <ImageView
         android:id="@+id/imageView"
