@@ -17,7 +17,7 @@
             android:layout_height="33dp"
             android:fontFamily="@font/opensans_semicondensed_italic"
             android:gravity="center|start"
-            android:text="This application is solely for displaying garbage schedule in you area."
+            android:text="This application is solely for displaying garbage schedule in your area."
             android:textColor="@color/color2"
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"
