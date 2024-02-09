@@ -1,11 +1,13 @@
 package com.schedBin.a1project;
 
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.pm.ActivityInfo;
 import android.icu.text.SimpleDateFormat;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -109,6 +111,7 @@ public class addSchedule_activity extends AppCompatActivity implements  AdapterV
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_schedule);
 
+
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         btnSelectTime = findViewById(R.id.btnSelectTime_from);
@@ -160,6 +163,11 @@ public class addSchedule_activity extends AppCompatActivity implements  AdapterV
 
         //adding schedule with the repeat event
         addScheduleButton.setOnClickListener(view -> {
+            ProgressDialog progressDialog = new ProgressDialog(this);
+            progressDialog.setMessage("Adding schedule...");
+            progressDialog.setCancelable(false);
+            progressDialog.show();
+
             // Get values from input fields
             String date = dateAutoCompleteTextView.getText().toString();
             String address = addressAutoCompleteTextView.getText().toString();
@@ -173,16 +181,22 @@ public class addSchedule_activity extends AppCompatActivity implements  AdapterV
 
             // Check if date and address are not empty
             if (date.isEmpty() || address.isEmpty()) {
+                deletePastSchedules();
+                progressDialog.dismiss();
                 Toast.makeText(this, "Please enter a valid date and address", Toast.LENGTH_SHORT).show();
                 return; // Exit the method if validation fails
             }
             if (!isValidDate(date)) {
+                deletePastSchedules();
+                progressDialog.dismiss();
                 Toast.makeText(this, "Please enter a valid date", Toast.LENGTH_SHORT).show();
                 return; // Exit the method if validation fails
             }
 
             // Check if a time has been selected
             if (startTimes.equals("SELECT TIME") || endTimes.equals("SELECT TIME")) {
+                deletePastSchedules();
+                progressDialog.dismiss();
                 Toast.makeText(this, "Please select a valid start and end time", Toast.LENGTH_SHORT).show();
                 return; // Exit the method if validation fails
             }
@@ -208,6 +222,7 @@ public class addSchedule_activity extends AppCompatActivity implements  AdapterV
                         if (task.isSuccessful()) {
                             // Schedule added successfully
                             deletePastSchedules();
+                            progressDialog.dismiss();
                             Toast.makeText(this, "Schedules added to Firebase", Toast.LENGTH_SHORT).show();
                         } else {
                             // Handle the case where the schedule addition failed
@@ -348,22 +363,69 @@ public class addSchedule_activity extends AppCompatActivity implements  AdapterV
     private void addScheduleToFirebase(String date, String address, String garbageType, String repeatType, String startTime, String endTime) {
         Schedule repeatedSchedule = new Schedule(date, address, garbageType, repeatType, startTime, endTime);
         String scheduleKey = databaseReference.push().getKey();
-
+        ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Adding schedule...");
+        progressDialog.setCancelable(false);
         // Save the schedule to Firebase
-        databaseReference.child(scheduleKey).setValue(repeatedSchedule)
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        // Schedule added successfully
-                        deletePastSchedules();
-                        Toast.makeText(this, "Schedule added to Firebase", Toast.LENGTH_SHORT).show();
+//        databaseReference.child(scheduleKey).setValue(repeatedSchedule)
+//                .addOnCompleteListener(task -> {
+//                    if (task.isSuccessful()) {
+//                        // Schedule added successfully
+//                        deletePastSchedules();
+//                        progressDialog.dismiss();
+//                        Toast.makeText(this, "Schedule added to Firebase", Toast.LENGTH_SHORT).show();
+//
+//                        // Finish the activity
+//                        finish();
+//                    } else {
+//                        // Handle the case where the schedule addition failed
+//                        Toast.makeText(this, "Failed to add schedule to Firebase, Please check your internet connection", Toast.LENGTH_LONG).show();
+//                    }
+//                });
 
-                        // Finish the activity
-                        finish();
-                    } else {
-                        // Handle the case where the schedule addition failed
-                        Toast.makeText(this, "Failed to add schedule to Firebase", Toast.LENGTH_SHORT).show();
-                    }
-                });
+
+        addSchedulesWithProgress(date, address, garbageType, repeatType, startTime, endTime, progressDialog, 0);
+    }
+
+    private void addSchedulesWithProgress(String date, String address, String garbageType, String repeatType, String startTime, String endTime, ProgressDialog progressDialog, int progressStep) {
+        new Handler().postDelayed(() -> {
+            // Update progress message
+            updateProgressDialogMessage(progressDialog, progressStep);
+
+            Schedule repeatedSchedule = new Schedule(date, address, garbageType, repeatType, startTime, endTime);
+            String scheduleKey = databaseReference.push().getKey();
+
+            // Save the schedule to Firebase
+            databaseReference.child(scheduleKey).setValue(repeatedSchedule)
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            // Schedule added successfully
+                            deletePastSchedules();
+                            progressDialog.dismiss();
+                            Toast.makeText(this, "Schedule added to Firebase", Toast.LENGTH_SHORT).show();
+
+                            // Finish the activity
+                            finish();
+                        } else {
+                            // Handle the case where the schedule addition failed
+                            Toast.makeText(this, "Failed to add schedule to Firebase. Please check your internet connection.", Toast.LENGTH_LONG).show();
+                        }
+                    });
+        }, 1000); // Delay added to simulate asynchronous operation. You can remove this in a real application.
+    }
+
+    private void updateProgressDialogMessage(ProgressDialog progressDialog, int progressStep) {
+        String[] messages = {
+                "Adding schedules...",
+                "Still adding schedules, please be patient...",
+                "Taking longer than expected, thank you for waiting..."
+        };
+
+        if (progressStep < messages.length) {
+            progressDialog.setMessage(messages[progressStep]);
+        } else {
+            progressDialog.setMessage("Adding schedules..."); // Reset message if all messages are displayed
+        }
     }
 
 
