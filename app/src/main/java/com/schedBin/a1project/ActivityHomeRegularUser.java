@@ -28,6 +28,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.content.res.AppCompatResources;
 
+import com.google.android.material.progressindicator.LinearProgressIndicator;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.database.DataSnapshot;
@@ -79,6 +80,8 @@ public class ActivityHomeRegularUser extends AppCompatActivity implements Adapte
 
     private String selectedAddress;
 
+    private LinearProgressIndicator linearProgressIndicator;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,6 +89,8 @@ public class ActivityHomeRegularUser extends AppCompatActivity implements Adapte
         setContentView(R.layout.home_regular_user); // Replace with your activity layout
 
         FirebaseApp.initializeApp(this);
+        linearProgressIndicator = findViewById(R.id.lineardialog);
+
 
         // Retrieve the database URL
         FirebaseApp app = FirebaseApp.getInstance();
@@ -242,9 +247,12 @@ public class ActivityHomeRegularUser extends AppCompatActivity implements Adapte
 
 
     private void updateTableWithFilteredData() {
+
         if ( mContext == null) {
             return; // Fragment is not attached, do nothing
         }
+
+        linearProgressIndicator.setVisibility(View.VISIBLE);
         DatabaseReference schedulesRef = FirebaseDatabase.getInstance().getReference("schedules");
 
         schedulesRef.addValueEventListener(new ValueEventListener() {
@@ -309,11 +317,14 @@ public class ActivityHomeRegularUser extends AppCompatActivity implements Adapte
                         dataTableLayout.addView(dataRow);
                     }
                 }
+                linearProgressIndicator.setVisibility(View.GONE);
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 // Handle errors
+
+                linearProgressIndicator.setVisibility(View.GONE);
             }
         });
     }
