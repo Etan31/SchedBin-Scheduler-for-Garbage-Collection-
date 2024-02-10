@@ -1,11 +1,11 @@
-package com.example.a1project.adapter;
+package com.schedBin.a1project.adapter;
 
 import android.content.Context;
 import android.widget.ArrayAdapter;
 import android.widget.Filter;
 import android.widget.Filterable;
 
-import com.example.a1project.models.PlaceApi;
+import com.schedBin.a1project.models.PlaceApi;
 
 import java.util.ArrayList;
 import java.util.Arrays;

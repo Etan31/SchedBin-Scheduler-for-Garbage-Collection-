@@ -1,4 +1,4 @@
-package com.example.a1project;
+package com.schedBin.a1project;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -35,6 +35,7 @@ public class DeleteDialogFragment extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = requireActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.delete_dialog, null);
+
 
         builder.setView(view);
         builder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
@@ -76,6 +77,8 @@ public class DeleteDialogFragment extends DialogFragment {
 
 
     public interface DeleteDialogListener {
+        Void doInBackground(Object... params);
+
         void onDeleteConfirmed(boolean deleteThisEvent, boolean deleteThisAndFollowingEvents);
         void onDeleteCancelled();
     }

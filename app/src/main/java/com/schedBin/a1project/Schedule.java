@@ -10,18 +10,11 @@ public class Schedule {
     private String startTime;
     private String endTime;
 
+
     public Schedule() {
         // Default constructor required for Firebase
     }
 
-    public Schedule(String date, String address, String garbageType, String repeatType) {
-        this.date = date;
-        this.address = address;
-        this.garbageType = garbageType;
-        this.repeatType = repeatType;
-    }
-
-    // Constructor with additional properties
     public Schedule(String date, String address, String garbageType, String repeatType, String startTime, String endTime) {
         this.date = date;
         this.address = address;
@@ -29,25 +22,20 @@ public class Schedule {
         this.repeatType = repeatType;
         this.startTime = startTime;
         this.endTime = endTime;
+
     }
 
-    // Getter and setter methods for the new properties
-//    public String getDayOfWeek() {
-//        return startTime;
-//    }
-//
-//    public void setDayOfWeek(String dayOfWeek) {
+    // Constructor with additional properties
+//    public Schedule(String date, String address, String garbageType, String repeatType, String startTime, String endTime) {
+//        this.date = date;
+//        this.address = address;
+//        this.garbageType = garbageType;
+//        this.repeatType = repeatType;
 //        this.startTime = startTime;
-//    }
-//
-//    public String getMonth() {
-//        return endTime;
-//    }
-//
-//    public void setMonth(String month) {
 //        this.endTime = endTime;
 //    }
 
+    // Getter and setter methods for the new properties
     public String getDate() {
         return date;
     }
@@ -56,13 +44,28 @@ public class Schedule {
         this.date = date;
     }
 
-
     public String getAddress() {
         return address;
     }
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public String getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
+    }
+
+    public String getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(String endTime) {
+        this.endTime = endTime;
     }
 
     public String getDayOfWeek() {
