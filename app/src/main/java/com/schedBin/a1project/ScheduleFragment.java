@@ -1,4 +1,4 @@
-package com.example.a1project;
+package com.schedBin.a1project;
 
 import android.content.Context;
 import android.content.pm.ActivityInfo;
@@ -22,6 +22,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.material.progressindicator.LinearProgressIndicator;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -57,6 +58,8 @@ public class ScheduleFragment extends Fragment implements AdapterView.OnItemSele
     private Map<String, String> dateGarbageTypeMap;
     private GridView calendarGridView;
 
+    private DatabaseReference databaseReference;
+
     private MaterialCalendarView materialCalendarView;
 
 
@@ -65,6 +68,7 @@ public class ScheduleFragment extends Fragment implements AdapterView.OnItemSele
     private Map<CalendarDay, String> scheduleAddressMap = new HashMap<>();
     private String selectedAddress;
     private ScheduleDecorator scheduleDecorator;
+    private LinearProgressIndicator linearProgressIndicator;
 
 
 
@@ -148,12 +152,17 @@ public class ScheduleFragment extends Fragment implements AdapterView.OnItemSele
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_schedule, container, false);
+        linearProgressIndicator = view.findViewById(R.id.lineardialog);
+
 
         requireActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        databaseReference = FirebaseDatabase.getInstance().getReference("schedules");
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("schedules");
 
         if (!isAdded() || mContext == null) {
             return null; // Fragment is not attached, return null or handle accordingly
         }
+
 
         //filter dots on the calendarView
         scheduleDecorator = new ScheduleDecorator(requireContext(), scheduledDates_CalendarDay);
@@ -183,6 +192,7 @@ public class ScheduleFragment extends Fragment implements AdapterView.OnItemSele
         DatabaseReference schedulesRef = FirebaseDatabase.getInstance().getReference("schedules");
 
         schedulesRef.addValueEventListener(new ValueEventListener() {
+
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // Check if the fragment is still attached to a context
@@ -203,6 +213,8 @@ public class ScheduleFragment extends Fragment implements AdapterView.OnItemSele
                 String date = scheduleSnapshot.child("date").getValue(String.class);
                 String garbageType = scheduleSnapshot.child("garbageType").getValue(String.class);
                 String address = scheduleSnapshot.child("address").getValue(String.class);
+                String startTime = scheduleSnapshot.child("startTime").getValue(String.class);
+                String endTime = scheduleSnapshot.child("endTime").getValue(String.class);
 
                 // Check if the schedule's address matches the selected address
                 if (selectedAddress != null && selectedAddress.equals(address)) {
@@ -214,20 +226,34 @@ public class ScheduleFragment extends Fragment implements AdapterView.OnItemSele
                     // Create TextViews for the data
                     TextView dateTextView = new TextView(mContext); // Use stored context
                     dateTextView.setText(date);
-                    dateTextView.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1f)); // Use layout weight to fill available space
+                    dateTextView.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1f));
                     dateTextView.setGravity(Gravity.START);
                     dateTextView.setPadding(10, 10, 5, 5);
 
-                    TextView garbageTypeTextView = new TextView(requireContext());
+                    TextView garbageTypeTextView = new TextView(mContext);
                     garbageTypeTextView.setText(garbageType);
-                    garbageTypeTextView.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1f )); // Use layout weight to fill available space
+                    garbageTypeTextView.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1f));
                     garbageTypeTextView.setGravity(Gravity.START);
                     garbageTypeTextView.setPadding(10, 10, 5, 5);
+
+                    TextView startTimeTextView = new TextView(mContext);
+                    startTimeTextView.setText(startTime);
+                    startTimeTextView.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1f));
+                    startTimeTextView.setGravity(Gravity.START);
+                    startTimeTextView.setPadding(10, 10, 5, 5);
+
+                    TextView endTimeTextView = new TextView(mContext);
+                    endTimeTextView.setText(endTime);
+                    endTimeTextView.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1f));
+                    endTimeTextView.setGravity(Gravity.START);
+                    endTimeTextView.setPadding(10, 10, 5, 5);
 
 
                     // Add the TextViews to the dataRow
                     dataRow.addView(dateTextView);
                     dataRow.addView(garbageTypeTextView);
+                    dataRow.addView(startTimeTextView);
+                    dataRow.addView(endTimeTextView);
 
                     // Add the dataRow to the dataTableLayout (inside the ScrollView)
                     dataTableLayout.addView(dataRow);
@@ -276,7 +302,8 @@ public class ScheduleFragment extends Fragment implements AdapterView.OnItemSele
     }//end of onCreateView
 
 
-//    displaying List of Address on the firebase realtime database to the spinner
+
+    //    displaying List of Address on the firebase realtime database to the spinner
     private void fetchFirebaseDataAndPopulateSpinner(Spinner spinner) {
         if (isAdded()) {
             DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("schedules");
@@ -339,6 +366,7 @@ public class ScheduleFragment extends Fragment implements AdapterView.OnItemSele
         return; // Fragment is not attached, do nothing
     }
 
+    linearProgressIndicator.setVisibility(View.VISIBLE);
     DatabaseReference schedulesRef = FirebaseDatabase.getInstance().getReference("schedules");
     MaterialCalendarView calendarView = requireView().findViewById(R.id.Admin_calendarView);
 
@@ -420,12 +448,13 @@ public class ScheduleFragment extends Fragment implements AdapterView.OnItemSele
                 }
             }
                 applyDecorator(selectedAddress);
-
+                linearProgressIndicator.setVisibility(View.GONE);
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 // Handle errors
+                linearProgressIndicator.setVisibility(View.GONE);
             }
         });
     }
