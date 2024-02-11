@@ -1,4 +1,4 @@
-package com.example.a1project;
+package com.schedBin.a1project;
 
 import android.content.Context;
 
