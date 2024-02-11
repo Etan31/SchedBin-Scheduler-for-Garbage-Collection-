@@ -17,8 +17,8 @@ android {
         namespace "com.schedBin.a1project"
         minSdk 24
         targetSdk 33
-        versionCode 12
-        versionName "1.21.23"
+        versionCode 15
+        versionName "2.8.24"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
