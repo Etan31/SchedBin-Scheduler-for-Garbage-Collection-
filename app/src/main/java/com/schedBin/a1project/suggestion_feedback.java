@@ -1,8 +1,10 @@
 package com.schedBin.a1project;
 
+import android.app.ProgressDialog;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
@@ -45,7 +47,25 @@ public class suggestion_feedback extends AppCompatActivity {
     }
 
 //    This send data from the database, Datas to be sent are text from spinner, and Generated Id, and user feedbacks
+    private long lastFeedbackTimestamp = 0; // Variable to store the timestamp of the last feedback
+
     private void sendDataToFirebase() {
+        long currentTimestamp = System.currentTimeMillis();
+
+        // Check if enough time has passed since the last feedback
+        if (currentTimestamp - lastFeedbackTimestamp < 60000) { // 60000 milliseconds = 1 minute
+            // If less than 1 minute has passed, show a message and do not proceed
+            Toast.makeText(this, "Please wait before sending another feedback.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // If enough time has passed, proceed to send feedback
+        Log.d("SendDataToFirebase", "Before creating ProgressDialog");
+        ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Sending feedback...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+
         String selectedFeature = featureSpinner.getSelectedItem().toString();
         String userSuggestion = suggestionEditText.getText().toString();
 
@@ -56,13 +76,19 @@ public class suggestion_feedback extends AppCompatActivity {
             Feedback feedback = new Feedback(feedbackId, selectedFeature, userSuggestion);
             databaseReference.child(feedbackId).setValue(feedback);
 
-            clearForms();
+            lastFeedbackTimestamp = currentTimestamp; // Update the timestamp of the last feedback
 
+            clearForms();
+            progressDialog.dismiss(); // Dismiss the progress dialog
             Toast.makeText(this, "Feedback sent, Thank you!", Toast.LENGTH_SHORT).show();
         } else {
+            progressDialog.dismiss(); // Dismiss the progress dialog in case of empty suggestion
             Toast.makeText(this, "Please enter your suggestion", Toast.LENGTH_SHORT).show();
         }
+        Log.d("SendDataToFirebase", "After dismissing ProgressDialog");
     }
+
+
 
     private void clearForms() {
         // Clear the selected item in the spinner

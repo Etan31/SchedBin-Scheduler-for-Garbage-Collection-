@@ -1,8 +1,9 @@
-package com.example.a1project;
+package com.schedBin.a1project;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,8 @@ import android.widget.Button;
 import androidx.fragment.app.Fragment;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -73,6 +76,10 @@ public class SettingsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_settings, container, false);
 
         requireActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+
+        // Log the database reference
+        Log.d("Firebase", "Connected to database: " + databaseReference.toString());
 
         logout = view.findViewById(R.id.logout);
         add_admin = view.findViewById(R.id.add_adminBtn);
