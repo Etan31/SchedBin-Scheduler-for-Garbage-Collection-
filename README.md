@@ -1,3 +1,7 @@
+# SchedBin
+# Features 
+# Tools & Technology used
+ 
 ## Preview
 ### Admin's Interface
 <img src="https://github.com/user-attachments/assets/efdaedee-b313-4b93-9327-576477e5a674" alt="Image 1" width="100" height="200">
