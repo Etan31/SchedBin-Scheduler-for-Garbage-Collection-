@@ -1,4 +1,4 @@
-# SchedBin
+# SchedBin - Schedule Garbage collection
 
 ## Features 
 - CRUD(Create, Read, Update, Delete)  to FIrebase
