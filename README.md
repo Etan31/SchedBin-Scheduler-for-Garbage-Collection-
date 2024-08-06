@@ -4,6 +4,10 @@
 - CRUD(Create, Read, Update, Delete)  to FIrebase
 - View Schedule from 3rd Party Calendar API
 
+## Tools & Technology used
+- Java
+- Firebase
+- GCP
  
 ## Preview
 ### Admin's Interface
