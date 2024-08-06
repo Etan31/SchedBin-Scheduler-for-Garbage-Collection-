@@ -3,6 +3,7 @@
 ## Features 
 - CRUD(Create, Read, Update, Delete)  to FIrebase
 - View Schedule from 3rd Party Calendar API
+- Two user: Admins set the collection dates; and users can view the schedule.
 
 ## Tools & Technology used
 - Java
