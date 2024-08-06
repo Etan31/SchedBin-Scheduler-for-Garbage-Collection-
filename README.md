@@ -1,6 +1,9 @@
 # SchedBin
-# Features 
-# Tools & Technology used
+
+## Features 
+- CRUD(Create, Read, Update, Delete)  to FIrebase
+- View Schedule from 3rd Party Calendar API
+
  
 ## Preview
 ### Admin's Interface
